@@ -1,6 +1,6 @@
 {
     "name": "Lab Scenario 2",
-    "image": "ghcr.io/networktocode/100-days-of-nautobot/100-days-of-nautobot:lab_scenario_1", 
+    "image": "ghcr.io/nautobot/100-days-of-nautobot/100-days-of-nautobot:lab_scenario_1", 
     "hostRequirements": {
         "cpus": 4,
         "memory": "16gb",

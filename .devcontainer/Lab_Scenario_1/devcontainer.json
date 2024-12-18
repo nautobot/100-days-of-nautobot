@@ -1,6 +1,6 @@
 {
     "name": "Lab Scenario 1",
-    "image": "ghcr.io/networktocode/100-days-of-nautobot/100-days-of-nautobot:lab_scenario_1", 
+    "image": "ghcr.io/nautobot/100-days-of-nautobot/100-days-of-nautobot:lab_scenario_1", 
     "features": {
        "ghcr.io/devcontainers/features/docker-in-docker:2": {
             "version": "latest",

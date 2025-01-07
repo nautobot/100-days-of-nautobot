@@ -1,0 +1,37 @@
+---
+name: "ceos-lab"
+prefix: ""
+
+mgmt:
+  # network: "network-lab"
+  # ipv4-subnet: "172.24.78.0/24"
+  network: "bridge"
+
+topology:
+  kinds:
+    ceos:
+      image: "ceos:4.32.0F"
+
+  nodes:
+    bos-acc-01:
+      kind: "ceos"
+      startup-config: "startup-configs/bos-acc-01.conf"
+
+    bos-rtr-01:
+      kind: "ceos"
+      startup-config: "startup-configs/bos-rtr-01.conf"
+
+    nyc-acc-01:
+      kind: "ceos"
+      startup-config: "startup-configs/nyc-acc-01.conf"
+
+    nyc-rtr-01:
+      kind: "ceos"
+      startup-config: "startup-configs/nyc-rtr-01.conf"
+
+  links:
+    - endpoints: ["bos-acc-01:eth1", "bos-rtr-01:eth1"]
+    - endpoints: ["bos-acc-01:eth2", "nyc-rtr-01:eth2"]
+    - endpoints: ["bos-rtr-01:eth2", "nyc-acc-01:eth2"]
+    - endpoints: ["nyc-acc-01:eth1", "nyc-rtr-01:eth1"]
+

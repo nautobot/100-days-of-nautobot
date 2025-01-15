@@ -1,8 +1,43 @@
 # Lab Related Notes
 
-This document captures some of the notes related to the lab setup. 
+This document captures various notes related to the lab setup. 
 
-## Rebuild Coespace
+## Launch Bigger Instance
+
+It is easy to run out of CPU resources when we have both Nautobot containers and Containerlab running at the same time, even with just a few lab nodes. In most cases, you can simply choose a bigger instance to have a better experience: 
+
+![bigger_instance_1](images/bigger_instance_1.png)
+
+## Filter Containerlab Nodes
+
+To save resources, sometimes we might want to launch fewer Containerlab nodes than described in the topology graph. We can either comment out the nodes or use the command line option of `--node-filter`:  
+
+```
+$ sudo containerlab deploy --topo ceos-lab.clab.yml --node-filter bos-acc-01,bos-rtr-01
+```
+
+## Containerlab Launch, Destroy, and Reconfigure
+
+It is a good idea to destroy the Containerlab topology once you are done with it. 
+
+```
+(deploy) # containerlab deploy --topo ceos-lab.clab.yml
+(destroy) # containerlab destroy --topo ceos-lab.clab.yml
+```
+
+But if you forget to destroy the lab, the next time you try to launch the lab you will encounter error similar to below: 
+
+```
+Error: containers ["bos-acc-01" "bos-rtr-01"] already exist. Add '--reconfigure' flag to the deploy command to first remove the containers and then deploy the lab
+```
+
+As stated, the command to fix the error is to use the `reconfigure` flag: 
+
+```
+# sudo containerlab deploy --reconfigure --topo ceos-lab.clab.yml
+```
+
+## Rebuild Codespace
 
 We have discovered sometimes after the codespace instance was stopped either manually or due to the preset timeout period, the Docker daemon would stop working. 
 
@@ -65,11 +100,61 @@ For more examples and ideas, visit:
 
 ```
 
-## Rename Codespace spaces
+## Rename Codespace Instances
 
 By default, the codespace name are randomly assigned. They can be renamed after they are launched by click on the ```...``` option and choose "Rename": 
 
 ![rename_spaces](images/rename_spaces.png)
 
 I find it beneficial to rename them according to the scenarios, such as "scenario_1" and "scenario_2". 
+
+## Database Import
+
+In order to minimize the setup steps, the dev container took a few extra steps than the steps listed in [nautobot-docker-compose](https://github.com/nautobot/nautobot-docker-compose). 
+
+- Proactively copied the environment files: 
+
+```
+cp environments/local.example.env environments/local.env
+cp environments/creds.example.env environments/creds.env
+```
+
+- Preloaded the `nautobot.sql` file in the directory. The `invoke db-import` commands looks for the `nautobot.sql` file as the database file to be loaded: 
+
+```
+# invoke --list
+Available tasks:
+
+  ...
+  db-export              Export the database from the dev environment to nautobot.sql.
+  db-import              Install the backup of Nautobot db into development environment.
+  ...
+```
+
+Under "Lab_Setup -> database_files" there are other database files we can use for labs. 
+
+## PostCreate.sh File
+
+In the `devcontainer.json` file we use the `postCreateCommand` to specify the commands to run after codespace is launched, in this case a shell script `postCreate.sh`: 
+
+```
+{
+    "name": "Lab Scenario 1",
+    ...
+    "postCreateCommand": "bash /workspaces/100-days-of-nautobot/postCreate.sh",
+    ...
+}
+```
+
+Currently, the script clones the repository and copy the README.md file from the repository to the root level: 
+
+```
+#!/bin/bash
+git clone https://github.com/nautobot/100-days-of-nautobot.git
+cp 100-days-of-nautobot/README.md .
+```
+
+
+
+
 

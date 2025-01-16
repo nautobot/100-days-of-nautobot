@@ -260,7 +260,6 @@ We can use the `get_or_create` method to create the location, remember we mentio
 
 ```
 >>> location, created = Location.objects.get_or_create(name="Charlotte", location_type=location_type_store, parent=location_eastcoast, status=status_active)
->>> location, created = Location.objects.get_or_create(name="Charlotte", location_type=location_type_store, parent=location_eastcoast, status=status_active)
 
 >>> location
 <Location: Charlotte>
@@ -273,6 +272,8 @@ True
 We can either use the location query to see the newly created store or just browse to the Web UI: 
 
 ![location_creation_2](images/location_creation_2.png)
+
+This location is created in the database as we entered the commands. But if you feel a bit strange to create database entries so easily in the shell, you are not alone. 
 
 One of the features Django offers is to validate data before it is saved with `validated_save()` method. It helps to catch any error to see if, say, there are duplicated names. It is a good practice to use it before we commit the change. 
 

@@ -213,7 +213,7 @@ register_jobs(
 
 Here is what the complete file looks like: 
 
-```
+```python
 from nautobot.apps.jobs import Job, register_jobs
 
 class HelloJobs(Job):
@@ -331,6 +331,9 @@ This is the result you should see:
 ![hello_jobs_7](images/hello_jobs_7.png)
 
 Just like that, we have our first job running! 
+
+> [!TIP]
+> If you run into any issues, here is a [video walkthrough](https://youtu.be/eOvCss4_Z_w) for Day 3. 
 
 ## Day 3 To Do
 

@@ -8,6 +8,9 @@ Jobs can extend Nautobot's functionality by creating custom automation scripts t
 
 For today's challenge, we will execute a predefined job on [demo.nautobot.com](https://demo.nautobot.com/) to familiarize ourselves with the basic usage of Jobs. We will also learn about the advantages of using Nautobot Jobs for your automation tasks.
 
+> [!TIP]
+> Open a separate browser window for [demo.nautobot.com](https://demo.nautobot.com/) to keep the instruction side-by-side (Right Click -> Open Link in New Tab)
+
 ## Nautobot Job Example
 
 1. Navigate to [demo.nautobot.com](https://demo.nautobot.com/) and log in using the username ```demo``` and password ```nautobot```:
@@ -45,7 +48,7 @@ After you download the file, you can see that it is a CSV representation of the 
 
 You might be wondering, what is so special about executing this simple job? Let's point out a few things that worked behind the scenes to enable the job to run: 
 
-1. Asynchronous execution 
+1. **Asynchronous execution**
 
 The job was executed in an asynchronous, non-blocking way. If you noticed, as soon as we click on `Run`, we were redirected to the results page. We did not have to wait for the job result to come back before we can interact with Nautobot again. 
 
@@ -53,19 +56,19 @@ This is due to the fact that Nautobot is integrated with the [Celery](https://do
 
 By turning our scripts into Nautobot Jobs, we too can enjoy asynchronous execution using Celery distributed task queues.
 
-2. Accountability
+2. **Accountability**
 
 On the job result page, we can see the user who executed the job and the various log levels that were generated from its execution, providing both accountability and audit trails. 
 
-3. Performance benchmark
+3. **Performance benchmark**
 
 We can see the basic performance benchmark in the job execution, such as the duration of the job from start to completion. 
 
-4. Interaction with existing Nautobot data
+4. **Interaction with existing Nautobot data**
 
 This job interacted directly with the data existed in Nautobot. We did not have to write an external API call to Nautobot. The job has access to both the data and the relationship between the objects. 
 
-5. Other benefits
+5. **Other benefits**
 
 There are lots of other benefits with Nautobot jobs that we will learn about as we move along, such as scheduling jobs, job hooks, permissions, and more. 
 
@@ -74,7 +77,7 @@ There are lots of other benefits with Nautobot jobs that we will learn about as 
 In addition to executing the sample Job on [demo.nautobot.com](https://demo.nautobot.com), here are a few more tasks for today: 
 
 1. Execute a few more jobs on the demo site, look over the different options and experiment with them. 
-2. Read or at least glance over the Nautobot Jobs in the [User Guide](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/jobs/). 
+2. Read or at least glance over the `Nautobot Jobs` section in the [User Guide](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/jobs/). 
 3. Familiarize yourself with the [Jobs Developer Guide](https://docs.nautobot.com/projects/core/en/stable/development/jobs/) and bookmark it, this will be a handy document to refer to for future days. 
 
 ## Day 2 To Do

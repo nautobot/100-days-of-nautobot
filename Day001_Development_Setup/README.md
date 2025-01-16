@@ -17,6 +17,9 @@ There are two steps to start our lab:
 
 Let's start by launching Codespace with the correct options.
 
+> [!TIP]
+> There are some Tips and Tricks we learned along the way that we keep a running [Lab Notes](https://github.com/nautobot/100-days-of-nautobot/blob/main/Lab_Setup/lab_related_notes/README.md). Please keep this note handy if you run into issues.  
+
 ## Launch Codespace
 
 If you are brand new to GitHub Codespace, we recommend watching the following video for steps to launch Codespace. However, if you are already somewhat familiar with Codespace, feel free to skip to the screenshot instructions for a quick reference.
@@ -62,6 +65,9 @@ Go ahead and launch the Codespace, once it is launched, come back to ```Day001_D
 Included in the Codespace is the code from [nautobot-docker-compose](https://github.com/nautobot/nautobot-docker-compose/) repository. Our Codespace is launched with the docker-in-docker feature to allow us run Nautobot as well as the necessary components in containers.
 
 The following instructions will be typed in at the terminal window.
+
+> [!TIP]
+> If you try to copy and paste commands to the Codepsace terminal window, it will ask for permission for the first time. Please allow it. 
 
 - Change directory to where the nautobot docker-compose code is:
 
@@ -169,6 +175,9 @@ The new window should direct you to the forwarded port where Nautobot UI can be 
 
 ![Codespace_Screenshot_7.png](images/Codespace_Screenshot_7.png)
 
+> [!TIP]
+> Not the most secure username and password, I know, you might get a warning prompt depending on the browser. The port and instance is *not* open to the public. 
+
 We now have a working Nautobot instance in Codepsace. Let's go back to the terminal window and use ```Ctl+C``` to terminate the Nautobot instance:
 
 ```shell
@@ -200,7 +209,7 @@ Let's go ahead and stop Codespace as we do not want to incur unnecessary charges
 ![Codespace_Screenshot_8.png](images/Codespace_Screenshot_8.png)
 
 > [!TIP]
-> You can optionally delete the Codespace, however, you will need to repeat the steps in this lesson if you do.
+> You can optionally delete the Codespace, however, you will need to repeat the steps in this lesson if you do. My preference is to just *stop* Codespace unless you are running low on usage credit, which you can check [here](https://github.com/codespaces). 
 
 That is it for Day 1, congratulations on creating a lab environment!
 

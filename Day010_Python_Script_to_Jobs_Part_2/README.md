@@ -26,6 +26,8 @@ In today's challenge, we will turn the Netmiko commands into a Nautobot job that
 > $ sudo containerlab deploy --topo ceos-lab.clab.yml 
 > ```
 
+If you see an error such as `Error: containers ["bos-acc-01" "bos-rtr-01"] already exist. Add '--reconfigure' flag to the deploy command to first remove the containers and then deploy the lab` that was a result of the lab was not shutdown properly with `containerlab destroy` command. Use the `sudo containerlab deploy --reconfigure --topo ceos-lab.clab.yml` as suggested by the error message. 
+
 Let's create the file needed for today's challenge. 
 
 ## Operations Job File

@@ -144,7 +144,7 @@ topology:
 > 
 > ```
 > $ cd clab/
-> $ sudo containerlab deploy --topo ceos-lab.clab.> yml --node-filter bos-acc-01,bos-rtr-01
+> $ sudo containerlab deploy --topo ceos-lab.clab.yml --node-filter bos-acc-01,bos-rtr-01
 > ```
 
 Let's go ahead and launch the lab: 
@@ -229,6 +229,13 @@ Free memory: 1232352 kB
 ```
 
 I will leave it to you to repeat the same step for the other device ```172.17.0.2``` to test the lab reachability. 
+
+After you are done with today's work, shutdown Containerlab with: 
+
+```
+$ cd clab/
+$ sudo containerlab destroy --topo ceos-lab.clab.yml 
+```
 
 ## Day 9 To Do
 

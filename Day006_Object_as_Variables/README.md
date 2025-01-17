@@ -23,28 +23,6 @@ $ invoke db-import
 $ invoke debug
 ```
 
-Let's upload and prepare cEOS image and start Containerlab: 
-
-> [!TIP]
-> Please see [Lab Setup Scenario 1](../Lab_Setup/scenario_1_setup/README.md) for instructions on how to download Arista cEOS image
-
-> [!WARNING]
-> In the example below, the file was already unzipped, it does not have the `.zip` file extension. Please include the `.zip` extension as necessary.  
-
-```
-$ docker import cEOS64-lab-4.32.0F.tar ceos:4.32.0F
-```
-
-For this lab we only needed the BOS devices: 
-
-> [!TIP] 
-> The `clab` directory is at the top level of the `100-days-of-nautobot` directory. 
-
-```
-$ cd clab/
-$ sudo containerlab deploy --topo ceos-lab.clab.yml --node-filter bos-acc-01,bos-rtr-01
-```
-
 We are ready to create our new job file. 
 
 ## Job File Creation 

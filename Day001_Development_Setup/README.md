@@ -24,7 +24,7 @@ Let's start by launching Codespace with the correct options.
 
 If you are brand new to GitHub Codespace, we recommend watching the following video for steps to launch Codespace. However, if you are already somewhat familiar with Codespace, feel free to skip to the screenshot instructions for a quick reference.
 
-[Video: Setting Up Your 100 Days of Nautobot Development Environment](https://www.youtube.com/watch?v=gW3Qq0yssLE)
+[Video: Setting Up Your 100 Days of Nautobot Development Environment](https://www.youtube.com/watch?v=i1K_zBz0Ny0)
 
 Launch Codespace with the following steps:
 

@@ -333,7 +333,7 @@ This is the result you should see:
 Just like that, we have our first job running! 
 
 > [!TIP]
-> If you run into any issues, here is a [video walkthrough](https://youtu.be/eOvCss4_Z_w) for Day 3. 
+> If you run into any issues, here is a [video walkthrough](https://www.youtube.com/watch?v=ogh9jMTTa7I) for Day 3. 
 
 ## Day 3 To Do
 

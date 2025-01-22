@@ -2,7 +2,7 @@
 
 Welcome to Day 3 of the `#100DaysOfNautobot` challenge! It is time to create some jobs for Retail-r-Us. 
 
-For our first job, we will create a customary 'Hello World' type of job. It will be a small and limited Python script, but a fully funcaitonal Nautobot job. This will help us to see how the pieces work together before we move on to more complex jobs.
+For our first job, we will create a customary 'Hello World' type of job. It will be a small and limited Python script, but a fully functional Nautobot job. This will help us to see how the pieces work together before we move on to more complex jobs.
 
 Ready? Let's begin! 
 

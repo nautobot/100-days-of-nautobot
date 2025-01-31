@@ -107,13 +107,13 @@ Running docker compose command "build"
 #24 DONE 0.0s
 ```
 
-- A successful```invoke build``` completion, will output a docker image for Nautobot, check this with ```docker ps```. If no images are visible, try the invoke process again and/or request help in the [Nautobot Slack](https://networktocode.slack.com/archives/C01UJ9ZQZ3D).
+- A successful```invoke build``` completion, will output a docker image for Nautobot, check this with ```docker images```. If no images are visible, try the invoke process again and/or request help in the [Nautobot Slack](https://networktocode.slack.com/archives/C01UJ9ZQZ3D).
 
 ```shell
 (nautobot-docker-compose-py3.10) @user ➜ ~/nautobot-docker-compose (main) $ docker images
 REPOSITORY                         TAG         IMAGE ID       CREATED         SIZE
 yourrepo/nautobot-docker-compose   local       aae299e33a72   2 minutes ago   1.11GB
-(nautobot-docker-compose-py3.10) @moogzy ➜ ~/nautobot-docker-compose (main) $ 
+(nautobot-docker-compose-py3.10) @user ➜ ~/nautobot-docker-compose (main) $ 
 ```
 
 - We are now ready to import the initial datasets:

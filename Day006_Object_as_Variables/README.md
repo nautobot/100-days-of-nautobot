@@ -32,28 +32,9 @@ Let's create a file for today's challenge. We can either do this via the shared 
 > [!TIP]
 > Take a look at [Day 003 Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md) if you need a refresher. 
 
-Let's begin by creating a file named `Day6_Variable_Example` on the Nautobot docker container under the `/opt/nautobot/jobs` directory (please feel free to create it via the shared directory if you'd prefer): 
+Let's begin by creating a file named `Day6_Variable_Example.py` under `nautobot-docker-compose/jobs` in the VSCode editor. This is further explored in the [Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md)) lab.
 
-1. Create the file under `/opt/nautobot/jobs`.
-2. Change the file ownership to `nautobot:nautobot`.
-
-```
-(nautobot-docker-compose-py3.10) @ericchou1 ➜ ~/nautobot-docker-compose (main) $ docker exec -u root -it nautobot_docker_compose-nautobot-1 bash
-
-root@32a27fa1f5a6:/opt/nautobot# cd jobs
-root@32a27fa1f5a6:/opt/nautobot/jobs# touch Day6_Variable_Example.py
-
-root@32a27fa1f5a6:/opt/nautobot/jobs# chown nautobot:nautobot Day6_Variable_Example.py 
-
-root@32a27fa1f5a6:/opt/nautobot/jobs# ls -lia Day6_Variable_Example.py 
-1618584 -rw-r--r-- 1 nautobot nautobot 0 Nov 10 15:07 Day6_Variable_Example.py
-```
-
-We can right-click on the file to edit it in the main window: 
-
-![file_edit](images/file_edit.png)
-
-Let's pick up where `HelloJobs.py` left off and fill in some boilerplate code to see the job show up in our UI: 
+Let's pick up where `HelloJobs.py` left off and fill in some boilerplate code to see the job show up in our UI:
 
 ```python
 from nautobot.apps.jobs import MultiChoiceVar, Job, ObjectVar, register_jobs, TextVar, IntegerVar

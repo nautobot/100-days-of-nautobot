@@ -43,20 +43,7 @@ $ cd clab/
 $ sudo containerlab deploy --topo ceos-lab.clab.yml --node-filter bos-acc-01,bos-rtr-01
 ```
 
-Let's create a file for today's challenge. We can either do this via the shared directory or directly in the Nautobot docker container: 
-
-![file_creation.png](images/file_creation.png)
-
-```
-$ docker exec -u root -it nautobot_docker_compose-nautobot-1 bash
-root@c9e0fa2a45a0:/opt/nautobot# cd jobs
-root@c9e0fa2a45a0:/opt/nautobot/jobs# pwd
-/opt/nautobot/jobs
-root@c9e0fa2a45a0:/opt/nautobot/jobs# touch hello_world_job_button.py
-root@c9e0fa2a45a0:/opt/nautobot/jobs# chown nautobot:nautobot hello_world_job_button.py
-```
-
-The environment is now setup for today's challenge.  
+Let's create a new job named `hello_world_job_button.py` under `nautobot-docker-compose/jobs` in the VSCode editor. This is further explored in the [Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md) lab.
 
 ## First Job Button Receiver 
 

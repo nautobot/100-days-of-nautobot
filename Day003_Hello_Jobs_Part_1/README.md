@@ -76,10 +76,6 @@ We now have Nautobot running in debug mode with a browser window open to access 
 
 ## Creating the Job File
 
-We are now ready to create our first job file using Python. **There are two options to do this, just pick one.** If you’re new to Nautobot Jobs, which is probably the case for most of us, I’d recommend starting with Option 1. But don’t worry—take a look at Option 2 as well to understand the structure behind it. 
-
-### Option 1. Create File in Jobs Folder
-
 Under ```nautobot-docker-compose``` folder, find the ```jobs``` folder and right click to create a New File and name it ```hello_jobs.py```:
 
 ![create_job_in_folder_1](images/create_job_in_folder_1.png)
@@ -112,76 +108,12 @@ services:
       - "../jobs:/opt/nautobot/jobs"
 ```
 
-If you already created the file via option 1, you can read through option 2 for a better understanding of the jobs file structure. 
-
-### Option 2. Create File in Docker Container
-
-With option 2, we will create the job file directly in the ```nautobot``` container. We want to demonstrate this option because it follows the method used in the [Jobs Developer Guide](https://docs.nautobot.com/projects/core/en/stable/development/jobs/#installing-jobs) for installing jobs.   
-
-Let's come back to the terminal section. While leaving the first ```invoke debug``` window open, click on the ```+``` sign to add a separate terminal window: 
-
-![start_new_terminal_1](images/start_new_terminal_1.png)
-
-
-> [!TIP] 
-> By leaving the first terminal window open and in debug mode, we will be able to see the system level messages that is helpful during our learning process. 
-
-Let's see which docker containers are running: 
-
-```
-@ericchou1 ➜ ~ $ docker ps
-CONTAINER ID   IMAGE                                    COMMAND                  CREATED              STATUS                        PORTS                                                 NAMES
-0674568846da   yourrepo/nautobot-docker-compose:local   "sh -c 'nautobot-ser…"   About a minute ago   Up About a minute (healthy)   8080/tcp, 8443/tcp                                    nautobot_docker_compose-celery_worker-1
-50c2738fbded   yourrepo/nautobot-docker-compose:local   "sh -c 'nautobot-ser…"   About a minute ago   Up About a minute             8080/tcp, 8443/tcp                                    nautobot_docker_compose-celery_beat-1
-15a80b83b587   yourrepo/nautobot-docker-compose:local   "/docker-entrypoint.…"   About a minute ago   Up About a minute (healthy)   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp, 8443/tcp   nautobot_docker_compose-nautobot-1
-fd292402488a   redis:6-alpine                           "docker-entrypoint.s…"   About a minute ago   Up About a minute             6379/tcp                                              nautobot_docker_compose-redis-1
-5075768319ae   postgres:13-alpine                       "docker-entrypoint.s…"   About a minute ago   Up About a minute (healthy)   5432/tcp                                              nautobot_docker_compose-db-1
-@ericchou1 ➜ ~ $ 
-
-```
-
-We can attach to the Nautobot docker image from the terminal window with ```docker exec```. 
-
-Let's attach to the nautobot container as root, navigate to the ```/opt/nautobot/jobs``` folder, then create a ```hello_jobs.py``` file:  
-
-```
-@ericchou1 ➜ ~ $ docker exec -u root -it nautobot_docker_compose-nautobot-1 bash
-
-root@196e7f7abedd:/opt/nautobot# cd /opt/nautobot/jobs/
-root@196e7f7abedd:/opt/nautobot/jobs# touch hello_jobs.py
-```
-
 > [!IMPORTANT] 
-> The location of the file is very important, this is where Nautobot looks for the job files. Also the file permission with `chown` is critical as well. 
-
-We will need to change the owner and group for the file to `nautobot`: 
-
-```
-root@196e7f7abedd:/opt/nautobot/jobs# ls -lia hello_jobs.py 
-1487781 -rw-r--r-- 1 root root 0 Oct 17 12:38 hello_jobs.py
-
-root@196e7f7abedd:/opt/nautobot/jobs# chown nautobot:nautobot hello_jobs.py 
-
-root@196e7f7abedd:/opt/nautobot/jobs# ls -lia hello_jobs.py 
-
-1487781 -rw-r--r-- 1 nautobot nautobot 0 Oct 17 12:38 hello_jobs.py
-```
-
-We can edit the file directly in the terminal. However, remember that Visual Studio Code is a full-featured IDE. By using the Docker extension, we can make edits much more intuitively.
-
-We can click on the docker extension symbol and find the Nautobot container: 
-
-![docker_access_1](images/docker_access_1.png)
-
-Once we locate the file under `/opt/nautobot/jobs`, highlight it and choose the `open` option to open in the viewer area: 
-
-![docker_access_2](images/docker_access_2.png)
-
-Once we have the file open, we can start adding components to the job. 
+> The location and file permissions of the file is very important, this is where Nautobot ingests job files. 
 
 ## Hello Jobs
 
-Whether you used Option 1 or Option 2, you are now ready to modify the Python file to specify the details of the job.
+You are now ready to modify the Python file to specify the details of the job.
 
 First, we'll have to import the necessary object and methods from the ```nautobot.apps.jobs``` module: 
 

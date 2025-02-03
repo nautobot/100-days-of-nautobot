@@ -22,17 +22,7 @@ We are ready to create our new job file.
 
 ## Job File Creation 
 
-Let's create a new job named `data_quality_jobs.py` under `/opt/nautobot/jobs` in the nautobot docker container (feel free to use Option 1 as specified in [Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md)): 
-
-```
-(nautobot-docker-compose-py3.10) @ericchou1 ➜ ~/nautobot-docker-compose (main) $ docker exec -u root -it nautobot_docker_compose-nautobot-1 bash
-
-root@32a27fa1f5a6:/opt/nautobot# cd jobs
-
-root@32a27fa1f5a6:/opt/nautobot/jobs# touch data_quality_jobs.py
-
-root@32a27fa1f5a6:/opt/nautobot/jobs# chown nautobot:nautobot data_quality_jobs.py
-```
+Let's create a new job named `data_quality_jobs.py` under `nautobot-docker-compose/jobs` in the VSCode editor. This is further explored in the [Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md) lab.
 
 We will use this file to work on the rest of today's challenge. 
 

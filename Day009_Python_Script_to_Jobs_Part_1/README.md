@@ -9,7 +9,7 @@ In many of the future challenges, we will need to have a network lab our Nautobo
 
 ![codespace_machine_types](images/codespace_machine_types.png)
 
-Again, as we stated in the `warnign` box above, s we add more containers to the Codespace environment, you will find the CPU running high during the launch. I have successfully completed the lab with the `2-core` machine types, but I had to wait a while for the CPU to normalize. 
+Again, as we stated in the `warning` box above, as we add more containers to the Codespace environment, you will find the CPU running high during the launch. I have successfully completed the lab with the `2-core` machine types, but I had to wait a while for the CPU to normalize. 
 
 ## Lab Environment Setup
 

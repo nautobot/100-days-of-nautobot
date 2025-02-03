@@ -32,20 +32,7 @@ Let's create the file needed for today's challenge.
 
 ## Operations Job File
 
-We will create a file named ```operation_jobs.py``` under the ```/opt/nautobot/jobs``` folder on the Nautobot docker instance: 
-
-```
-$ docker exec -u root -it nautobot_docker_compose-nautobot-1 bash
-root@c9e0fa2a45a0:/opt/nautobot# cd jobs
-root@c9e0fa2a45a0:/opt/nautobot/jobs# pwd
-/opt/nautobot/jobs
-root@c9e0fa2a45a0:/opt/nautobot/jobs# touch operation_jobs.py
-root@c9e0fa2a45a0:/opt/nautobot/jobs# chown nautobot:nautobot operation_jobs.py
-```
-
-Once the file is created, we can open it on the main panel and start to work on it: 
-
-![operation_jobs_file_1](images/operation_jobs_file_1.png)
+Let's create a new job named ```operation_jobs.py``` under ```nautobot-docker-compose/jobs``` in the VSCode editor. This is further explored in the [Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md) lab.
 
 We will build this job step-by-step. 
 

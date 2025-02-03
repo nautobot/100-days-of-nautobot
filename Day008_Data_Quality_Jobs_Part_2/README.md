@@ -12,16 +12,7 @@ In today's job, we will build from Day 007's data quality job. The main learning
 > $ invoke debug
 > ```
 
-As a reminder, in Day 007 we created a file named ```data_quality_jobs.py``` under ```/opt/nautobot/jobs``` in the nautobot docker container. Here is a repeat of [Day 7](../Day007_Data_Quality_Jobs_Part_1/README.md) file creation and file content: 
-
-```
-(nautobot-docker-compose-py3.10) @ericchou1 ➜ ~/nautobot-docker-compose (main) $ docker exec -u root -it nautobot_docker_compose-nautobot-1 bash
-
-root@32a27fa1f5a6:/opt/nautobot/jobs# touch data_quality_jobs.py
-root@32a27fa1f5a6:/opt/nautobot/jobs# chown nautobot:nautobot data_quality_jobs.py
-```
-
-Let's go ahead and paste in the code where we left off from Day 007: 
+As a reminder, in Day 007 we created a file named ```data_quality_jobs.py``` under ```nautobot-docker-compose/jobs```. Additional guidance on this file creation process is explored in the [Hello Jobs](../Day003_Hello_Jobs_Part_1/README.md)) lab. Here is a repeat of [Day 7's](../Day007_Data_Quality_Jobs_Part_1/README.md) file content:
 
 ```python
 from nautobot.apps.jobs import MultiChoiceVar, Job, ObjectVar, register_jobs, StringVar, IntegerVar

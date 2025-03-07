@@ -53,7 +53,7 @@ root@0936589bc72d:/opt/nautobot# apt-get install -y python3-software-properties
 root@0936589bc72d:/opt/nautobot# echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu focal main" > /etc/apt/sources.list.d/ansible.list
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 apt-get update
-root@0936589bc72d:/opt/nautobot# apt-get install -y ansible, vim, python3-paramiko
+root@0936589bc72d:/opt/nautobot# apt-get install -y ansible vim python3-paramiko
 root@771b55abc34a:/opt/nautobot# export ANSIBLE_HOST_KEY_CHECKING=False
 
 root@0936589bc72d:/opt/nautobot# ansible --version
@@ -216,6 +216,6 @@ Go ahead and post a screenshot of the successful execution of the job calling th
 
 See you tomorrow! 
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+32+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+32+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 
 [LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 32 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 

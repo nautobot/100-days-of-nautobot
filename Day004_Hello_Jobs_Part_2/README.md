@@ -204,6 +204,6 @@ Go ahead and post a screenshot of the newly created jobs on a social media platf
 
 In tomorrow's challenge, we dive deeper into Django ORM. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+4+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+4+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 
 [LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 4 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

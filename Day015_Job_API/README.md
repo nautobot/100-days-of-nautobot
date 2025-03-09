@@ -2,7 +2,7 @@
 
 Nautobot uses [Django REST Framework](https://www.django-rest-framework.org/) to provide Web APIs. The API can be used to trigger Nautobot Jobs. 
 
-In today's challenge, we will use Web API to interface with Nautobot Jobs. 
+In today's challenge, we will use the Web API to interface with Nautobot Jobs. 
 
 ## Environment Setup
 
@@ -21,7 +21,7 @@ $ invoke db-import
 $ invoke debug
 ```
 
-For today's challenge, we do not need to start Cotnainerlab, Arista vEOS image, or a new file. 
+For today's challenge, we do not need to start Containerlab, Arista vEOS image, or a new file. 
 
 The environment is now setup for today's challenge.  
 

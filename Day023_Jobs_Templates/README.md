@@ -1,6 +1,6 @@
 # Jobs Template HTML View
 
-As we progress forward and build on that last 22 days, let's take a closer look at the HTML templates that make up Nautobot and see how extensible Nautobot can be, it really is an "if can you dream it, you can build it" framework. Today we are going to create a custom HTML template that takes one of our previous validation jobs and places the data in a nice table which can also be exported to a CSV file.
+As we progress and build upon the last 22 days, let's take a closer look at the HTML templates that make up Nautobot and see how extensible Nautobot can be, it really is an "if you can dream it, you can build it" framework. Today we are going to create a custom HTML template that takes one of our previous validation jobs and places the data in a nice table which can also be exported to a CSV file.
 
 Today we will cover the following:
 - How to extend Nautobot’s built-in jobresult.html template with a new “Hostname Check” tab that displays custom data returned by an updated job (VerifyHostname). 
@@ -152,7 +152,7 @@ In this folder create two new files:
 1. customized_jobresult.html
 2. hostname_check_results.html
 
-In folder named ```environments``` open the ```docker-compose-local.yml``` file. The contents of the file should look like this:
+In folder named ```environments```, open the ```docker-compose-local.yml``` file. The contents of the file should look like this:
 
 ```yaml
 ---
@@ -180,7 +180,7 @@ We will be adding two new lines to the volumes list under the Nautobot service. 
 
 The new config should look like this:
 > [!TIP]
-> Notice to two new lines under the volumes list.
+> Notice the two new lines under the volumes list.
 
 ```yaml
 ---
@@ -471,13 +471,13 @@ After these two blocks have been added the final result of the ```customized_job
 {% endblock %}
 ```
 
-Understanding what we need to adjust in the jobresult.html, copy the above template and place it into our new file that we created called ```customized_jobresult.html```. Notice the ```extra_nav_tabs``` block and the ```extra_tab_content``` block that should now be updated.
+Now that we understand what to adjust in ```jobresult.html```, copy the above template into our new file, ```customized_jobresult.html```. Notice the ```extra_nav_tabs``` block and the ```extra_tab_content``` block that should now be updated.
 
 
 ### hostname_check_results.html - Extending base templates
 In the above step we reference a file that does not yet exist ```extras/inc/hostname_check_results.html```, this is one of the files that we created in our ```nautobot-docker-compose/template``` folder, and linked to the location described in the ```extra_tab_content``` block.
 
-> [!TIP] Linking these files in this way allows you to make edits to the file locally and those changes will be represented in the container without having to physically move the file to the container.
+> [!TIP] Linking these files this way allows you to edit the file locally and immediately see changes reflected in the container without manually moving the files.
 
 Open the ```hostname_check_results.html``` file in the ```nautobot-docker-compose/template``` folder and add the following lines:
 
@@ -513,7 +513,7 @@ Open the ```hostname_check_results.html``` file in the ```nautobot-docker-compos
 {% endif %}
 ```
 
-This is a really simple template that formats the output in a table with two columns, Hostname and Status. It uses the label-success and label-danger to color the Green and Red pass or fail colors. 
+This is a really simple template that formats the output in a table with two columns, Hostname and Status. it uses `label-success` and `label-danger` classes to indicate Pass (green) or Fail (red) results. 
 
 
 At this point you should stop the containers and then restart them, you can hit ```crtl-c``` in the terminal with the debug information. 
@@ -612,7 +612,7 @@ Then below the ```{% endif %}```, add the following JavaScript:
 </script>
 ```
 
-Refresh the page or re-run the job. In the `Hostname Check` tab you should now have a `export` button, and it will download a CSV version of the rendered table.
+Refresh the page or re-run the job. In the `Hostname Check` tab, you should now have an `export` button that downloads a CSV version of the table.
 ![Hostname Export](images/hostname_check_with_export.jpg)
 
 ## Day 23 To Do

@@ -105,7 +105,7 @@ j1.get_computed_fields(                     j1.job_results(                     
 >>>
 ```
 
-Today's challenge is heavy on background knowledge on Nautobot Job models than hands on. As a beginner, we should be a bit cautious about modifying any core Data models that is not exposed to us. 
+Today's challenge focuses heavily on background knowledge of Nautobot Job models rather than hands-on practice. As a beginner, we should be a bit cautious about modifying any core Data models that is not exposed to us. 
 
 As we become more familiar with Nautobot jobs, we might need to revisit some of these fields during troubleshooting. 
 
@@ -113,7 +113,7 @@ As we become more familiar with Nautobot jobs, we might need to revisit some of 
 
 Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
 
-Go ahead and post a screenshot of the `queryset` of your choice for the Job data model on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of a `queryset` of your choice for the Job data model on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
 
 In tomorrow's challenge, we will take a look at the Single Source of Truth (SSoT) app and the DiffSync library. See you tomorrow! 
 

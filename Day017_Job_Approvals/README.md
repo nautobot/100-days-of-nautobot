@@ -14,7 +14,7 @@ The environment setup will be the same as [Lab Setup Scenario 1](../Lab_Setup/sc
 
 We will follow the same steps to start Nautobot: 
 
-```
+```sh
 $ cd nautobot-docker-compose/
 $ poetry shell
 $ invoke build
@@ -24,7 +24,7 @@ $ invoke debug
 
 We will use the previously constructed `hello_jobs.py` file as a starting point, please create it if it does not exist in the `/jobs` folder: 
 
-```
+```python
 from nautobot.apps.jobs import Job, register_jobs
 
 class HelloJobs(Job):
@@ -35,7 +35,6 @@ class HelloJobs(Job):
 register_jobs(
     HelloJobs,
 )
-
 ```
 
 The environment is now setup for today's challenge.  
@@ -60,24 +59,29 @@ We can see the job in the approval queue for `Dry Run`, `Approve`, or `Deny`:
 
 Let's go ahead and reverse the approval change in the UI and see how we can enforce approval in code. 
 
-## Job Approval with Code
+## Job Approval in Code
 
-To require approval for Jobs in code, it is amazingly simple, just add `approval_required = True` in the `Meta` class: 
+Requiring approval for a Job in code is amazingly simple - just add `approval_required = True` in the `Meta` class!
 
-```
-from nautobot.apps.jobs import Job, register_jobs
+We're going to create a new job named `HelloJobsWithApproval`.  Because a job that requires approval *cannot* have 
+sensitive variables, we will also set `has_sensitive_variables` to `False`:
 
-class HelloJobs(Job):
+```python
+...
+
+class HelloJobsWithApproval(Job):
 
     class Meta: 
         name = "Hello World with Approval Required"
         approval_required = True
+        has_sensitive_variables = False
 
     def run(self):
-        self.logger.debug("Hello, this is my first Nautobot Job.")
+        self.logger.debug("Hello, this is my first Nautobot Job that requires approval.")
 
 register_jobs(
     HelloJobs,
+    HelloJobsWithApproval,
 )
 ```
 

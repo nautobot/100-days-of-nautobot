@@ -96,4 +96,8 @@ Here is a partial list of all the contributors:
 - Dwayne Camacho (co-author of Days 31, 34 - 39)
 - DJ Howard (co-author of Days 31, 34 - 39)
 - Byrns Baker (author of Days 23, 27, 33)
-- Nautobot Core Team & Community
+- Chritina Lang
+- Nolan Torres
+- Florian Lohden
+- Nautobot Core and Application Team 
+- Nautobot's Awesome Community 

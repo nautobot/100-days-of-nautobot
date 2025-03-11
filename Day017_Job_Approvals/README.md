@@ -100,6 +100,6 @@ Go ahead and post your answers to today's challenge on a social media of your ch
 
 In tomorrow's challenge, we will use Git repository to share our Jobs. See you tomorrow! 
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+17+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+17+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 
 [LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 17 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

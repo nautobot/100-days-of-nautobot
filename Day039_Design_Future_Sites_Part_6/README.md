@@ -1136,6 +1136,6 @@ Go ahead and post a screenshot of the successful execution of the new job on a s
 
 In tomorrow's challenge, we will conduct a review and look ahead to what we will be encountering over the upcoming days in the 100 Days of Nautobot Challenge. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+39+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+39+of+the+100+days+of+nautobot+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 
 [LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 39 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

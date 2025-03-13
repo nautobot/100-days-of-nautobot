@@ -49,11 +49,14 @@ root@32a27fa1f5a6:/opt/nautobot/jobs# ls -lia Day6_Variable_Example.py
 1618584 -rw-r--r-- 1 nautobot nautobot 0 Nov 10 15:07 Day6_Variable_Example.py
 ```
 
-We can right-click on the file to edit it in the main window:
+> [!IMPORTANT]
+> If you've changed file ownership to ```nautobot:nautobot``` within the Docker container directory, be sure to continue modifying the file using this method. This helps prevent file permission issues and ensures consistency. 
+
+Using the Docker extension on the left, we can right-click on the file to edit it in the main window:
 
 ![file_edit](images/file_edit.png)
 
-Let's pick up where `HelloJobs.py` left off and fill in some boilerplate code to see the job show up in our UI:
+Just like in the previous days, we'll begin today's code by setting up the essential elements: our ```import``` statements, ```class Meta```, ```run()``` method, and ```register_jobs```. This ensures our job is properly structured and ready to execute.
 
 ```python
 from nautobot.apps.jobs import MultiChoiceVar, Job, ObjectVar, register_jobs, TextVar, IntegerVar
@@ -97,13 +100,13 @@ Then run it:
 
 ## Adding Variables
 
-Noticed we imported a few additional objects for our file:
+Notice we imported a few additional objects for our file:
 
 ```python
 from nautobot.apps.jobs import MultiChoiceVar, Job, ObjectVar, register_jobs, TextVar, IntegerVar
 ```
 
-We can add a `TextVar` and `IntegerVar` to the file: 
+This allows us to add `TextVar` and `IntegerVar` options to the file: 
 
 ```python
 from nautobot.apps.jobs import MultiChoiceVar, Job, ObjectVar, register_jobs, TextVar, IntegerVar
@@ -186,11 +189,11 @@ class HelloVariables(Job):
         self.logger.info(f"Pick a location: {location}")
 ```
 
-That is it! Now we have the user input a selection of the location from our location object:
+That is it! Now we can prompt the user to select a location from our predefined location object:
 
 ![object_var_1](images/object_var_1.png)
 
-Here is the result:  
+And here is the result:  
 
 ![object_var_2](images/object_var_2.png)
 

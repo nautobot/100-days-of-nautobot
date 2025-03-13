@@ -1,6 +1,6 @@
 # Introduction to Job Hooks 
 
-[Job hooks](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/jobs/jobhook/) are a concept introduced by Nautobot inspired by webhooks. The idea is to trigger a job that sends out an API call when a data is changed in Nautobot. 
+[Job hooks](https://docs.nautobot.com/projects/core/en/stable/user-guide/platform-functionality/jobs/jobhook/) are a concept introduced by Nautobot inspired by webhooks. The idea is to trigger a job that sends out an API call when data is changed in Nautobot. 
 
 We will create a simple example of Job hook for today's challenge. 
 
@@ -33,7 +33,7 @@ root@c9e0fa2a45a0:/opt/nautobot# cd jobs
 root@c9e0fa2a45a0:/opt/nautobot/jobs# pwd
 /opt/nautobot/jobs
 root@c9e0fa2a45a0:/opt/nautobot/jobs# touch job_hook_test.py
-root@c9e0fa2a45a0:/opt/nautobot/jobs# chown nautobot:nautobot ob_hook_test.py
+root@c9e0fa2a45a0:/opt/nautobot/jobs# chown nautobot:nautobot job_hook_test.py
 ```
 
 The environment is now setup for today's challenge.  
@@ -90,7 +90,7 @@ We can use the "+" icon next to "Job Hooks" to create a new Job hook:
 
 ![job_hook_4](images/job_hook_4.png)
 
-In our example, we wired it up with the `dcim|device` object, so any time when a create/upate/delete even is associated with a device, this Job hook will be called. 
+In our example, we wired it up with the `dcim|device` object, so any time when a create/update/delete even is associated with a device, this Job hook will be called. 
 
 ![job_hook_5](images/job_hook_5.png)
 
@@ -106,7 +106,7 @@ If we go to the "Job Results" page, we should be able to see the Job hook result
 
 ![job_hook_test_2](images/job_hook_test_2.png)
 
-Alright, great job! I hope you are starting to notice a pattern of the structure and steps for Nautobot jobs. 
+Alright, great job! I hope you are starting to notice a pattern in the structure and steps for Nautobot jobs. 
 
 ## Day 14 To Do
 

@@ -1,43 +1,43 @@
 # Baking a Nautobot App Cookie
 
-In today's challenge, we will use [Cookiecutter](https://github.com/cookiecutter/cookiecutter) to create our own Nautobot app. 
+In today's challenge, we will use [Cookiecutter](https://github.com/cookiecutter/cookiecutter) to create our own Nautobot app.
 
 > [!INFORMATION]
 > Cookiecutter is a command-line utility that simplifies the creation of new projects by generating them from predefined templates.
 
-Network to Code announced the released a Nautobot App Cookiecutter [repository](https://github.com/nautobot/cookiecutter-nautobot-app/tree/develop) in early 2024, [Introducing Cookiecutter Project Template to Support Nautobot App Development for Network Automation](https://networktocode.com/blog/introducing-cookiecutter-nautobot-app/), and we will use it to create our app in today's challenge. 
+Network to Code announced the released a Nautobot App Cookiecutter [repository](https://github.com/nautobot/cookiecutter-nautobot-app/tree/develop) in early 2024, [Introducing Cookiecutter Project Template to Support Nautobot App Development for Network Automation](https://networktocode.com/blog/introducing-cookiecutter-nautobot-app/), and we will use it to create our app in today's challenge.
 
 > [!TIP]
-> For more information on general Cookiecutter usage, feel free to check out [Cookiecutter Quick Start](https://docs.nautobot.com/projects/cookiecutter-nautobot-app/en/latest/user/quick-start/#help) and its related documenation. 
+> For more information on general Cookiecutter usage, feel free to check out [Cookiecutter Quick Start](https://docs.nautobot.com/projects/cookiecutter-nautobot-app/en/latest/user/quick-start/#help) and its related documenation.
 
-Let's get started. 
+Let's get started.
 
 ## Environment Setup
 
-Please note we **DO NOT** need to start Nautobot and related docker containers under `nautobot-docker-compose` for the next few days. The application development environment includes an inclusive development environment similar to what we have been using.  
+Please note we **DO NOT** need to start Nautobot and related docker containers under `nautobot-docker-compose` for the next few days. The application development environment includes an inclusive development environment similar to what we have been using.
 
 ## Cookiecutter Example
 
-We will follow the steps laid out in the [Nautobot Cookiecutter repository README](https://github.com/nautobot/cookiecutter-nautobot-app/blob/develop/README.md) to install and create the application: 
+We will follow the steps laid out in the [Nautobot Cookiecutter repository README](https://github.com/nautobot/cookiecutter-nautobot-app/blob/develop/README.md) to install and create the application:
 
-```
+```sh
 @ericchou1 ➜ ~ $ pip install cookiecutter
 ...
 Successfully installed Jinja2-3.1.6 MarkupSafe-3.0.2 arrow-1.3.0 binaryornot-0.4.4 chardet-5.2.0 cookiecutter-2.6.0 python-dateutil-2.9.0.post0 python-slugify-8.0.4 pyyaml-6.0.2 six-1.17.0 text-unidecode-1.3 types-python-dateutil-2.9.0.20241206
 ```
 
-We will create a `outputs` directory for out app: 
+We will create a `outputs` directory for out app:
 
-```
+```sh
 @ericchou1 ➜ ~ $ mkdir outputs
 ```
 
-As we say in Cookiecutter land, let's "Bake a cookie": 
+As we say in Cookiecutter land, let's "Bake a cookie":
 
 > [!IMPORTANT]
-> Please use your own information, such as GitHub username, Full name, etc. when prompted. 
+> Please use your own information, such as GitHub username, Full name, etc. when prompted.
 
-```
+```md
 @ericchou1 ➜ ~ $ cookiecutter \
   --output-dir=./outputs \
   --directory=nautobot-app \
@@ -79,11 +79,11 @@ Congratulations! Your cookie has now been baked. It is located at /home/vscode/o
 The file `creds.env` will be ignored by git and can be used to override default environment variables.
 ```
 
-Note the steps listed after the cookie is baked to start a development environment. 
+Note the steps listed after the cookie is baked to start a development environment.
 
-Here are the contents in the `outputs` directory: 
+Here are the contents in the `outputs` directory:
 
-```
+```sh
 @ericchou1 ➜ ~ $ ls outputs/
 nautobot-app-my-awesome-app
 @ericchou1 ➜ ~ $ ls -lia outputs/
@@ -108,20 +108,20 @@ drwxr-xr-x 6 vscode vscode  4096 Feb 26 18:34 my_awesome_app
 -rw-r--r-- 1 vscode vscode 30961 Feb 26 18:34 tasks.py
 ```
 
-Let's change to that directory. 
+Let's change to that directory.
 
-```
+```sh
 @ericchou1 ➜ ~ $ cd outputs/nautobot-app-my-awesome-app/
 @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $
 ```
 
-In the next step, we will launch the development environment for our app. 
+In the next step, we will launch the development environment for our app.
 
 ## Development Environment
 
-The directory contains a development docker environment: 
+The directory contains a development docker environment:
 
-```
+```sh
 @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ ls -l development/
 total 48
 -rw-r--r-- 1 vscode vscode 2678 Feb 26 18:34 app_config_schema.py
@@ -138,9 +138,9 @@ total 48
 -rw-r--r-- 1 vscode vscode 1303 Feb 26 18:34 towncrier_template.j2
 ```
 
-We will use `poetry`, `invoke`, and other tools: 
+We will use `poetry`, `invoke`, and other tools:
 
-```
+```sh
 @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ poetry lock
 Creating virtualenv my-awesome-app-TNUNvfeN-py3.10 in /home/vscode/.cache/pypoetry/virtualenvs
 Updating dependencies
@@ -177,12 +177,12 @@ Running docker compose command "run --rm --entrypoint='nautobot-server makemigra
  ...
 ```
 
-Finally, let's launch the containers: 
+Finally, let's launch the containers:
 
 > [!TIP]
-> It takes a while for the initial build, wait until you see the `nautobot-1  | Starting development server at http://0.0.0.0:8080/` message before moving on to the next step.  
+> It takes a while for the initial build, wait until you see the `nautobot-1  | Starting development server at http://0.0.0.0:8080/` message before moving on to the next step.
 
-```
+```csv
 @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ invoke debug
 Starting  in debug mode...
 Running docker compose command "up"
@@ -212,9 +212,9 @@ redis-1     | 1:M 26 Feb 2025 18:58:23.515 # Server initialized
 ...
 ```
 
-There is one more thing we need to do regarding the CSRF setting. This is due to the port forwarding in Codespace that we will need to allow the localhost origin. Do not do this in product, we will only do this for the lab: 
+There is one more thing we need to do regarding the CSRF setting. This is due to the port forwarding in Codespace that we will need to allow the localhost origin. Do not do this in product, we will only do this for the lab:
 
-```
+```sh
 (nautobot-docker-compose-py3.10) @ericchou1 ➜ ~/nautobot-docker-compose (main) $ docker exec -it -u root my-awesome-app-nautobot-1 bash
 
 root@b02cb102c0b1:/source# ls
@@ -233,27 +233,26 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost:8080", "https://localhost:8080"]
 
 ![csrf_trusted_origin](images/CSRF_Trusted_Origin.png)
 
-We can now launch the browser at `port 8080` and login with `admin/admin`, note we now also have a [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) along with the app. We can hide it with the `Hide >>` button: 
+We can now launch the browser at `port 8080` and login with `admin/admin`, note we now also have a [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) along with the app. We can hide it with the `Hide >>` button:
 
 ![initial_home_page](images/initial_home_page.png)
 
-If we navigate down to the `APPS -> Installed Apps` section, we will see our shining new app: 
+If we navigate down to the `APPS -> Installed Apps` section, we will see our shining new app:
 
 ![installed_apps](images/installed_apps.png)
 
+Congratulations, that is one cool way to quickly launch a Nautobot app development environment. Not to mention we just learned another cool tool in the Python community!
 
-Congratulations, that is one cool way to quickly launch a Nautobot app development environment. Not to mention we just learned another cool tool in the Python community! 
-
-For the next 3 days (until Day 45), we will be using this cookie-cutter app. Unless you are running out of free Codespace storage credit, my recommendation is to stop the Codespace instance to come back to it for the next few days. 
+For the next 3 days (until Day 45), we will be using this cookie-cutter app. Unless you are running out of free Codespace storage credit, my recommendation is to stop the Codespace instance to come back to it for the next few days.
 
 ## Day 42 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of a new app that you have built for today's challenge, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of a new app that you have built for today's challenge, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will be taking a closer look at the file structure for our app. See you tomorrow! 
+In tomorrow's challenge, we will be taking a closer look at the file structure for our app. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+42+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+42+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 42 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 42 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

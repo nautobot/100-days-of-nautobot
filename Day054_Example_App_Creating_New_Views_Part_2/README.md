@@ -1,12 +1,12 @@
 # Example App Creating New Views - Part 2
 
-In today's challenge, we will create a new view for the new data model. 
+In today's challenge, we will create a new view for the new data model.
 
 ## New views.py Code
 
-As mentioned yesterday, we will keep our view pretty simple. We will import the data model, use a Django `ListView`, and display it with a yet-to-be-created HTML template creatively named `useful_link_detail.html`: 
+As mentioned yesterday, we will keep our view pretty simple. We will import the data model, use a Django `ListView`, and display it with a yet-to-be-created HTML template creatively named `useful_link_detail.html`:
 
-```python views.py
+```python
 from example_app.models import AnotherExampleModel, ExampleModel, UsefulLink
 
 from django.views.generic import ListView
@@ -21,9 +21,9 @@ class UsefulLinkListView(ListView):
         return UsefulLink.objects.all()
 ```
 
-Just for good measures, here is the full content of the `views.py` file: 
+Just for good measures, here is the full content of the `views.py` file:
 
-```python views.py
+```python
 from django.shortcuts import HttpResponse, render
 from django.utils.html import format_html
 from rest_framework.decorators import action
@@ -285,24 +285,24 @@ override_views = {
 }
 ```
 
-The code is straight forward for today's challenge, please take the rest of the time to study the `views.py` file and reference the Nautobot documentation to see what the code does. 
+The code is straight forward for today's challenge, please take the rest of the time to study the `views.py` file and reference the Nautobot documentation to see what the code does.
 
 ## What is Ahead
 
-Quick question, now that we have the models and the views, can we see anything on the Web UI? The answer is no. 
+Quick question, now that we have the models and the views, can we see anything on the Web UI? The answer is no.
 
 "Why not?"
 
-Well, for starters, we still need an HTML template to display the links. Also, which URL should we use to see that template? Those two steps is what we will do in the following days.  
+Well, for starters, we still need an HTML template to display the links. Also, which URL should we use to see that template? Those two steps is what we will do in the following days.
 
 ## Day 54 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and write a simple post about a Nautobot views feature you studied on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and write a simple post about a Nautobot views feature you studied on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will create the HTML template for our view. See you tomorrow! 
+In tomorrow's challenge, we will create the HTML template for our view. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+54+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+54+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 54 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 54 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

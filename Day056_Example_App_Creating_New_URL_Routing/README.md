@@ -1,12 +1,12 @@
 # Example App Create New URL Routing
 
-Let's add a URL pattern to match the view to let the user can see the page. 
+Let's add a URL pattern to match the view to let the user can see the page.
 
 ## urls.py
 
-The URL file is at the same level as `views.py` named `ursl.py`: 
+The URL file is at the same level as `views.py` named `ursl.py`:
 
-```
+```ini
 @ericchou1 ➜ ~/nautobot/examples (develop) $ tree example_app/example_app/
 example_app/example_app/
 ├── admin.py
@@ -36,9 +36,9 @@ example_app/example_app/
 10 directories, 88 files
 ```
 
-Let's add a `useful-links/` pattern 
+Let's add a `useful-links/` pattern
 
-```python url.py
+```python
 from django.urls import path
 ...
 urlpatterns = [
@@ -48,11 +48,11 @@ urlpatterns = [
 ]
 ```
 
-The `name="usefullinks_list"` assigns a name to this URL pattern for other parts of the code, so we do not need to type in the whole path. 
+The `name="usefullinks_list"` assigns a name to this URL pattern for other parts of the code, so we do not need to type in the whole path.
 
-For good measure, here is the full content of the `urls.py`: 
+For good measure, here is the full content of the `urls.py`:
 
-```python urls.py
+```python
 from django.templatetags.static import static
 from django.urls import path
 from django.views.generic import RedirectView
@@ -102,13 +102,13 @@ urlpatterns = [
 urlpatterns += router.urls
 ```
 
-We can now see the page: 
+We can now see the page:
 
 ![final_view_1](images/final_view_1.png)
 
-The coding portion of today's challenge is simple. Please take the extra time to look up the Django documentation on [URL Dispatcher](https://docs.djangoproject.com/en/5.1/topics/http/urls/). 
+The coding portion of today's challenge is simple. Please take the extra time to look up the Django documentation on [URL Dispatcher](https://docs.djangoproject.com/en/5.1/topics/http/urls/).
 
-Then come back and see what the `<uuid:pk>` portion would change the call to the `views.DeviceDetailAppTabTwoView()` function: 
+Then come back and see what the `<uuid:pk>` portion would change the call to the `views.DeviceDetailAppTabTwoView()` function:
 
 ```python
     papth(
@@ -118,16 +118,16 @@ Then come back and see what the `<uuid:pk>` portion would change the call to the
     )
 ```
 
-Congratulations on completing Day 56!  
+Congratulations on completing Day 56!
 
 ## Day 56 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post something you learned from URL dispatching in Django from today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post something you learned from URL dispatching in Django from today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will add this URL pattern to the navigation menu. See you tomorrow! 
+In tomorrow's challenge, we will add this URL pattern to the navigation menu. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+56+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+56+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 56 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 56 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

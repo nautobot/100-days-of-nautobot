@@ -1,36 +1,36 @@
 # Example App Overview
 
-In the next few days, Days 50 to 59 to be exact, we will apply what we learned to the Nautobot environment using a pre-existing example app setting. 
+In the next few days, Days 50 to 59 to be exact, we will apply what we learned to the Nautobot environment using a pre-existing example app setting.
 
-In particular, we will clone the [Nautobot](https://github.com/nautobot/nautobot) repository and use the [example_app](https://github.com/nautobot/nautobot/tree/develop/examples/example_app) within Nautobot repository. 
+In particular, we will clone the [Nautobot](https://github.com/nautobot/nautobot) repository and use the [example_app](https://github.com/nautobot/nautobot/tree/develop/examples/example_app) within Nautobot repository.
 
-Just like [Day 42](../Day042_Baking_an_App_Cookie/README.md), the Nautobot repository contains a development environment with various docker containers that we will use. 
+Just like [Day 42](../Day042_Baking_an_App_Cookie/README.md), the Nautobot repository contains a development environment with various docker containers that we will use.
 
-In today's challenge, we will: 
+In today's challenge, we will:
 
-- Set up the development environment and launch the App with different dev container images. 
-- Do a quick overview of how the App integrates to Nautobot for an end-to-end workflow. 
+- Set up the development environment and launch the App with different dev container images.
+- Do a quick overview of how the App integrates to Nautobot for an end-to-end workflow.
 
-Ready? Let's get started. 
+Ready? Let's get started.
 
 ## Environment Setup
 
-We will use [Scenario 2](../Lab_Setup/scenario_2_setup/README.md) for Days 50 - 59. This scenario contains a pre-cloned Nautobot directory we will be working in: 
+We will use [Scenario 2](../Lab_Setup/scenario_2_setup/README.md) for Days 50 - 59. This scenario contains a pre-cloned Nautobot directory we will be working in:
 
 ![scenario_2](images/scenario_2.png)
 
 > [!INFORMATION]
-> If you wonder why we need to use a pre-cloned directory, we listed out the changes we had for Codespace environment in [Scenario 2 Setup](../Lab_Setup/scenario_2_setup/README.md). 
+> If you wonder why we need to use a pre-cloned directory, we listed out the changes we had for Codespace environment in [Scenario 2 Setup](../Lab_Setup/scenario_2_setup/README.md).
 
-Once Codespace is launched, we will see the `nautobot` directory: 
+Once Codespace is launched, we will see the `nautobot` directory:
 
 ![nautobot_repository](images/nautobot_repository.png)
 
-The steps to launch the development containers is almost identical to what we have been doing in `Scenario 1`. However, this process takes longer for "nautobot proper" because of the complexity and the additional packages. 
+The steps to launch the development containers is almost identical to what we have been doing in `Scenario 1`. However, this process takes longer for "nautobot proper" because of the complexity and the additional packages.
 
-Here are the steps: 
+Here are the steps:
 
-```
+```sh
 $ cd nautobot
 $ poetry shell
 $ poetry install
@@ -47,30 +47,27 @@ $ invoke debug
 ...
 ```
 
-Finally, once everything is completed, you will see many ports opened by various containers, please pick our favorite port 8080: 
+Finally, once everything is completed, you will see many ports opened by various containers, please pick our favorite port 8080:
 
 ![port_8080](images/port_8080.png)
 
+We can log in with `admin/admin` and username and password.
 
-We can log in with `admin/admin` and username and password. 
-
-Once logged in, we can see [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) is active, it is a fantastic debug tool, however, we will minimize it for more screen real estate with the `Hide>>` button on the top. 
+Once logged in, we can see [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/) is active, it is a fantastic debug tool, however, we will minimize it for more screen real estate with the `Hide>>` button on the top.
 
 ![django_debug_toolbar](images/django_debug_toolbar.png)
 
-In the next section, we will take a closer look at this environment. 
+In the next section, we will take a closer look at this environment.
 
 ## Example Application Environment
 
-Here are some of the points of interest that are new to us: 
+Here are some of the points of interest that are new to us:
 
 - There is a new docker image with [Selenium](https://www.selenium.dev/), it is used for headless Web UI Testing.
+- The Nautobot version is 2.4. For our purpose it does not make much difference, but there are obviously some differences between Nautobot 2.3 and 2.4.
+- If you are interested in which services maps to which port:
 
-- The Nautobot version is 2.4. For our purpose it does not make much difference, but there are obviously some differences between Nautobot 2.3 and 2.4. 
-
-- If you are interested in which services maps to which port: 
-
-```
+```sh
 @ericchou1 ➜ ~ $ cd nautobot
 @ericchou1 ➜ ~/nautobot (develop) $ poetry shell
 @ericchou1 ➜ ~ $ docker ps
@@ -85,16 +82,16 @@ f6b2d7fe2883   selenium/standalone-firefox:4.27      "/opt/bin/entry_poin…"   
 
 ### Example App
 
-In the `APPS -> Installed Apps` section, we see the `Example Nautobot App` is already installed: 
+In the `APPS -> Installed Apps` section, we see the `Example Nautobot App` is already installed:
 
 ![example_app_detail](images/example_app_detail.png)
 
-We will attach to the `nautobot` container and take a look at the following: 
- 
-- The code is mapped under `/source` in the container. 
-- Nautobot is installed under `/opt/nautobot`. 
+We will attach to the `nautobot` container and take a look at the following:
 
-```
+- The code is mapped under `/source` in the container.
+- Nautobot is installed under `/opt/nautobot`.
+
+```sh
 @ericchou1 ➜ ~ $ docker exec -it -u root nautobot-2-4-nautobot-1 bash
 
 root@b3f7ed22a9e5:/source# pwd
@@ -115,7 +112,7 @@ __pycache__  git  jobs  media  nautobot_config.py  static
 
 We can walk from the Python packages to the core `urls.py` and see it offloads the URL patterns to `example_app/urls.py`:
 
-```
+```py
 root@b3f7ed22a9e5:/source# cat /usr/local/lib/python3.12/site-packages/nautobot.pth 
 /source
 
@@ -186,13 +183,13 @@ urlpatterns += router.urls
 
 ```
 
-From the URL patterns, we can see there is a pattern for `config/` for the `views.ExampleAppConfigView` view. From the root level, it should be `plugins/example-app/config/`: 
+From the URL patterns, we can see there is a pattern for `config/` for the `views.ExampleAppConfigView` view. From the root level, it should be `plugins/example-app/config/`:
 
 ![example_app_url_1](images/example_app_url_1.png)
 
-Let's see the code for that view: 
+Let's see the code for that view:
 
-```
+```py
 root@b3f7ed22a9e5:/source# cat examples/example_app/example_app/views.py
 ...
 class ExampleAppConfigView(views.GenericView):
@@ -214,11 +211,11 @@ class ExampleAppConfigView(views.GenericView):
 ...
 ```
 
-The code for the view is a bit different from what we have learned before. The type of view code we used were Python functions with `def`, but this view is using `class`. What gives? In short, [function-based views](https://docs.djangoproject.com/en/5.1/topics/http/views/) and [class-based views](https://docs.djangoproject.com/en/5.1/topics/class-based-views/) are both valid ways of generating a view but `class-based views` is newer and does more with less code at the expense of giving more `Django magic`. 
+The code for the view is a bit different from what we have learned before. The type of view code we used were Python functions with `def`, but this view is using `class`. What gives? In short, [function-based views](https://docs.djangoproject.com/en/5.1/topics/http/views/) and [class-based views](https://docs.djangoproject.com/en/5.1/topics/class-based-views/) are both valid ways of generating a view but `class-based views` is newer and does more with less code at the expense of giving more `Django magic`.
 
-Even if we do not fully understand the code, we can see the template being returned is `example_app/config.html` in the view code, let's take a look at the template code: 
+Even if we do not fully understand the code, we can see the template being returned is `example_app/config.html` in the view code, let's take a look at the template code:
 
-```
+```html
 root@c8032ee34216:/source# cat examples/example_app/example_app/templates/example_app/config.html 
 {% extends 'base.html' %}
 {% load form_helpers %}
@@ -255,9 +252,9 @@ root@c8032ee34216:/source# cat examples/example_app/example_app/templates/exampl
 {% endblock content %}
 ```
 
-Cool, we just traced from the initial URL all the way to the final HTML template with `URL Dispatch -> View -> HTML Template`. But wait, what about database models? I am glad you asked, looking back in the view code, there is a `form = forms.ExampleAppConfigForm`. Let's take a look at that: 
+Cool, we just traced from the initial URL all the way to the final HTML template with `URL Dispatch -> View -> HTML Template`. But wait, what about database models? I am glad you asked, looking back in the view code, there is a `form = forms.ExampleAppConfigForm`. Let's take a look at that:
 
-```
+```py
 root@c8032ee34216:/source# cat examples/example_app/example_app/forms.py 
 ...
 class ExampleAppConfigForm(BootstrapMixin, forms.Form):
@@ -268,15 +265,15 @@ class ExampleAppConfigForm(BootstrapMixin, forms.Form):
 ...
 ```
 
-Ok, so we can see this particular code does not have anything to do with database models. However, as we can see from other code snippets in the form, this is where the code would be if we need to modify the database models with a form submission. 
+Ok, so we can see this particular code does not have anything to do with database models. However, as we can see from other code snippets in the form, this is where the code would be if we need to modify the database models with a form submission.
 
-In today's challenge, even without understanding every line of code, we can still get a good sense of where things are with just basic Django design patterns. 
+In today's challenge, even without understanding every line of code, we can still get a good sense of where things are with just basic Django design patterns.
 
-The last step is to make a simple HTML change and see it on the screen. 
+The last step is to make a simple HTML change and see it on the screen.
 
 ## Change Banners
 
-Let's expand the Django debug toolbar on the home page:  
+Let's expand the Django debug toolbar on the home page:
 
 ![debug_toolbar_1](images/debug_toolbar_1.png)
 
@@ -284,24 +281,24 @@ We can see the toolbar gives us information such as the CPU time, current reques
 
 ![debug_toolbar_2](images/debug_toolbar_2.png)
 
-Once we find it, we can add a `<h1>` tag to say `Hello Banners!`: 
+Once we find it, we can add a `<h1>` tag to say `Hello Banners!`:
 
 ![banner_1](images/banner_1.png)
 
-There it is, our awesome message to whoever sees the banner when they log in: 
+There it is, our awesome message to whoever sees the banner when they log in:
 
 ![banner_2](images/banner_2.png)
 
-I don't know about you, but today's challenge is a giant step toward understanding Nautobot structure and how we can use the existing framework to develop our new app! 
+I don't know about you, but today's challenge is a giant step toward understanding Nautobot structure and how we can use the existing framework to develop our new app!
 
 ## Day 50 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). As mentioned, we will use the same instance for the next few days. 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). As mentioned, we will use the same instance for the next few days.
 
-Go ahead and post a screenshot of the new banner or any of the steps in today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of the new banner or any of the steps in today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will be working with database models in the example app. See you tomorrow! 
+In tomorrow's challenge, we will be working with database models in the example app. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+50+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+50+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 50 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 50 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

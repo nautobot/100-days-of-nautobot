@@ -1,17 +1,17 @@
 # Example App Creating Navigation
 
-We are almost done with our `Useful Links` addition to the Nautobot `example_app`. The last step is to add the URL link to the navigation menu. 
+We are almost done with our `Useful Links` addition to the Nautobot `example_app`. The last step is to add the URL link to the navigation menu.
 
 ## Nautobot Navigation Menu
 
-In Nautobot, both core applications and Apps can be on the navigation menu by adding code to the `menu_items` inside of the app's `navigation.py` file. 
+In Nautobot, both core applications and Apps can be on the navigation menu by adding code to the `menu_items` inside of the app's `navigation.py` file.
 
 > [!TIP]
-> The Nautobot documentation [Populating the Navigation Menu](https://docs.nautobot.com/projects/core/en/stable/development/core/navigation-menu/) is a great resource for this topic. 
+> The Nautobot documentation [Populating the Navigation Menu](https://docs.nautobot.com/projects/core/en/stable/development/core/navigation-menu/) is a great resource for this topic.
 
-Remember we use a `name` for the url, we can use that here in the `NavMenuItem`: 
+Remember we use a `name` for the url, we can use that here in the `NavMenuItem`:
 
-```python navigation.py
+```python
 menu_items = (
     NavMenuTab(
         ...
@@ -27,7 +27,7 @@ menu_items = (
 
 Here is the content of the `navigation.py` file:
 
-```python navigation.py
+```python
 from nautobot.apps.ui import (
     NavMenuAddButton,
     NavMenuGroup,
@@ -136,13 +136,13 @@ menu_items = (
 )
 ```
 
-Our link now appears on the navigation menu as a first class citizen: 
+Our link now appears on the navigation menu as a first class citizen:
 
 ![navigation_1](images/navigation_1.png)
 
-Play around with the different options specified in the documentation. For example, if we change the weight of our link to be 100: 
+Play around with the different options specified in the documentation. For example, if we change the weight of our link to be 100:
 
-```
+```js
                     NavMenuItem(
                         link="plugins:example_app:usefullinks_list",
                         name="Useful Links",
@@ -151,20 +151,20 @@ Play around with the different options specified in the documentation. For examp
                     ),
 ```
 
-The new link now appears *before* other links in the `Example Nautobot App` group. 
+The new link now appears *before* other links in the `Example Nautobot App` group.
 
 ![navigation_2](images/navigation_2.png)
 
-Try changing other options for navigation menu, it will be fun! 
+Try changing other options for navigation menu, it will be fun!
 
 ## Day 57 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of a new navigation menu on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of a new navigation menu on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will add a job to our app. See you tomorrow! 
+In tomorrow's challenge, we will add a job to our app. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+57+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+57+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 57 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 57 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

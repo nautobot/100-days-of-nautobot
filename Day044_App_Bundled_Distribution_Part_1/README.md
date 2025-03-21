@@ -2,20 +2,20 @@
 
 In a typical app development cycle, we will need a way to distribute the application once it is completed. We saw in [Day 41](../Day041_Installing_and_Uninstalling_Apps/README.md) how easy it was to install an application once it is on PyPI, but how do we package the application in a way to be able to upload to PyPI? The last part of distribution is the focus of Day 44 (today) and Day 45 (tomorrow).
 
-In summary: 
+In summary:
 
-- Day 42: Create a Nautobot App using Cookiecutter. 
-- Day 43: Understand the App structure and start developing. 
-- Day 44 (Today): Bundle the App into a wheel file that can be downloaded locally or upload to PyPI. 
-- Day 45 (Tomorrow): Install this app on another Nautobot instance. 
+- Day 42: Create a Nautobot App using Cookiecutter.
+- Day 43: Understand the App structure and start developing.
+- Day 44 (Today): Bundle the App into a wheel file that can be downloaded locally or upload to PyPI.
+- Day 45 (Tomorrow): Install this app on another Nautobot instance.
 
-Ready? Let's get started. 
+Ready? Let's get started.
 
 ## Environment Setup
 
-Restart the Codespace instance from [Day 43](../Day042_Baking_an_App_Cookie/README.md) and start the app development environment: 
+Restart the Codespace instance from [Day 43](../Day042_Baking_an_App_Cookie/README.md) and start the app development environment:
 
-```
+```sh
 @ericchou1 ➜ ~ $ cd outputs/nautobot-app-my-awesome-app/
 @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ poetry shell
 Spawning shell within /home/vscode/.cache/pypoetry/virtualenvs/my-awesome-app-TNUNvfeN-py3.10
@@ -35,13 +35,13 @@ nautobot-1  | Quit the server with CONTROL-C.
 nautobot-1  | 
 ```
 
-We are ready to package our application for distribution. 
+We are ready to package our application for distribution.
 
 ## Example
 
-The `pyproject.toml` contains the information we created during the initial setup, including version, description, author, etc.: 
+The `pyproject.toml` contains the information we created during the initial setup, including version, description, author, etc.:
 
-```
+```toml
 @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ cat pyproject.toml 
 [tool.poetry]
 name = "my-awesome-app"
@@ -234,9 +234,9 @@ name = "Housekeeping"
 showcontent = true
 ```
 
-We can use the `invoke generate-package` to generate wheel file that is standard across Python community as an all-in-one installation package: 
+We can use the `invoke generate-package` to generate wheel file that is standard across Python community as an all-in-one installation package:
 
-```
+```sh
 (my-awesome-app-py3.10) @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ invoke generate-packages
 Running docker compose command "ps --services --filter status=running"
 Running docker compose command "exec nautobot poetry build"
@@ -248,9 +248,9 @@ Building my-awesome-app (0.1.0)
   - Built my_awesome_app-0.1.0-py3-none-any.whl
 ```
 
-Under the `dist/` folder we have the `my_awesome_app-0.1.0-py3-none-any.whl` and `my_awesome_app-0.1.0.tar.gz` files: 
+Under the `dist/` folder we have the `my_awesome_app-0.1.0-py3-none-any.whl` and `my_awesome_app-0.1.0.tar.gz` files:
 
-```
+```sh
 (my-awesome-app-py3.10) @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ ls
 changes  development  dist  docs  invoke.example.yml  invoke.mysql.yml  LICENSE  mkdocs.yml  my_awesome_app  poetry.lock  pyproject.toml  README.md  tasks.py
 (my-awesome-app-py3.10) @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $ ls dist/
@@ -258,18 +258,18 @@ my_awesome_app-0.1.0-py3-none-any.whl  my_awesome_app-0.1.0.tar.gz
 (my-awesome-app-py3.10) @ericchou1 ➜ ~/outputs/nautobot-app-my-awesome-app $
 ```
 
-Let's right-click on the wheel file and download the file to a location on our computer. We will come back tomorrow and install the package on a separate Nautobot instance. 
+Let's right-click on the wheel file and download the file to a location on our computer. We will come back tomorrow and install the package on a separate Nautobot instance.
 
 ![download_wheel](images/download_wheel.png)
 
 ## Day 44 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of the new `dist/` folder you created from today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of the new `dist/` folder you created from today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will be installing this package. See you tomorrow! 
+In tomorrow's challenge, we will be installing this package. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+44+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+44+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 44 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 44 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

@@ -1,15 +1,14 @@
 # Django Example - Part 2. Creating New Data Models
 
-Building from yesterday's challenge, in today's challenge, we will create two new database models for our new `polls` app. 
+Building from yesterday's challenge, in today's challenge, we will create two new database models for our new `polls` app.
 
 ## Code Example
 
-We will create two models, Question and Choice. The [Django Tutorial Part 2](https://docs.djangoproject.com/en/5.1/intro/tutorial02/) does a good job explaining the meaning of the fields as well as relationships. Please refer to the tutorial for more information as even just copy/paste that here would be pretty extensive. 
+We will create two models, Question and Choice. The [Django Tutorial Part 2](https://docs.djangoproject.com/en/5.1/intro/tutorial02/) does a good job explaining the meaning of the fields as well as relationships. Please refer to the tutorial for more information as even just copy/paste that here would be pretty extensive.
 
-Here is the content of the `polls/models.py` file: 
+Here is the content of the `polls/models.py` file:
 
-
-```python polls/models.py
+```python
 from django.db import models
 
 class Question(models.Model):
@@ -28,11 +27,11 @@ class Choice(models.Model):
         return self.choice_text
 ```
 
-Django provides tools of `makemigrations` and `migrate` to allow database changes to take effect. Again, refer to the [Django Tutorial 2](https://docs.djangoproject.com/en/5.1/intro/tutorial02/) for more information on their purpose. 
+Django provides tools of `makemigrations` and `migrate` to allow database changes to take effect. Again, refer to the [Django Tutorial 2](https://docs.djangoproject.com/en/5.1/intro/tutorial02/) for more information on their purpose.
 
-We will simply perform the migration for the changes to take effect: 
+We will simply perform the migration for the changes to take effect:
 
-```
+```ini
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ python manage.py makemigrations polls
 Migrations for 'polls':
   polls/migrations/0001_initial.py
@@ -63,9 +62,9 @@ Running migrations:
   Applying sessions.0001_initial... OK
 ```
 
-Django provides an admin interface out of the box to manage the database entries, but we will need to register the database models in the `polls/admin.py` file: 
+Django provides an admin interface out of the box to manage the database entries, but we will need to register the database models in the `polls/admin.py` file:
 
-```python 
+```python
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/admin.py 
 from django.contrib import admin
 from .models import Question
@@ -73,9 +72,9 @@ from .models import Question
 admin.site.register(Question)
 ```
 
-Let's create superuser for our project: 
+Let's create superuser for our project:
 
-```
+```ini
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ python manage.py createsuperuser
 Username (leave blank to use 'vscode'): admin
 Email address: admin@admin.com
@@ -88,34 +87,34 @@ Bypass password validation and create user anyway? [y/N]: y
 Superuser created successfully.
 ```
 
-Start the development server again: 
+Start the development server again:
 
-```
+```sh
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ python manage.py runserver 0.0.0.0:8080
 ```
 
-We can access the admin interface by appending the `/admin` at the end of the URL: 
+We can access the admin interface by appending the `/admin` at the end of the URL:
 
 ![admin_1](images/admin_1.png)
 
-We can create new questions by clicking on the `+ Add` button: 
+We can create new questions by clicking on the `+ Add` button:
 
 ![admin_2](images/admin_2.png)
 
-Notice the text, date, and time field on the page, we can use teh `Today` and `Now` button to quickly add date and time: 
+Notice the text, date, and time field on the page, we can use teh `Today` and `Now` button to quickly add date and time:
 
 ![admin_3](images/admin_3.png)
 
-Great job in completing today's challenge, tomorrow we will create new views and templates. 
+Great job in completing today's challenge, tomorrow we will create new views and templates.
 
 ## Day 47 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of the new admin interface modifying the polls database entries on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of the new admin interface modifying the polls database entries on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will be creating new views and HTML templates. See you tomorrow! 
+In tomorrow's challenge, we will be creating new views and HTML templates. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+47+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+47+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 47 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 47 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

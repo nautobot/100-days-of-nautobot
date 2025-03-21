@@ -1,14 +1,14 @@
 # Example App Creating New Job
 
-Nautobot Jobs are the work horses of the Nautobot ecosystem. They can be standalone, as we have been constructing for the first two segments of this challenge, or they can be bundled into Nautobot apps. 
+Nautobot Jobs are the work horses of the Nautobot ecosystem. They can be standalone, as we have been constructing for the first two segments of this challenge, or they can be bundled into Nautobot apps.
 
-In today's challenge, we will put a small, 'hello world' type of job in the example_app we have been working on, just to how we can include jobs in Nautobot Apps. 
+In today's challenge, we will put a small, 'hello world' type of job in the example_app we have been working on, just to how we can include jobs in Nautobot Apps.
 
 ## Job Code
 
-It seems so long ago we knew nothing about Nautobot Jobs, but if we went back to memory lane in the first few jobs we constructed, we wrote a simple job that logs some outputs: 
+It seems so long ago we knew nothing about Nautobot Jobs, but if we went back to memory lane in the first few jobs we constructed, we wrote a simple job that logs some outputs:
 
-```python jobs.py
+```python
 class TestingAppHelloJobsWithLogs(Job):
 
     class Meta:
@@ -28,13 +28,13 @@ jobs = (
 )
 ```
 
-Let us find the `jobs.py` file in the `example_app` directory and add the code to the end of the file, don't forget to register the new job in the `jobs` list: 
+Let us find the `jobs.py` file in the `example_app` directory and add the code to the end of the file, don't forget to register the new job in the `jobs` list:
 
 ![jobs_python_file_1](images/jobs_python_file_1.png)
 
-Here is the full `jobs.py` file: 
+Here is the full `jobs.py` file:
 
-```python jobs.py
+```python
 import sys
 import time
 
@@ -555,24 +555,24 @@ register_jobs(*jobs)
 
 ```
 
-Remember to perform `invoke post-upgrade` to allow the new job to be registered. Once that is done, the new job should show up under the `JOBS` menu: 
+Remember to perform `invoke post-upgrade` to allow the new job to be registered. Once that is done, the new job should show up under the `JOBS` menu:
 
 ![jobs_1](images/jobs_1.png)
 
-Enable the Job and run it, we should be familiar with the Job results page: 
+Enable the Job and run it, we should be familiar with the Job results page:
 
 ![jobs_2](images/jobs_2.png)
 
-Congratulations on completing the last leg of our 9-part series of App development using the Nautobot repository `example_app`. 
+Congratulations on completing the last leg of our 9-part series of App development using the Nautobot repository `example_app`.
 
 ## Day 58 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of the job result with the new app on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of the job result with the new app on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will cover some topics we did not have a chance to cover in the last few days. See you tomorrow! 
+In tomorrow's challenge, we will cover some topics we did not have a chance to cover in the last few days. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+58+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+58+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 58 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 58 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

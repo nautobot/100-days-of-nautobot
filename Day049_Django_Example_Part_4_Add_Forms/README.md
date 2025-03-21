@@ -1,12 +1,12 @@
 # Django Example - Part 4. Add Forms
 
-In today's challenge, we will finish the 4-part challenge by adding forms for the users to cast their vote. 
+In today's challenge, we will finish the 4-part challenge by adding forms for the users to cast their vote.
 
-Today's challenge is roughly mapped to [Django Tutorial Part 4](https://docs.djangoproject.com/en/5.1/intro/tutorial04/). Please consult the page for more details about the code. 
+Today's challenge is roughly mapped to [Django Tutorial Part 4](https://docs.djangoproject.com/en/5.1/intro/tutorial04/). Please consult the page for more details about the code.
 
 ## Code Example
 
-Let's update the views with the new vote and results function-based views. Each function will specify the new HTML template it will use to return the final page: 
+Let's update the views with the new vote and results function-based views. Each function will specify the new HTML template it will use to return the final page:
 
 ```python
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/views.py 
@@ -44,7 +44,7 @@ def results(request, question_id):
     return render(request, 'polls/results.html', {'question': question})
 ```
 
-We will modify the `detail.html` page to include a voting mechanism with radio buttons: 
+We will modify the `detail.html` page to include a voting mechanism with radio buttons:
 
 ```html
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/templates/polls/detail.html 
@@ -70,7 +70,7 @@ We will modify the `detail.html` page to include a voting mechanism with radio b
 </html>
 ```
 
-We will add the new url paths: 
+We will add the new url paths:
 
 ```python
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/urls.py 
@@ -85,7 +85,7 @@ urlpatterns = [
 ]
 ```
 
-We need to create the new `results` template: 
+We need to create the new `results` template:
 
 ```html
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/templates/polls/results.html 
@@ -106,9 +106,9 @@ We need to create the new `results` template:
 </html>
 ```
 
-We can update `admin.py` to add new choice entries: 
+We can update `admin.py` to add new choice entries:
 
-```
+```py
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/admin.py 
 from django.contrib import admin
 from .models import Question, Choice
@@ -117,32 +117,31 @@ admin.site.register(Question)
 admin.site.register(Choice)
 ```
 
-Restart the dev server: 
+Restart the dev server:
 
-```shell
+```sh
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ python manage.py runserver 0.0.0.0:8080
 ```
 
-We can now create choices in admin, notice the relationship between Question and Choice, we need to pick the existing question from the drop down menu: 
+We can now create choices in admin, notice the relationship between Question and Choice, we need to pick the existing question from the drop down menu:
 
 ![choice_1](images/choice_1.png)
 
-The list of choices is listed on the main page: 
+The list of choices is listed on the main page:
 
 ![choice_2](images/choice_2.png)
 
-
-Let's go ahead and view the `polls` page and vote: 
+Let's go ahead and view the `polls` page and vote:
 
 ![vote_1](images/vote_1.png)
 
-Once the voting is done, we will be redirected to the result page: 
+Once the voting is done, we will be redirected to the result page:
 
 ![vote_2](images/result_1.png)
 
-Final view on directory structure: 
+Final view on directory structure:
 
-```shell
+```sh
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject $ pwd
 /home/vscode/djangoproject
 
@@ -193,36 +192,36 @@ Final view on directory structure:
 9 directories, 32 files
 ```
 
-Congratulations on completing the 4-part challenge! 
+Congratulations on completing the 4-part challenge!
 
 ## Final Thoughts
 
-Here are some final thoughts comparing Django and Nautobot: 
+Here are some final thoughts comparing Django and Nautobot:
 
     - In our Django app, we did not require Celery, Redis, or Beats because we do not need to execute asynchronous jobs. 
-
+    
     - In our Django app, we use `makemigrations` and `migrate` to commit database changes. In our previous days, we use `invoke` that took care these steps, amongst others.  
-
+    
     - In this simple Django app, we use SQLite as database that is only a single file. In our Nautobot setup, we use a Postgres container as our database.  
-
+    
     - If you noticed, `manage.py` is similar in function to `nautobot-server`. 
-
+    
     - `mysite` is similar to `Nautobot` and `polls` is simliar to different Nautobot apps. 
-
+    
     - In our simple Django apps, we ignored tests, security, and many other important aspects. 
-
+    
     - Just to be extra clear, the development server is not suitable for production. 
 
-In the next few days, we will see how we can take these Django concepts we learned and apply them in the Nautobot app development context. 
+In the next few days, we will see how we can take these Django concepts we learned and apply them in the Nautobot app development context.
 
 ## Day 49 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of the final iteration of the Django app on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of the final iteration of the Django app on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will be taking these Django concepts to the Nautobot app development environment. See you tomorrow! 
+In tomorrow's challenge, we will be taking these Django concepts to the Nautobot app development environment. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+49+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+49+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 49 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 49 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

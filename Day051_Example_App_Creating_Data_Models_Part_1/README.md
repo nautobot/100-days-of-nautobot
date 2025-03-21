@@ -1,29 +1,29 @@
 # Example App Creating Data Models - Part 1
 
-For our example app, we will add a new page with a list of useful links as a quick reference. This is what we will end up with at the end of Day 59: 
+For our example app, we will add a new page with a list of useful links as a quick reference. This is what we will end up with at the end of Day 59:
 
-- A new database model of useful links. 
-- Use the admin panel to add data to the database model. 
-- A new view that integrates the new database model. 
-- A new HTML template to present these links. 
-- A new URL for the new template. 
-- A new navigation link within example_app points to the new URL. 
+- A new database model of useful links.
+- Use the admin panel to add data to the database model.
+- A new view that integrates the new database model.
+- A new HTML template to present these links.
+- A new URL for the new template.
+- A new navigation link within example_app points to the new URL.
 
 ![final_version_1](images/final_version_1.png)
 
-We will use the admin panel to add our links: 
+We will use the admin panel to add our links:
 
 ![final_version_1](images/final_version_admin_panel.png)
 
-As with most new app development, we will start with the database model. 
+As with most new app development, we will start with the database model.
 
 ## Models.py
 
-We know the file to be modified for the example_app is probably named `models.py`, if we look around the nautobot repository, we see this file [models.py](https://github.com/nautobot/nautobot/blob/develop/examples/example_app/example_app/models.py) file. Let's find it in our environment. 
+We know the file to be modified for the example_app is probably named `models.py`, if we look around the nautobot repository, we see this file [models.py](https://github.com/nautobot/nautobot/blob/develop/examples/example_app/example_app/models.py) file. Let's find it in our environment.
 
-Use the `docker ps` to see the running containers: 
+Use the `docker ps` to see the running containers:
 
-```
+```sh
 @ericchou1 ➜ ~ $ docker ps
 CONTAINER ID   IMAGE                                 COMMAND                  CREATED      STATUS                       PORTS                                                                                                          NAMES
 6d89d5e18d29   local/nautobot-dev:local-2.4-py3.12   "watchmedo auto-rest…"   3 days ago   Up About an hour (healthy)   8080/tcp                                                                                                       nautobot-2-4-celery_beat-1
@@ -34,9 +34,9 @@ a4251f9acfae   redis:6-alpine                        "docker-entrypoint.s…"   
 d5e11fb88308   postgres:13                           "docker-entrypoint.s…"   3 days ago   Up About an hour (healthy)   5432/tcp                                                                                                       nautobot-2-4-db-1
 ```
 
-Attach to the nautobot instance and take a look at the models: 
+Attach to the nautobot instance and take a look at the models:
 
-```
+```py
 @ericchou1 ➜ ~ $ docker exec -it nautobot-2-4-nautobot-1 bash
 
 root@c8032ee34216:/source# cat examples/example_app/example_app/models.py 
@@ -83,19 +83,19 @@ class AnotherExampleModel(OrganizationalModel):
 
 ```
 
-We see there are two models, `ExampleModel` and `AnotherExampleModel`. We can verify that in two places in the Web UI. 
+We see there are two models, `ExampleModel` and `AnotherExampleModel`. We can verify that in two places in the Web UI.
 
-The first place is under `Installed Apps -> Example Nautoobt App` there is a `Data Models` section that lists out the data models: 
+The first place is under `Installed Apps -> Example Nautoobt App` there is a `Data Models` section that lists out the data models:
 
 ![example_app_models](images/example_app_models.png)
 
-Another place is from the navigation menu, there is a link for `Example Models` that we can click to see a list view of examples: 
+Another place is from the navigation menu, there is a link for `Example Models` that we can click to see a list view of examples:
 
 ![example_app_models_2](images/example_app_models_2.png)
 
-Keep these locations in mind as we start to add our own data model. 
+Keep these locations in mind as we start to add our own data model.
 
-The last step is to find this file in our VSCode explorer: 
+The last step is to find this file in our VSCode explorer:
 
 ![models_file](images/models_file.png)
 
@@ -103,12 +103,12 @@ Congratulations on completing today's task! Finding the right file and knowing w
 
 ## Day 51 To Do
 
-Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot from any of the steps in today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot from any of the steps in today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will be creating a new database model. See you tomorrow! 
+In tomorrow's challenge, we will be creating a new database model. See you tomorrow!
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+jst+completed+Day+51+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+51+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 51 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 51 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

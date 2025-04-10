@@ -100,7 +100,7 @@ Here is the code for `index.html`:
 </html>
 ```
 
-Here is the code for `polls.html`: 
+Here is the code for `detail.html`: 
 
 ```html
 (djangoproject-py3.10) @ericchou1 ➜ ~/djangoproject/mysite $ cat polls/templates/polls/detail.html 

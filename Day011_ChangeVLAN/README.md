@@ -128,7 +128,7 @@ Then we can define a ```IntegerVar``` to enter the VLAN number as well as the Me
 
 In the main ```run()``` method, we will perform the normal checks, then use Netmiko to execute the command: 
 
-```
+```python
     def run(self, device_location, device, interface, vlan):
         """Run method for executing the checks on the device."""
         self.logger.info(f"Device: {device.name}, Interface: {interface}")

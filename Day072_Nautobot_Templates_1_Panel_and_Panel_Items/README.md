@@ -1,6 +1,6 @@
 # Page Panels and Panel Items
 
-Starting from today's challenge, in the next few days we will start to discuss the user interface in Nautobot. 
+We will begin diving into Nautobot's user interface over the next few days, starting with today's challenge. 
 
 From previous exercises, we have already seen the relationship between models, views, templates, and URLs. 
 
@@ -15,7 +15,7 @@ The current trend in Django and Nautobot is to decrease the amount of raw HTML i
 
 We will start our discussion with Panels and Panel Items. 
 
-The main objective for today is to use the widely used object (panels and panel items) to illustrate how we can use what we have learned so far and traverse through code in our sandbox. We will also make trivial changes to reinforce the learning. 
+Today’s goal is to work with a commonly used UI element—panels and panel items—to show how we can apply everything we’ve learned so far. We’ll explore how these components are used in the code and make a few simple changes along the way to help reinforce the concepts.
 
 ## Environment Setup
 
@@ -37,7 +37,7 @@ The first thing we saw on the home page of Nautobot are groups of `panels` with 
 
 ![panel_and_panel_items](images/panel_and_panel_items.png)
 
-If we want to make some changes on how the panels look, where should we start? Below are a few places we can start. 
+If we want to make some changes on how the panels look, where should we start? Below are a few starting point. 
 
 ## Looking at the Code
 
@@ -65,7 +65,7 @@ urlpatterns = [
 ]
 ```
 
-When we look under the `views` folder under `nautobot.core` we do not see an individual file corresponding to `HomeView`. But looking into `__init__.py` we found the class-based view for `HomeView`: 
+When we look under the `views` folder under `nautobot.core`, we do not see an individual file corresponding to `HomeView`. But looking into `__init__.py`, we find the class-based view for `HomeView`: 
 
 ```python nautobot.core.views.__init__.py
 class HomeView(AccessMixin, TemplateView):
@@ -145,11 +145,11 @@ class HomeView(AccessMixin, TemplateView):
         return self.render_to_response(context)
 ```
 
-We know the template being rendered from the line `template_name = "home.html"`. 
+With the line `template_name = "home.html"` within the first part of the code, we discover that the page being is being rendered from `core -> templates -> home.html`.
 
 ## Example - HTML 
 
-Let's make a simple change in the `core -> templates -> home.html` file. We can locate the `panel_name` `div` class and comment out the `<string>` tag, replace it with the `span style` of `red`: 
+Let's make a simple change in the `core -> templates -> home.html` file. We can locate the `panel_name` `div` class and comment out the `<string>` tag then replace it with the `span style` of `red`: 
 
 ![panel_name_1](images/panel_name_1.png)
 
@@ -188,18 +188,18 @@ As the great `Lao Tzu` saying goes:
 
 **Give a man a fish you feed him for a day. Teach him how to fish, and you feed him for a lifetime.** 
 
-Hopefully from the steps in today's challenge, it opens the door of the steps we can take if we want to  make changes in templates and user interface. 
+Hopefully from the steps in today's challenge, it opens the door for us if we want to make changes in templates and user interface in the future. 
 
-Congratulations on completing Day 71! 
+Congratulations on completing Day 72! 
 
-## Day 71 To Do
+## Day 72 To Do
 
 Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
 
 Go ahead and post a screenshot of the change you made for today's challenge on a social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
 
-In tomorrow's challenge, we will look at searchable model. See you tomorrow! 
+In tomorrow's challenge, we will look at Nautobot Searchable Models. See you tomorrow! 
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+60+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+72+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 60 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 72 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 

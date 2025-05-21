@@ -1,4 +1,4 @@
-# Day 78: Nautobot Forms
+# Day 77: Nautobot Forms
 
 In today's challenge, we will discuss how to use forms in Nautobot. 
 
@@ -77,9 +77,7 @@ class ExampleModelFilterForm(BootstrapMixin, forms.Form):
     number = forms.IntegerField(required=False)
 ```
 
-Building further from [Day 67](../Day067_Nautobot_Views_2_Nautobot_UI_ViewSet/README.md), we can add a `filter_form_class` for `UsefulLinkUIViewSet` to use a separate form. 
-
-In Day 67, we map the URL for `https://<url>/plugins/example-app/useful-links-2` the `NautobotUIViewSet`. If we click on the `Filter` button: 
+Building further on [Day 69](../Day069_Nautobot_Views_4_Nautobot_Views_Applying_Theory/), we can add a `filter_form_class` for `UsefulLinkUIViewSet` to use a separate form. We also mapped the URL for `https://<url>/plugins/example-app/useful-links-2` the `NautobotUIViewSet`. If we click on the `Filter` button: 
 
 ![filter_button](images/filter_button.png)
 

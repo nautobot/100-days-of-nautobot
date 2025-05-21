@@ -2,13 +2,13 @@
 
 In today's challenge, we will look into searchable models and the related concepts in Nautobot. 
 
-What do we mean by "searchable model"? On the home page, we saw there were two locations for search through the data models: 
+What do we mean by "searchable model"? On the home page, we saw that there are two locations to search through data models: 
 
 ![search_1](images/search_1.png)
 
-For today's challenge, it is not template-related, however, it fits into the overall theme of presentation and how we present data to the user. 
+Today's challenge is not template-related, however, it fits into the overall theme of presentation and how we present data to the user. 
 
-If we use the same method by looking at `urls.py` and `views.py` from [Day 71](../Day071_Nautobot_Templates_1_Panel_and_Panel_Items/README.md), we can see there is also a `SearchView` that we can access: 
+If we use the same method by looking at `urls.py` and `views.py` from [Day 72](../Day072_Nautobot_Templates_1_Panel_and_Panel_Items/README.md), we can see there is also a `SearchView` that we can access: 
 
 ![search_2](images/search_2.png)
 
@@ -99,9 +99,9 @@ Now if we search either `Data Centers` or `Offices` the result will be returned:
 
 As we progress further into the nautobot app development journey, the documentation will not always be sufficient. We might need to start getting into a habit of using existing knowledge, reading the code, experiment, and asking questions on the public Slack channel. Hopefully this challenge gave you some taste in that process. 
 
-Congratulations on completing Day 72! 
+Congratulations on completing Day 73! 
 
-## Day 72 To Do
+## Day 73 To Do
 
 Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
 
@@ -109,6 +109,6 @@ Go ahead and post a screenshot of the new searchable model list from today's cha
 
 In tomorrow's challenge, we will look at a new UI component framework. See you tomorrow! 
 
-[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+60+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+73+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 
-[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 60 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 73 of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot-challenge, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot) 

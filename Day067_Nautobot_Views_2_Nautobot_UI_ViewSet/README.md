@@ -30,7 +30,7 @@ Nautobot uses class-based views extensively through the `NautobotUIViewSet` and 
 
 The `NautobotUIViewSetRouter` is a key component for creating and registering URL patterns in [Nautobot Apps urls.py](https://github.com/nautobot/nautobot/blob/develop/nautobot/apps/urls.py): 
 
-```
+```python
 """Utilities for apps to implement URL routing."""
 
 from nautobot.core.views.routers import NautobotUIViewSetRouter

@@ -1,6 +1,6 @@
 # Nautobot Views Review
 
-Over Days 66 to 69, we delved into the intricacies of Nautobot views, focusing primarily on class-based views (CBVs), `NautbotUIVewSet`, Nautobot Generic Views, and `mixins`. It is obvious we've only scratched the surface of the respected topics. 
+Over Days 66 to 69, we delved into the intricacies of Nautobot views, focusing primarily on class-based views (CBVs), `NautbotUIVewSet`, Nautobot Generic Views, and `mixins`. It is obvious that we've only scratched the surface of these respected topics. 
 
 In today's challenge, we will do a consolidated review of the last few days.
 

@@ -85,7 +85,7 @@ How do we know to use `object_detail_content` and `ObjectDetailContent` for our 
 > [!NOTE]
 > We will discuss Nautobot UI Components like [Panels](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#panels) along with [Tabs](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#panels) and [Buttons](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#buttons) in the coming days so don't worry about that part of the code. 
 
-From our lesson in [Day 67](../Day067_Nautobot_Views_2_Nautobot_UI_ViewSet/), we need to register the new `viewset` with `NautobotUIViewSetRouter` in `urls.py`. To avoid conflict, we will use `useful-link-2` as the endpoint (recall our previous URL was `useful-link`): 
+From our lesson in [Day 67](../Day067_Nautobot_Views_2_Nautobot_UI_ViewSet/), we know that we need to register the new `viewset` with `NautobotUIViewSetRouter` in `urls.py`. To avoid conflict, we will use `useful-link-2` as the endpoint (recall our previous URL was `useful-link`): 
 
 ```python file=urls.py
 app_name = "example_app"
@@ -142,7 +142,7 @@ class UsefulLinkModelFilterSet(BaseFilterSet):
         ]
 ```
 
-We can now include them in the `views.py` code: 
+Now that the related filter and table object habe been added, we can include them in the `views.py` code without causing any errors:
 
 ```python views.py
 class UsefulLinkUIViewSet(views.NautobotUIViewSet):
@@ -163,13 +163,13 @@ class UsefulLinkUIViewSet(views.NautobotUIViewSet):
     )
 ```
 
-Let's try navigating again to the `useful-link-2` page and check out our page:
+Let's try navigating again to the `useful-link-2` page to check out our page:
 
 ![usefull-links-2](images/usefull-links-2.png)
 
 And there it is! The familiar Nautobot look and functionality we're all used to. 
 
-As you can see, using `NautobotUIViewSet` makes it easy to tap into Nautobot’s built-in UI features—like object pages, forms, and navigation, without having to build everything from scratch. It helps keep things consistent and user-friendly, so your custom models feel just like the rest of Nautobot.
+As you can see, using `NautobotUIViewSet` makes it easy to tap into Nautobot’s built-in UI features—like object pages, forms, tables, and filters, without having to build everything from scratch. It helps keep things consistent and user-friendly, so your custom models feel just like the rest of Nautobot.
 
 
 Congratulations on completing Day 69!

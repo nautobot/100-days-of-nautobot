@@ -188,7 +188,7 @@ As the great `Lao Tzu` saying goes:
 
 **Give a man a fish you feed him for a day. Teach him how to fish, and you feed him for a lifetime.** 
 
-Hopefully from the steps in today's challenge, it opens the door for us if we want to make changes in templates and user interface in the future. 
+Hopefully from the steps in today's challenge, it opens the door for us to make changes in templates and user interface in the future. 
 
 Congratulations on completing Day 72! 
 

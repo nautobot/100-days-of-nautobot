@@ -77,15 +77,15 @@ class ExampleModelFilterForm(BootstrapMixin, forms.Form):
     number = forms.IntegerField(required=False)
 ```
 
-Building further on [Day 69](../Day069_Nautobot_Views_4_Nautobot_Views_Applying_Theory/), we can add a `filter_form_class` for `UsefulLinkUIViewSet` to use a separate form. We also mapped the URL for `https://<url>/plugins/example-app/useful-links-2` the `NautobotUIViewSet`. If we click on the `Filter` button: 
+Building further on lessons from [Day 69](../Day069_Nautobot_Views_4_Nautobot_Views_Applying_Theory/), we can add a `filter_form_class` so that our `UsefulLinkUIViewSet` can use a separate form. Let's navigate to `https://<url>/plugins/example-app/useful-links-2` and click on the `Filter` button: 
 
 ![filter_button](images/filter_button.png)
 
-It leads us to a generic form: 
+This leads us to a generic form: 
 
 ![filter_form_1](images/filter_form_1.png)
 
-Let us create a new filter form in `forms.py`: 
+Let us create a new filter form in `forms.py` to add more options to this:
 
 ```python 
 from example_app.models import AnotherExampleModel, ExampleModel, UsefulLink
@@ -122,7 +122,7 @@ class UsefulLinkUIViewSet(views.NautobotUIViewSet):
     )
 ```
 
-By doing so, we can use the customized form when we click on the `filter` button: 
+By doing so, we can use the customized form when we click on the `filter` button and see the added `Default` tab and additional filter fields.
 
 ![filter_form_2](images/filter_form_2.png)
 

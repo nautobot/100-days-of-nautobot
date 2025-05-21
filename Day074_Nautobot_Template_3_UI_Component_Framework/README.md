@@ -1,6 +1,6 @@
 # Nautobot UI Component Framework
 
-[Nautobot UI Component Framework](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/) was introduced in Nautobot v2.4 and changes how Nautobot create object views in the applications. Instead of writing HTML templates, we *declare* the UI structure using Python objects. This allows us to have more consistent, maintainable, and responsive interfaces. 
+[Nautobot UI Component Framework](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/) was introduced in Nautobot v2.4 and changes how Nautobot creates object views in the application. Instead of writing HTML templates, we *declare* the UI structure using Python objects. This allows us to have more consistent, maintainable, and responsive interfaces. 
 
 **Why Use the UI Framework?**
   - Reduced Development Time
@@ -8,9 +8,9 @@
   - Reusable Components
   - Extensible and customizable
 
-In today's challenge, we will try to gain an understanding of the Nautobot UI Framework, its components, and how to use it to create object detail views.
+In today's challenge, we will build on previous knowledge we gained from our Nautobot Views segment to try and gain a better understanding of the Nautobot UI Framework, its components, and how to use it to create object detail views.
 
-We touched a little bit on this topic from [Day 69](../Day069_Nautobot_Views_4_Nautobot_Views_Applying_Theory/) when we converted our `Useful Links` view from the generic `ListView` to `NautobotUIViewSet`. We mentioned [Panels](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#panels), [Tabs](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#panels) and [Buttons](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#buttons) are the main building blocks for the Nautobot UI. One of the common feedback from people new to Django is the initial learning curve of going from 0 to 1 using the framework. In order to get started, we had to learn about creating apps, views, url routing, and some HTML just to see a simple `hello world` to display in our browser. 
+We touched a little bit on this topic from [Day 69](../Day069_Nautobot_Views_4_Nautobot_Views_Applying_Theory/) when we converted our `Useful Links` view from the Nautobot Generic `ListView` to `NautobotUIViewSet`. We mentioned [Panels](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#panels), [Tabs](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#panels) and [Buttons](https://docs.nautobot.com/projects/core/en/stable/development/core/ui-component-framework/#buttons) are the main building blocks for the Nautobot UI. One of the common feedback from people new to Django is the initial learning curve of going from 0 to 1 using the framework. In order to get started, we had to learn about creating apps, views, url routing, and some HTML just to see a simple `hello world` to display in our browser. 
 
 That feedback is 100% valid and absolutely true, but the good news is going from 1 to 2 became easier because we front-loaded the learning effort. Things get easier as we become familiar with the pattern. 
 

@@ -121,7 +121,10 @@ When we loop over the devices, in the log, we use the `extra={"object": device}`
             )
 ```
 
-Once we enabled the job and run the job, we can pick Boston from the list of locations: 
+> [!TIP]
+> Don't forget to register the job by opening a new terminal window and running the `invoke post-upgrade` command.
+
+Once we've enabled and run the job, we can pick Boston from the list of locations: 
 
 ![platform_check_1](images/platform_check_1.png)
 
@@ -300,6 +303,8 @@ register_jobs(
     VerifyPlatform
 )
 ```
+
+Be sure to register our two new jobs from the terminal with `invoke post-upgrade` so they show up in Nautobot.
 
 After enabling the jobs, we can see the results. In this case, the Boston devices are indeed missing serial numbers: 
 

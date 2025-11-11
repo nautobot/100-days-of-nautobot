@@ -306,7 +306,7 @@ register_jobs(
 
 Be sure to register our two new jobs from the terminal with `invoke post-upgrade` so they show up in Nautobot.
 
-After enabling the jobs, we can see the results. In this case, the Boston devices are indeed missing serial numbers: 
+After enabling the jobs, we can run them and see the results. In this case, the Boston devices are indeed missing serial numbers: 
 
 ![other_checks_1](images/other_checks_1.png)
 

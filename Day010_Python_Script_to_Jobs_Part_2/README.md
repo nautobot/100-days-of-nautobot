@@ -145,7 +145,7 @@ COMMAND_CHOICES = (
 >
 > The first element is the actual command sent to the target device via CLI; if the incorrect syntax is used, the job will execute successfully but your output will show an error.
 >
-> The second element is how the command will appear from the dropdown menu inside the job. This can be whatever you want (e.g. substitutuing `"OSPF neighbors"` for `"show ip ospf neighbor"`), but it should be descriptive and easily understood by the network operators using the platform.
+> The second element is how the command will appear from the dropdown menu inside the job. This can be whatever you want (e.g. substituting `"OSPF neighbors"` for `"show ip ospf neighbor"`), but it should be descriptive and easily understood by the network operators using the platform.
 >
 > In this example, we've used the actual command syntax in the second element in each tuple for clarity.
 

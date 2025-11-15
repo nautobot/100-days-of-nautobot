@@ -87,6 +87,8 @@ Once that is done, we can go back to the device detail page to assign that IP as
 
 ![devices_5](images/devices_5.png)
 
+If there's a preexisting Management IP address, be sure to delete it before adding the address we just created.
+
 We should do this for all the devices we need to work with.
 
 ## Mapping Network Drivers
@@ -137,6 +139,13 @@ COMMAND_CHOICES = (
     ("show ip ospf neighbor", "show ip ospf neighbor"),
 )
 ```
+
+> [!TIP]
+> The tuples inside of `COMMAND_CHOICES` are comprised of two items. The first item is the actual command sent to the target device via CLI; if the incorrect syntax is used, the job will execute successfully but your output will show an error.
+>
+> The second item is how the command will appear from the dropdown menu inside the job. This can be whatever you want (e.g. substitutuing `"OSPF neighbors"` for `"show ip ospf neighbor"`), but it should be descriptive and easily understood by the network operators using the platform.
+>
+> In this example, we've used the actual command syntax for clarity.
 
 Here is the main part of the script, we have seen most of the verification pieces. We added the Netmiko connection function after the verifications and output the result in a file: 
 
@@ -199,6 +208,14 @@ register_jobs(
     CommandRunner,
 )
 ```
+
+> [!IMPORTANT]
+> Don't forget to run a POST update so that our new job shows up inside the Nautobot UI. To accomplish this, stop the Nautobot container using `CTRL+C` and run the following commands:
+> ```
+> invoke post-upgrade
+> invoke debug
+> ```
+> This will run the Django migrations to register the **Command Runner** job and restart Nautobot.
 
 We can enable the job and test out the job: 
 

@@ -141,13 +141,13 @@ COMMAND_CHOICES = (
 ```
 
 > [!TIP]
-> The tuples inside of `COMMAND_CHOICES` are comprised of two items:
+> The tuples inside of `COMMAND_CHOICES` are comprised of two elements:
 >
-> The first item is the actual command sent to the target device via CLI; if the incorrect syntax is used, the job will execute successfully but your output will show an error.
+> The first element is the actual command sent to the target device via CLI; if the incorrect syntax is used, the job will execute successfully but your output will show an error.
 >
-> The second item is how the command will appear from the dropdown menu inside the job. This can be whatever you want (e.g. substitutuing `"OSPF neighbors"` for `"show ip ospf neighbor"`), but it should be descriptive and easily understood by the network operators using the platform.
+> The second element is how the command will appear from the dropdown menu inside the job. This can be whatever you want (e.g. substitutuing `"OSPF neighbors"` for `"show ip ospf neighbor"`), but it should be descriptive and easily understood by the network operators using the platform.
 >
-> In this example, we've used the actual command syntax in the second item in each tuple for clarity.
+> In this example, we've used the actual command syntax in the second element in each tuple for clarity.
 
 Here is the main part of the script, we have seen most of the verification pieces. We added the Netmiko connection function after the verifications and output the result in a file: 
 

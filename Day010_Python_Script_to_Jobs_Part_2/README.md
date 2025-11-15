@@ -83,11 +83,11 @@ Finally, scroll down to the IP address section and assign it with the previously
 
 ![devices_4](images/devices_4.png)
 
+If there's a preexisting Management IP address in this field, be sure to delete it before adding the address we just created.
+
 Once that is done, we can go back to the device detail page to assign that IP as the "Primary IPv4" address:
 
 ![devices_5](images/devices_5.png)
-
-If there's a preexisting Management IP address, be sure to delete it before adding the address we just created.
 
 We should do this for all the devices we need to work with.
 

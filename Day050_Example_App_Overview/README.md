@@ -26,12 +26,23 @@ Once Codespace is launched, we will see the `nautobot` directory:
 
 ![nautobot_repository](images/nautobot_repository.png)
 
+> [!WARNING]
+> **Known Build Issue ([Issue #64](https://github.com/nautobot/100-days-of-nautobot/issues/64))**: Before running `invoke build`, apply these fixes to the Dockerfile:
+> ```bash
+> cd ~/nautobot
+> # Fix 1: Replace deprecated mime-support package
+> sed -i 's/mime-support/media-types mailcap/' docker/Dockerfile
+> # Fix 2: Remove xmlsec from no-binary list (lxml 5.x compatibility)
+> sed -i 's/lxml,pyuwsgi,xmlsec/lxml,pyuwsgi/' docker/Dockerfile
+> ```
+
 The steps to launch the development containers is almost identical to what we have been doing in `Scenario 1`. However, this process takes longer for "nautobot proper" because of the complexity and the additional packages. 
 
 Here are the steps: 
 
 ```
 $ cd nautobot
+# ⚠️ Apply the Dockerfile fixes from the warning above before running invoke build
 $ poetry shell
 $ poetry install
 ...

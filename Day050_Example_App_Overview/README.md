@@ -41,7 +41,7 @@ The steps to launch the development containers is almost identical to what we ha
 Here are the steps: 
 
 ```
-$ cd nautobot
+$ cd /home/vscode/nautobot
 # ⚠️ Apply the Dockerfile fixes from the warning above before running invoke build
 $ poetry shell
 $ poetry install

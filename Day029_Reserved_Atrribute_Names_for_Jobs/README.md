@@ -8,7 +8,7 @@ However, at some point, I had to come back to learn more about the "boring stuff
 
 Hopefully we have done enough to give you a taste of the power and fun aspect of Nautobot Jobs in the last 28 days of challenges. Today's challenge will be a little dull but necessary. 
 
-We will begin by learning more about the [Reserved Attribute Names](https://docs.nautobot.com/projects/core/en/stable/development/jobs/#reserved-attribute-names) in Nautobot Job class. 
+We will begin by learning more about the [Reserved Attribute Names](https://docs.nautobot.com/projects/core/en/stable/development/jobs/job-structure/#reserved-names-avoiding-collisions-with-job-internals) in Nautobot Job class. 
 
 
 ## Environment Setup

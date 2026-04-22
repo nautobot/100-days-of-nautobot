@@ -101,7 +101,7 @@ We are ready to wire this job receiver with an object.
 
 ## Wire Up the Job Receiver
 
-By default, Job button receivers are not visible on the Job UO, We will need to click on the filter button on the Job menu: 
+By default, Job button receivers are not visible on the Job UI, we will need to click on the filter button on the Job menu: 
 
 ![job_button_3](images/job_button_3.png)
 

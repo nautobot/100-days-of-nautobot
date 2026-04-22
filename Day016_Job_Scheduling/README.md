@@ -68,7 +68,7 @@ Once the job is scheduled, it can be viewed under 'Jobs -> Scheduled Jobs":
 
 ![job_scheduling_4](images/job_schedule_4.png)
 
-Job scheduling is a simple but powerful feature, if you have some time, experiment with the existing 'System Jobs' for 'Logs Cleanup' or take a look at the [Nautobot Golden Config App](https://docs.nautobot.com/projects/golden-config/en/latest/), where job schedule is used for configuration back. 
+Job scheduling is a simple but powerful feature, if you have some time, experiment with the existing 'System Jobs' for 'Logs Cleanup' or take a look at the [Nautobot Golden Config App](https://docs.nautobot.com/projects/golden-config/en/latest/), where job schedule is used for configuration backup. 
 
 ## Day 16 To Do
 

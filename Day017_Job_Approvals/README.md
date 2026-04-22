@@ -49,7 +49,7 @@ The property for `approval required` can be set in the `properties` section:
 
 ![job_approval_2](images/job_approval_2.png)
 
-Once the properties is changed, the `Run Job Now` will be changed to `Reqeust to Run Job Now`: 
+Once the properties is changed, the `Run Job Now` will be changed to `Request to Run Job Now`: 
 
 ![job_approval_3](images/job_approval_3.png)
 

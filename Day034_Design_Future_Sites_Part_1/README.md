@@ -191,7 +191,8 @@ We are also adding a new constant called ACTIVE_STATUS, which is just getting th
 You will also notice that we are getting the appropriate role name for each of the VLANs in this section.
 
 ```python
-
+from nautobot.extras.models import Status
+...
 ACTIVE_STATUS = Status.objects.get(name="Active")
 ...
 role_obj = Role.objects.get(name=vlan_name)
@@ -230,7 +231,7 @@ def create_vlans(logger):
             logger.info(f"VLAN '{vlan_name}' with ID {vlan_id} already exists.")
 ```
 
-Finally, we will create the custom fields that will be used to assign the roles to the interfaces. This is an important step for the coming days as we create connections and cabling between interaces between interfaces. Notice that we have to add two more import statements to make custom field method work.
+Finally, we will create the custom fields that will be used to assign the roles to the interfaces. This is an important step for the coming days as we create connections and cabling between interfaces. Notice that we have to add two more import statements to make custom field method work.
 
 ```python
 

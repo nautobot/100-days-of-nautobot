@@ -25,6 +25,10 @@ This journey has been a comprehensive exploration of Nautobot's capabilities, be
 
 Your journey with Nautobot doesn't end here. Here are some suggestions for continuing your growth and contribution to the Nautobot community:
 
+### Move to Nautobot 3.1
+
+The main 100 Days target Nautobot 2.x. If you want to bring your environment forward to the version currently running [demo.nautobot.com](https://demo.nautobot.com/), the [Nautobot 3.1 Upgrade Lab](../Nautobot_3_1_Upgrade_Lab/README.md) is a two-day expansion pack that walks an in-place 2.3.2 → 3.1.2 upgrade and catalogs the differences you will notice when replaying earlier Days against the upgraded environment.
+
 ### Continued Learning
 
 1. **Advanced Topics**: Explore advanced topics such as custom plugins, integrations, and scaling Nautobot for large environments.

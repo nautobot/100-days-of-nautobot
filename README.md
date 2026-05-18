@@ -79,6 +79,14 @@ Making a public commitment increases social accountability and provide network o
 
 I am glad you asked, sign up for the challenge [here](https://go.networktocode.com/100-days-of-nautobot) if you have not done so already, and let the games begin! 
 
+## Expansion Packs
+
+In addition to the main 100 Days, we maintain **expansion packs** — short, focused labs that cover topics adjacent to the core challenge.
+
+- **[Nautobot 3.1 Upgrade Lab](Nautobot_3_1_Upgrade_Lab/README.md)** — a two-day lab that walks an in-place upgrade of the Scenario 1 environment from Nautobot 2.3.2 to 3.1.2 (the version on [demo.nautobot.com](https://demo.nautobot.com/)), followed by a reference for what looks different in 3.1 when replaying Days 1–100 against the upgraded environment.
+
+More expansion packs are planned, including coverage of popular Nautobot apps that the main 100 Days do not get to.
+
 ## Contributors
 
 This repository is a team effort, thank you for making this challenge happen. 

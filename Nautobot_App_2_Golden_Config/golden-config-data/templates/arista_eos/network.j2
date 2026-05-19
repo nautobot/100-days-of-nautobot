@@ -1,0 +1,10 @@
+!
+! Intended configuration for {{ obj.name }} ({{ obj.role.name }} / {{ obj.platform.network_driver }})
+! Rendered by Nautobot Golden Config from templates/arista_eos/network.j2
+!
+hostname {{ obj.name }}
+!
+ntp server 1.1.1.1
+ntp server 8.8.8.8
+!
+end

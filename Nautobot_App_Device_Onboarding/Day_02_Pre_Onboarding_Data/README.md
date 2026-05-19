@@ -68,6 +68,24 @@ $ ssh admin@<bos-rtr-01-ip>
 ceos-01> show version
 ```
 
+### Bridge the Nautobot stack onto the Containerlab network
+
+Containerlab's topology file pins the cEOS devices to the default Docker `bridge` network (`172.17.0.0/16`). `nautobot-docker-compose` runs its services on a separate user-defined network called `nautobot-docker-compose_default`. Docker isolates the two networks by default — the **host** (your codespace shell) can reach both, but containers on one cannot reach the other. The result: your manual SSH from the codespace will work, but the celery_worker container running the onboarding job will time out with `TCP connection to device failed`.
+
+Attach the three Nautobot service containers to the default bridge as a **second** network interface (the existing `nautobot-docker-compose_default` attachment is preserved):
+
+```
+$ docker network connect bridge nautobot-docker-compose-celery_worker-1
+$ docker network connect bridge nautobot-docker-compose-nautobot-1
+$ docker network connect bridge nautobot-docker-compose-celery_beat-1
+```
+
+No container restart is needed — they pick up a `172.17.0.x` IP immediately and can reach the cEOS containers.
+
+> ⚠️ This attachment is **per-container**. It survives `invoke restart`, but not `invoke stop` + `invoke debug` — those destroy and recreate the containers, and you'll need to re-run the three `docker network connect` lines.
+>
+> A helper script at [`../scripts/patch_lab_ceos.sh`](../scripts/patch_lab_ceos.sh) re-applies this network attachment along with Day 3's cEOS-compatibility patches in one shot. Run it once after each `invoke debug`.
+
 ## Create Locations
 
 In the Nautobot UI under **Organization → Locations**, create two locations (or reuse what you set up during earlier 100 Days work):

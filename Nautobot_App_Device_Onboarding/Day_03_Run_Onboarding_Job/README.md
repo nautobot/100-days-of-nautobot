@@ -22,8 +22,72 @@ You should see one visible job from `nautobot_device_onboarding`:
 
 - **Sync Devices From Network** — the SSoT-based job that uses Nornir + the SecretsGroup we created on Day 2.
 
+![Jobs list filtered to onboarding, showing Sync Devices From Network and Sync Network Data From Network](../images/device_onboarding_jobs.png)
+
 > [!NOTE]
 > Device Onboarding 4.x still ships the legacy `Perform Device Onboarding (Original)` job, but it is marked hidden and does not appear in the UI's job list by default. We use the SSoT-based job in this lab.
+
+## Enable the Job
+
+Nautobot installs Jobs in a disabled state by default — you have to flip the `Enabled` flag once before the **Run Job Now** button appears.
+
+- Click into **Sync Devices From Network**.
+- Hit **Edit** (top-right) → tick **Enabled** → **Update**.
+
+You should now see **Run Job Now** on the job's detail page.
+
+## Verify the `arista_eos` Platform driver
+
+Device Onboarding 4.x maps each `show ...` command's output to Nautobot fields using a **platform-specific mapper** (a YAML keyed off the Platform's `network_driver`). If the driver string is wrong or missing, the job will SSH in, run all the commands, and then fail to extract anything — every field comes back as a missing key.
+
+Leaving **Platform** empty on the job form means Device Onboarding tries to *auto-detect* the platform from the command output. In practice this is brittle for Arista cEOS in this lab, so we'll pre-stage the Platform and pick it explicitly in the next step.
+
+Navigate to **Devices → Platforms**. Look for `arista_eos`:
+
+- If it does **not** exist, click **+ Add** and create one. The critical field is **Network Driver** — it must be exactly `arista_eos` (lowercase, with underscore). Also set **NAPALM Driver** = `eos`.
+- If it already exists (Scenario 1's seed data usually ships it), click into it and confirm **Network Driver** = `arista_eos`. Edit if needed.
+
+![arista_eos Platform showing Network Driver set to arista_eos](../images/arista_eos_platform_driver.png)
+
+## Patch the `arista_eos_show_version` TextFSM template for cEOS
+
+Device Onboarding's `arista_eos` mapper parses `show version` output using the `ntc-templates` package's `arista_eos_show_version.textfsm` template. That template was designed for real Arista EOS hardware and has a strict `^. -> Error` catch-all rule at the end — any line that doesn't match an earlier rule raises a `TextFSMError`. **Containerlab's cEOS image adds two lines that real EOS doesn't emit:**
+
+```
+cEOS tools version: (unknown)
+Kernel version: 6.8.0-1044-azure
+```
+
+When the parser hits the first one, it raises, Device Onboarding catches silently, and you see this in the job log:
+
+```
+Unable to onboard <ip>, returned data missing for ['device_type', 'hostname', 'mgmt_interface', 'mask_length', 'serial', 'platform']
+```
+
+Patch the template in the celery_worker container (`-u 0` runs as root to write into `/usr/local/lib/...`):
+
+```
+$ docker exec -u 0 -i nautobot-docker-compose-celery_worker-1 python <<'PYEOF'
+import ntc_templates, os
+path = os.path.dirname(ntc_templates.__file__) + '/templates/arista_eos_show_version.textfsm'
+text = open(path).read()
+if 'cEOS' not in text:
+    new_rules = (
+        '  ^cEOS\\s+tools\\s+version:.*\n'
+        '  ^Kernel\\s+version:.*\n'
+        '  ^. -> Error'
+    )
+    text = text.replace('  ^. -> Error', new_rules)
+    open(path, 'w').write(text)
+    print('PATCHED')
+else:
+    print('ALREADY PATCHED')
+PYEOF
+```
+
+The patch inserts two **silent skip** rules (a rule with a pattern but no `-> Action` consumes the line and continues) right before the Error catch-all. After this, `parse_output(platform='arista_eos', command='show version', data=<cEOS output>)` returns a populated dict instead of raising.
+
+> ⚠️ Like the network-bridge step in Day 2, this patch lives in the container's filesystem and is **lost** on `invoke stop` + `invoke debug`. Re-run after any container recreation. (A helper script that re-applies this and the Day 2 network bridge in one shot is available at [`scripts/patch_lab_ceos.sh`](../scripts/patch_lab_ceos.sh).)
 
 ## Run the Job Against One Device
 
@@ -31,10 +95,11 @@ Click **Sync Devices From Network** → **Run Job Now**. The form has many field
 
 | Field | Set to |
 |-------|--------|
+| **Dryrun** | **uncheck** — leaving this checked means the job runs but does not actually create anything in Nautobot, which is the opposite of what we want today |
 | **Debug** | leave unchecked |
 | **Connectivity test** | leave unchecked (the job will SSH to verify regardless) |
 | **CSV file** | leave empty (we use IP Addresses instead) |
-| **Location** | `Boston` |
+| **Location** | `East Coast → Boston` (the dropdown shows the parent path; pick the nested Boston) |
 | **Namespace** | `Global` (or your install's default) |
 | **IP Addresses** | the IPv4 of `bos-rtr-01` from `containerlab inspect` |
 | **Port** | `22` |
@@ -46,7 +111,7 @@ Click **Sync Devices From Network** → **Run Job Now**. The form has many field
 | **Interface status** | `Active` |
 | **IP address status** | `Active` |
 | **Secrets group** | `cEOS Lab Credentials` (from Day 2) |
-| **Platform** | leave empty (Device Onboarding auto-detects `arista_eos`) |
+| **Platform** | `arista_eos` — explicit, not auto-detect (see the previous section for why) |
 
 Click **Run**. The job redirects to its log view; refresh until it completes.
 

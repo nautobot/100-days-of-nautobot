@@ -1,0 +1,42 @@
+# AI assistant artifacts — never commit these to a public repo
+# Context / instruction files
+CLAUDE.md
+CLAUDE.local.md
+AGENTS.md
+GEMINI.md
+.clinerules
+.cursorrules
+.windsurfrules
+
+# Memory / state directories
+.claude/
+.cursor/
+.aider*
+.copilot/
+.continue/
+.codeium/
+.windsurf/
+
+# Common AI scratch / planning files
+MEMORY.md
+.memory/
+.scratch/
+.notes/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/settings.json
+
+# Python (in case anyone runs anything locally)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment / secrets — never commit
+.env
+*.env.local
+creds.env

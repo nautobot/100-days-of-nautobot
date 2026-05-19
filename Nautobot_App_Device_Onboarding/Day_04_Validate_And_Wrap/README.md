@@ -1,7 +1,5 @@
 # Day 4: Validate and Wrap
 
-> 🚧 **Desk-verified, not yet live-verified.** The two-job flow (Sync Devices → Sync Network Data) reflects 4.2.6's actual behavior per `nautobot_device_onboarding/jobs.py`. Idempotency expectations still need a live-env confirmation.
-
 The four cEOS devices are now real Devices in Nautobot, but only their management interface is populated. Today we pull in the rest (interfaces, VLANs, VRFs) with a second job, cross-check what landed, watch idempotency on a re-run, and close out.
 
 ## Populate Full Interface Data

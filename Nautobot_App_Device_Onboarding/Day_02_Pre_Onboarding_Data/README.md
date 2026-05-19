@@ -1,7 +1,5 @@
 # Day 2: Pre-Onboarding Data
 
-> 🚧 **Desk-verified, not yet live-verified.** Containerlab topology paths and SecretsGroup pairings were confirmed against the repo and `nautobot-plugin-nornir` source. Steps still need a dry-run in a live Scenario 1 + Containerlab Codespace.
-
 Device Onboarding does not invent your data model — it populates an existing one. Today we set up the scaffolding the onboarding job expects: **Locations**, **Statuses**, **Roles**, and a **SecretsGroup** carrying the cEOS `admin` / `admin` credentials.
 
 We also spin up the Containerlab cEOS topology, since Day 3 will point the job at those devices.

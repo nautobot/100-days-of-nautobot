@@ -1,7 +1,5 @@
 # Day 3: Run the Onboarding Job
 
-> 🚧 **Desk-verified, not yet live-verified.** The 16 form fields below were pulled from `SSOTSyncDevices` in `nautobot_device_onboarding/jobs.py` (v4.2.6). Field labels in the UI may differ slightly from the internal field IDs.
-
 Today is the payoff. We run Device Onboarding's job against `bos-rtr-01` first to inspect what it creates, then batch the remaining three cEOS devices.
 
 ## Look Up cEOS Container IPs

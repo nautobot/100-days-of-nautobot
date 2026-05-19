@@ -1,7 +1,5 @@
 # Day 1: Install Device Onboarding
 
-> 🚧 **Partially live-verified.** Install mechanism switched from in-container `pip install` to `poetry add` + `invoke build` after the original draft hit a `ModuleNotFoundError: No module named 'nautobot_plugin_nornir'` on container restart (the in-container install is ephemeral and is lost the moment `invoke stop` recreates the container). Container Python is bumped to 3.10 to match this repo's `pyproject.toml` (`python = ">=3.9,<3.12"`).
-
 Today we install [`nautobot-device-onboarding`](https://github.com/nautobot/nautobot-app-device-onboarding) on top of Scenario 1 and confirm it shows up in the Nautobot UI. No devices get onboarded today — that is Day 3.
 
 The Containerlab cEOS topology is **not** needed today — we will spin it up on Day 2.

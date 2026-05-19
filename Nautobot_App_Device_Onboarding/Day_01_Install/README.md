@@ -42,10 +42,19 @@ From inside the Poetry shell on the host (not inside the container):
 ```
 $ cd ~/nautobot-docker-compose
 $ poetry shell
-(nautobot-docker-compose-py3.10) $ poetry add nautobot-device-onboarding nautobot-ssot
+(nautobot-docker-compose-py3.10) $ poetry add 'nautobot-device-onboarding@^4' 'nautobot-ssot@^3'
 ```
 
-Poetry resolves both apps against `nautobot = "2.3.2"` and updates `pyproject.toml` + `poetry.lock`. `nautobot-plugin-nornir` is pulled in transitively as a dependency of `nautobot-device-onboarding` — no explicit pin needed.
+The `^4` / `^3` major-version constraints are deliberate:
+
+| Package | Constraint | Why |
+|---------|-----------|-----|
+| `nautobot-device-onboarding` | `^4` (i.e. `>=4, <5`) | The 4.x line targets Nautobot 2.x. Version 5.x targets Nautobot 3.x and is a different code path. |
+| `nautobot-ssot` | `^3` (i.e. `>=3, <4`) | Paired with Device Onboarding 4.x. SSoT 4.x ships against Nautobot 3.x. |
+
+An unconstrained `poetry add` would pick the latest majors (currently 5.x + 4.x), which are the **wrong** majors for a Nautobot 2.3.2 image — Poetry would either fail to resolve, or worse, succeed and produce an image that crashes at runtime. `nautobot-plugin-nornir` is pulled in transitively as a dependency of Device Onboarding — no explicit pin needed.
+
+This updates `pyproject.toml` + `poetry.lock`. The exact patch versions Poetry picks (e.g. 4.2.6, 3.5.0) get recorded in `poetry.lock` for reproducibility.
 
 > ℹ️ If you see a resolver error, double-check `python_ver` from Step 1 — most version-conflict errors at this step are actually a stale py3.8 environment trying to install a py3.9-only package.
 

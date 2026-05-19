@@ -12,13 +12,13 @@ The pack stays on **Nautobot 2.3.2** but bumps the container's Python from 3.8 t
 
 ## Packages added
 
-| Package | How it gets installed | Why |
-|---------|----------------------|-----|
-| `nautobot-device-onboarding` | `poetry add` on the host (Day 1, Step 2) | The app being installed |
-| `nautobot-ssot` | `poetry add` on the host (Day 1, Step 2) | Required by Device Onboarding 4.x; the SSoT framework the new jobs run on |
-| `nautobot-plugin-nornir` | Pulled in transitively by Device Onboarding | Required by Device Onboarding's Sync-Data-from-Network job |
+| Package | Constraint | Why |
+|---------|-----------|-----|
+| `nautobot-device-onboarding` | `^4` | The 4.x line targets Nautobot 2.x. 5.x targets Nautobot 3.x. |
+| `nautobot-ssot` | `^3` | Paired with Device Onboarding 4.x. SSoT 4.x is for Nautobot 3.x. |
+| `nautobot-plugin-nornir` | (transitive) | Pulled in by Device Onboarding; required by the Sync-Data-from-Network job. |
 
-Versions are resolved by Poetry against `nautobot = "2.3.2"` and `python = ">=3.9,<3.12"` — no manual pins. `poetry.lock` records the exact versions for reproducibility.
+Day 1 adds these via `poetry add` so they end up in `pyproject.toml` + `poetry.lock` and get baked into the image by `invoke build`. Exact patch versions Poetry picks (e.g. `4.2.6`, `3.5.0`) get recorded in `poetry.lock` for reproducibility.
 
 ## The four Days
 

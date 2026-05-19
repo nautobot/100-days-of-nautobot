@@ -97,7 +97,13 @@ Stop any running stack first so containers come up fresh against the new image:
 
 `invoke build` is the long step (several minutes — base image pull + `poetry install` inside the builder stage). When it finishes, the new image has Device Onboarding, SSoT, and `nautobot-plugin-nornir` baked in.
 
-> 🧹 Any earlier in-container `pip install` from a previous attempt is discarded by this rebuild — that is intentional.
+> 💾 **About the database:** `invoke build` rebuilds only the `nautobot` app image — it does **not** touch the Postgres container or its data volume. `invoke stop` does `docker compose down` *without* `-v`, so the volume survives. **However**, Docker volumes do **not** persist across separate Codespaces — if you launched a fresh Codespace this session, the volume is empty and the postgres container will start with no users (so `admin/admin` will not exist). Re-import the Scenario 1 starter SQL dump in that case:
+>
+> ```
+> (nautobot-docker-compose-py3.10) $ invoke db-import
+> ```
+>
+> Run that **before** `invoke debug`. Note that `invoke db-import` **overwrites the DB** with the Scenario 1 starter dump — fine on a fresh Codespace, but skip it if you have local data you want to keep.
 
 ## Step 5 — Start the stack
 
@@ -105,7 +111,7 @@ Stop any running stack first so containers come up fresh against the new image:
 (nautobot-docker-compose-py3.10) $ invoke debug
 ```
 
-`invoke debug` runs `docker compose up` in the foreground so you can watch the logs. You should **not** see `ModuleNotFoundError: No module named 'nautobot_plugin_nornir'` — if you do, the build did not produce the expected image. Check `docker images | grep nautobot` and re-run `invoke build`.
+`invoke debug` runs `docker compose up` in the foreground so you can watch the logs.
 
 ## Step 6 — Apply migrations
 
@@ -125,15 +131,65 @@ Device Onboarding and SSoT ship database migrations. Run `post-upgrade` to apply
 
 (`invoke`'s CLI accepts the dash form even though the underlying Python task is `post_upgrade` — both work.)
 
+Expected output (trimmed):
+
+```
+Running docker compose command "ps --services --filter status=running"
+Running docker compose command "exec nautobot nautobot-server post_upgrade"
+Performing database migrations...
+Operations to perform:
+  Apply all migrations: admin, auth, circuits, cloud, constance, contenttypes, dcim,
+  django_celery_beat, django_celery_results, extras, ipam, nautobot_device_onboarding,
+  nautobot_ssot, sessions, silk, social_django, taggit, tenancy, users, virtualization
+Running migrations:
+  Applying nautobot_device_onboarding.0001_initial... OK
+  Applying nautobot_ssot.0001_initial... OK
+  ... (on a fresh DB; if these migrations already ran you'll see "No migrations to apply.")
+
+19:41:11.457 INFO    nautobot.extras.utils utils.py        refresh_job_model_from_job_class() :
+  Refreshed Job "Device Onboarding: Perform Device Onboarding (Original)" from <OnboardingTask>
+19:41:11.461 INFO    nautobot.extras.utils utils.py        refresh_job_model_from_job_class() :
+  Refreshed Job "Device Onboarding: Sync Devices From Network" from <SSOTSyncDevices>
+19:41:11.465 INFO    nautobot.extras.utils utils.py        refresh_job_model_from_job_class() :
+  Refreshed Job "Device Onboarding: Sync Network Data From Network" from <SSOTSyncNetworkData>
+... (a few more job-refresh lines, plus System Jobs)
+
+Generating cable paths...
+Found no missing interface paths; skipping
+... (other cable-path checks, all "no missing")
+Finished.
+
+Collecting static files...
+0 static files copied to '/opt/nautobot/static', 1260 unmodified.
+
+Sending installation metrics...
+{
+    "nautobot_version": "2.3.2",
+    "python_version": "3.10.14",
+    ...
+}
+
+Refreshing dynamic group member caches...
+Refreshing DynamicGroup member caches...
+```
+
+The three things worth eyeballing in that output:
+
+1. `nautobot_device_onboarding` and `nautobot_ssot` appear in the migrations list — confirms both apps loaded.
+2. Three new **Device Onboarding** jobs got refreshed: `Sync Devices From Network` (Day 3), `Sync Network Data From Network` (Day 4), and `Perform Device Onboarding (Original)` (the legacy job, which we will not use).
+3. `python_version: "3.10.14"` in the installation-metrics blob — proof the container is on Python 3.10, not the old 3.8.
+
 Nautobot watches its config and reloads automatically. If for some reason the worker still complains, restart with `invoke restart` (which keeps the containers but restarts the processes) — **avoid `invoke stop`**, which would remove and recreate the containers.
 
 ## Step 7 — Confirm in the UI
 
 Open the Nautobot UI on port 8080. Under **Apps → Installed Apps**, you should now see:
 
-- `nautobot_plugin_nornir`
-- `nautobot_ssot`
-- `nautobot_device_onboarding`
+- `Nautobot Plugin for Nornir` (2.2.1)
+- `Single Source of Truth` (3.5.0)
+- `Device Onboarding` (4.2.6)
+
+![Installed Apps page showing Nautobot Plugin for Nornir, Single Source of Truth, and Device Onboarding](../images/installed_apps.png)
 
 A new **Apps → Device Onboarding** entry should also appear in the navigation.
 

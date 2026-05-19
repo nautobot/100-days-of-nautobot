@@ -2,17 +2,25 @@
 
 The four cEOS devices are now real Devices in Nautobot, but only their management interface is populated. Today we pull in the rest (interfaces, VLANs, VRFs) with a second job, cross-check what landed, watch idempotency on a re-run, and close out.
 
+## Enable the Job
+
+Just like `Sync Devices From Network` on Day 3, this second job ships disabled and won't show a **Run Job Now** button until you flip its Enabled flag.
+
+- **Jobs → Jobs** → click into **Sync Network Data From Network**.
+- Hit **Edit** (top-right) → tick **Enabled** → **Update**.
+
 ## Populate Full Interface Data
 
 The `Sync Devices From Network` job from Day 3 onboarded the device, its platform, and the management interface. To populate the **rest** of each device's interfaces (plus VLANs, VRFs, and cabling) we run a second job: **Sync Network Data From Network**.
 
 In the UI:
 
-- **Jobs** → **Jobs** → **Sync Network Data From Network** → **Run Job Now**.
-- Select the four onboarded devices from the **Devices** picker (or pass them via filter).
-- **Sync VLANs**, **Sync VRFs**, **Sync Cables** — leave at their defaults; for the lab the cEOS devices have all three to pick up.
-- **Secrets group**: should auto-populate from each device's SecretsGroup association set during Day 3.
+- **Jobs → Jobs → Sync Network Data From Network → Run Job Now**.
+- Select the onboarded device(s) from the **Devices** picker (or pass them via filter). If you only completed Day 3 against `bos-rtr-01`, just pick that one — the job works on a single device.
+- **Sync VLANs**, **Sync VRFs**, **Sync Cables** — leave at their defaults. The cEOS devices in this lab have all three to pick up.
 - Click **Run**.
+
+![Sync Network Data From Network job form](../images/sync_network_data.png)
 
 After the job completes, the Device detail pages should show their full interface list (Ethernet1, Ethernet2, …) with link types, VLANs, and IPs as configured on the cEOS side.
 

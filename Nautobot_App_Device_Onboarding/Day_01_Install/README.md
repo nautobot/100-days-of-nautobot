@@ -1,42 +1,55 @@
 # Day 1: Install Device Onboarding
 
-> 🚧 **Desk-verified, not yet live-verified.** Versions, file paths, and the SSoT job's form fields were confirmed against `nautobot-app-device-onboarding` v4.2.6 source. Steps still need a dry-run in a live Scenario 1 Codespace.
+> 🚧 **Partially live-verified.** Install mechanism switched from in-container `pip install` to `poetry add` + `invoke build` after the original draft hit a `ModuleNotFoundError: No module named 'nautobot_plugin_nornir'` on container restart (the in-container install is ephemeral and is lost the moment `invoke stop` recreates the container). Container Python is bumped to 3.10 to match this repo's `pyproject.toml` (`python = ">=3.9,<3.12"`).
 
 Today we install [`nautobot-device-onboarding`](https://github.com/nautobot/nautobot-app-device-onboarding) on top of Scenario 1 and confirm it shows up in the Nautobot UI. No devices get onboarded today — that is Day 3.
 
-## Environment Setup
-
-Same as [Lab Setup Scenario 1](../../Lab_Setup/scenario_1_setup/README.md). Skip `invoke build` / `invoke db-import` if your Codespace was restarted from a previous session:
-
-```
-$ cd nautobot-docker-compose/
-$ poetry shell
-$ invoke build
-$ invoke db-import
-$ invoke debug
-```
-
 The Containerlab cEOS topology is **not** needed today — we will spin it up on Day 2.
 
-## Install the App
+## Why we bake the apps into the image
 
-Attach to the Nautobot container:
+`nautobot-docker-compose` builds its Nautobot image via `environments/Dockerfile`, which copies the repo's `pyproject.toml` and `poetry.lock` into the image and runs `poetry install` at build time. Any `pip install` we do **inside a running container** disappears as soon as `invoke stop` removes that container — the next `invoke debug` will recreate it from the base image without our apps. So the right move is to add the apps as managed Poetry dependencies and rebuild the image once.
 
-```
-$ docker exec -it nautobot_docker_compose-nautobot-1 bash
-```
+## Step 1 — Pin Python 3.10 in `invoke.yml`
 
-Install Device Onboarding 4.2.6 along with an explicit SSoT pin. Both pins are needed: Device Onboarding 4.3.0+ requires Python ≥3.9.2, and SSoT 3.6.0+ requires Python ≥3.9.2. The versions below are the last in their lines that still support Scenario 1's Python 3.8.
+`pyproject.toml` requires `python >= 3.9, < 3.12`. The build will fail if the container is built on Python 3.8. Create an `invoke.yml` (none exists by default — only `invoke.example.yml`) and set `python_ver` to `"3.10"`:
 
 ```
-nautobot@<container>:~$ pip install nautobot-device-onboarding==4.2.6 nautobot-ssot==3.5.0
+$ cd ~/nautobot-docker-compose
+$ cp invoke.example.yml invoke.yml
 ```
 
-`nautobot-plugin-nornir` is pulled in transitively at a 2.x version, which works on Python 3.8 without an explicit pin.
+Edit `invoke.yml` so the `python_ver` line reads:
 
-Exit the container shell (`exit`) so we can edit the config file on the host.
+```yaml
+nautobot_docker_compose:
+  project_name: "nautobot-docker-compose"
+  python_ver: "3.10"
+  local: false
+  compose_dir: "environments/"
+  compose_files:
+    - "docker-compose.postgres.yml"
+    - "docker-compose.base.yml"
+    - "docker-compose.local.yml"
+```
 
-## Wire Into `nautobot_config.py`
+This drives the `PYTHON_VER` build arg consumed by `environments/Dockerfile`, which resolves the base image to `ghcr.io/nautobot/nautobot:2.3.2-py3.10`.
+
+## Step 2 — Add the apps as Poetry dependencies
+
+From inside the Poetry shell on the host (not inside the container):
+
+```
+$ cd ~/nautobot-docker-compose
+$ poetry shell
+(nautobot-docker-compose-py3.10) $ poetry add nautobot-device-onboarding nautobot-ssot
+```
+
+Poetry resolves both apps against `nautobot = "2.3.2"` and updates `pyproject.toml` + `poetry.lock`. `nautobot-plugin-nornir` is pulled in transitively as a dependency of `nautobot-device-onboarding` — no explicit pin needed.
+
+> ℹ️ If you see a resolver error, double-check `python_ver` from Step 1 — most version-conflict errors at this step are actually a stale py3.8 environment trying to install a py3.9-only package.
+
+## Step 3 — Wire into `nautobot_config.py`
 
 Edit `nautobot-docker-compose/config/nautobot_config.py`. Append the three new app names to the `PLUGINS` list and add their settings to `PLUGINS_CONFIG`:
 
@@ -64,22 +77,48 @@ PLUGINS_CONFIG = {
 
 The `CredentialsNautobotSecrets` reference is required for the **Sync Data from Network** job we use on Day 3. We will create the matching Secrets on Day 2.
 
-## Apply Migrations
+## Step 4 — Rebuild the image
 
-Run `post-upgrade` so Device Onboarding and SSoT create their database tables. (Invoke's CLI accepts the dash form even though the underlying Python task is `post_upgrade` — both work.)
-
-```
-$ invoke post-upgrade
-```
-
-Restart Nautobot if it did not auto-reload:
+Stop any running stack first so containers come up fresh against the new image:
 
 ```
-$ invoke stop
-$ invoke debug
+(nautobot-docker-compose-py3.10) $ invoke stop
+(nautobot-docker-compose-py3.10) $ invoke build
 ```
 
-## Confirm in the UI
+`invoke build` is the long step (several minutes — base image pull + `poetry install` inside the builder stage). When it finishes, the new image has Device Onboarding, SSoT, and `nautobot-plugin-nornir` baked in.
+
+> 🧹 Any earlier in-container `pip install` from a previous attempt is discarded by this rebuild — that is intentional.
+
+## Step 5 — Start the stack
+
+```
+(nautobot-docker-compose-py3.10) $ invoke debug
+```
+
+`invoke debug` runs `docker compose up` in the foreground so you can watch the logs. You should **not** see `ModuleNotFoundError: No module named 'nautobot_plugin_nornir'` — if you do, the build did not produce the expected image. Check `docker images | grep nautobot` and re-run `invoke build`.
+
+## Step 6 — Apply migrations
+
+Device Onboarding and SSoT ship database migrations. Run `post-upgrade` to apply them.
+
+> ⚠️ **Heads up:** open a **second terminal** so `invoke debug` keeps streaming logs in the first. In the second terminal, re-enter the Poetry shell — `invoke` is provided by that virtualenv, not by the system shell.
+>
+> ```
+> $ cd ~/nautobot-docker-compose
+> $ poetry shell
+> (nautobot-docker-compose-py3.10) $   # prompt should now show the venv
+> ```
+
+```
+(nautobot-docker-compose-py3.10) $ invoke post-upgrade
+```
+
+(`invoke`'s CLI accepts the dash form even though the underlying Python task is `post_upgrade` — both work.)
+
+Nautobot watches its config and reloads automatically. If for some reason the worker still complains, restart with `invoke restart` (which keeps the containers but restarts the processes) — **avoid `invoke stop`**, which would remove and recreate the containers.
+
+## Step 7 — Confirm in the UI
 
 Open the Nautobot UI on port 8080. Under **Apps → Installed Apps**, you should now see:
 

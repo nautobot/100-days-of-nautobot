@@ -2,7 +2,7 @@
 
 A four-day walkthrough for installing and using [`nautobot-app-device-onboarding`](https://github.com/nautobot/nautobot-app-device-onboarding) on top of the Lab Scenario 1 environment. By the end of Day 4, you will have onboarded the four Containerlab cEOS devices that ship with Scenario 1 (Boston + NYC) into Nautobot as real Devices with populated platforms, interfaces, and management IPs.
 
-The pack stays on **Nautobot 2.3.2 / Python 3.8** — the base Scenario 1 ships. If you want Device Onboarding on the upgraded 3.1.2 environment from the [Nautobot 3.1 Upgrade Lab](../Nautobot_3_1_Upgrade_Lab/README.md), wait for a future companion pack — Device Onboarding 5.x targets Nautobot 3.x and is a different code path.
+The pack stays on **Nautobot 2.3.2** but bumps the container's Python from 3.8 to **3.10** in Day 1 (the repo's `pyproject.toml` requires `python >= 3.9, < 3.12`, and a fresh `invoke build` needs that). If you want Device Onboarding on the upgraded 3.1.2 environment from the [Nautobot 3.1 Upgrade Lab](../Nautobot_3_1_Upgrade_Lab/README.md), wait for a future companion pack — Device Onboarding 5.x targets Nautobot 3.x and is a different code path.
 
 ## Prerequisites
 
@@ -10,19 +10,21 @@ The pack stays on **Nautobot 2.3.2 / Python 3.8** — the base Scenario 1 ships.
 - **Containerlab cEOS topology launched** — requires a one-time Arista cEOS image upload (free Arista account). The setup is documented in `Lab_Setup/scenario_1_setup/README.md` under "Containerlab". Most learners who finished Day009+ already have this.
 - Familiarity with [Day041](../Day041_Installing_and_Uninstalling_Apps/README.md) (the install / `PLUGINS` pattern this pack reuses).
 
-## Pinned versions
+## Packages added
 
-| Package | Version | Why |
-|---------|---------|-----|
-| `nautobot-device-onboarding` | `4.2.6` | Latest 4.x line that supports Python 3.8 (4.3.0+ requires Python ≥3.9.2) |
-| `nautobot-ssot` (dependency) | `3.5.0` | Required by Device Onboarding 4.x; latest 3.x supporting Python 3.8 |
-| `nautobot-plugin-nornir` (dependency) | latest `2.x` | Required by Device Onboarding's Sync-Data-from-Network job |
+| Package | How it gets installed | Why |
+|---------|----------------------|-----|
+| `nautobot-device-onboarding` | `poetry add` on the host (Day 1, Step 2) | The app being installed |
+| `nautobot-ssot` | `poetry add` on the host (Day 1, Step 2) | Required by Device Onboarding 4.x; the SSoT framework the new jobs run on |
+| `nautobot-plugin-nornir` | Pulled in transitively by Device Onboarding | Required by Device Onboarding's Sync-Data-from-Network job |
+
+Versions are resolved by Poetry against `nautobot = "2.3.2"` and `python = ">=3.9,<3.12"` — no manual pins. `poetry.lock` records the exact versions for reproducibility.
 
 ## The four Days
 
 | Day | Topic |
 |-----|-------|
-| 1 | [Install Device Onboarding](Day_01_Install/README.md) — pip install, `PLUGINS` + `PLUGINS_CONFIG`, post-upgrade, verify in the UI |
+| 1 | [Install Device Onboarding](Day_01_Install/README.md) — `poetry add`, `invoke build`, `PLUGINS` + `PLUGINS_CONFIG`, post-upgrade, verify in the UI |
 | 2 | [Pre-Onboarding Data](Day_02_Pre_Onboarding_Data/README.md) — Locations, Statuses, Roles, and a SecretsGroup for the cEOS `admin`/`admin` credentials |
 | 3 | [Run the Onboarding Job](Day_03_Run_Onboarding_Job/README.md) — look up cEOS container IPs, run the **Perform Device Onboarding** job, inspect what got created |
 | 4 | [Validate and Wrap](Day_04_Validate_And_Wrap/README.md) — cross-check populated DCIM data, observe idempotency on a re-run, real-world correlation |

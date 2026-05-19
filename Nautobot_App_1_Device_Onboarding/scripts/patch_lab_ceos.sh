@@ -7,7 +7,7 @@
 # are recreated). Safe to run multiple times — each step is idempotent.
 #
 # Usage:
-#   bash Nautobot_App_Device_Onboarding/scripts/patch_lab_ceos.sh
+#   bash Nautobot_App_1_Device_Onboarding/scripts/patch_lab_ceos.sh
 
 set -euo pipefail
 

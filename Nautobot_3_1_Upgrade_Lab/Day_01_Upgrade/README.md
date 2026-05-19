@@ -477,6 +477,14 @@ That mirrors production reality. A few lessons that translate directly:
 - **Plan per-hop change windows.** This lab compresses three Nautobot hops into one Day for pedagogy. In production, 2.x → 2.4.latest, 2.4 → 3.0, and 3.0 → 3.1 are three separate change windows with three sets of approvals, smoke tests, and rollback plans.
 - **The tooling differs, the pattern doesn't.** Your production environment is probably Kubernetes/Helm or Ansible, not `nautobot-docker-compose`. But the same skeleton applies: pin a new version, rebuild the image, migrate, post-upgrade, smoke-test, verify, repeat.
 
-## What's Next
+## Day 1 To Do
 
-[Day 2](../Day_02_What_Is_Different_in_3_1/README.md) — a reference for what looks different in 3.1 when you replay Days 1–100 against the upgraded environment.
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+
+Go ahead and post a screenshot of your upgraded Nautobot 3.1.2 version banner, or share one lesson learned from the migration (the `--fake` migration trick, the constance reset, the PG13→PG14 jump — your pick), on social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+
+In tomorrow's challenge, we will [tour what is different in 3.1](../Day_02_What_Is_Different_in_3_1/README.md) — UI changes, Django 5.2 deprecations, and what to watch for when replaying Days 1–100 against the upgraded environment. See you tomorrow! 
+
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+1+of+the+Nautobot+3.1+Upgrade+Lab+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 1 of the Nautobot 3.1 Upgrade Lab of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

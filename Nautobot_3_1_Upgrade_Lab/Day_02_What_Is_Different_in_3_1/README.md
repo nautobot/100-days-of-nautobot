@@ -82,4 +82,16 @@ These notes will eventually fold into a 3.1-native rewrite of Days 1–100. Unti
 
 The Scenario 1 image is now on the same Nautobot version that backs [demo.nautobot.com](https://demo.nautobot.com/). When in doubt about what 3.1 *should* look like, hit demo as a known-good comparison.
 
-A future expansion pack is planned for popular Nautobot apps that the original 100 Days did not cover (Device Onboarding, Single Source of Truth, others TBD).
+The first such expansion pack is now available — the [Nautobot Device Onboarding Expansion Pack](../../Nautobot_App_Device_Onboarding/README.md). More are planned (Golden Config, others TBD).
+
+## Day 2 To Do
+
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+
+Go ahead and post a screenshot of a 3.1 UI difference you encountered, or share a snippet of code you had to change for 3.1 compatibility, on social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+
+This wraps the **Nautobot 3.1 Upgrade Lab**. Other expansion packs — like the [Device Onboarding pack](../../Nautobot_App_Device_Onboarding/README.md) — build on different baseline environments. Check the top-level [README](../../README.md) for what's currently available. See you in the next pack! 
+
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+2+of+the+Nautobot+3.1+Upgrade+Lab+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 2 of the Nautobot 3.1 Upgrade Lab of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

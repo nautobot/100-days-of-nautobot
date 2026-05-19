@@ -101,7 +101,20 @@ Stop any running stack first so containers come up fresh against the new image:
 > (nautobot-docker-compose-py3.10) $ invoke db-import
 > ```
 >
-> Run that **before** `invoke debug`. Note that `invoke db-import` **overwrites the DB** with the Scenario 1 starter dump — fine on a fresh Codespace, but skip it if you have local data you want to keep.
+> Run that **before** `invoke debug`. `invoke db-import` requires a **truly empty** Postgres volume — it loads the starter dump on top of whatever is there, it does not drop the existing schema first.
+>
+> ⚠️ **If `invoke db-import` fails with hundreds of `ERROR: relation "..." already exists` lines:** Nautobot already initialized the DB schema on a prior `invoke debug`, and the dump now collides with it. The fix is to nuke the Postgres volume and re-import from scratch (you will lose any local DB state — fine on a fresh Codespace):
+>
+> ```
+> $ invoke stop
+> $ docker volume ls | grep -i postgres
+> # note the volume name(s); typical: nautobot-docker-compose_postgres_data
+> $ docker volume rm <volume-name>
+> $ invoke db-import
+> $ invoke debug
+> ```
+>
+> If `invoke db-import` itself fails with `psql: error: could not connect to server: Connection refused`, that is a startup race — the fresh Postgres container needs a few seconds to initialize its data directory before accepting psql connections. Just retry `invoke db-import` once; the second attempt connects against the now-ready DB.
 
 ## Step 5 — Start the stack
 
@@ -191,6 +204,14 @@ Open the Nautobot UI on port 8080. Under **Apps → Installed Apps**, you should
 
 A new **Apps → Device Onboarding** entry should also appear in the navigation.
 
-## What's Next
+## Day 1 To Do
 
-[Day 2](../Day_02_Pre_Onboarding_Data/README.md) — set up the Locations, Statuses, Roles, and a SecretsGroup for the cEOS `admin` / `admin` credentials, so Day 3's onboarding job has the data scaffolding it expects.
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+
+Go ahead and post a screenshot of your **Apps → Installed Apps** page showing Device Onboarding, Single Source of Truth, and Nautobot Plugin for Nornir on social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+
+In tomorrow's challenge, we will set up the [pre-onboarding data](../Day_02_Pre_Onboarding_Data/README.md) — Locations, Statuses, Roles, and a SecretsGroup — that the onboarding job expects. See you tomorrow! 
+
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+1+of+the+Device+Onboarding+expansion+pack+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 1 of the Device Onboarding expansion pack of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

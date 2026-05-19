@@ -74,6 +74,14 @@ You have:
 
 The Retail-r-Us network in your Codespace is now backed by a Source of Truth that mirrors reality.
 
-## What's Next
+## Day 4 To Do
 
-A future expansion pack will likely cover **Golden Config** — the next step after you have devices in Nautobot is generating, comparing, and deploying their intended configurations. Watch this repo.
+Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/). 
+
+Go ahead and post a screenshot of a device's fully-populated interface list, or share one lesson learned about idempotency and real-world onboarding, on social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+
+This wraps the **Device Onboarding** expansion pack. A future expansion pack will likely cover **Golden Config** — the next step after you have devices in Nautobot is generating, comparing, and deploying their intended configurations. Keep an eye on this repo. See you in the next pack! 
+
+[X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+4+of+the+Device+Onboarding+expansion+pack+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
+
+[LinkedIn](https://www.linkedin.com/) (Copy & Paste: I just completed Day 4 of the Device Onboarding expansion pack of 100 Days of Nautobot, https://github.com/nautobot/100-days-of-nautobot, challenge! @networktocode #JobsToBeDone #100DaysOfNautobot)

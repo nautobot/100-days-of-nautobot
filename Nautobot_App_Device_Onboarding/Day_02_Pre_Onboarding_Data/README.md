@@ -30,6 +30,13 @@ $ cd ~/100-days-of-nautobot
 $ sudo containerlab deploy --topo clab/ceos-lab.clab.yml
 ```
 
+> ℹ️ **If you previously deployed Containerlab on an older checkout of this repo**, the cEOS startup-configs used hardcoded generic hostnames (`ceos-01`..`ceos-04`) that did not match the per-device filenames — so every onboarded Device would land in Nautobot named `ceos-NN` instead of `bos-rtr-01` etc. The configs in this branch have been corrected. If your containers were spun up before that fix, destroy and redeploy now so they boot with the right hostnames:
+>
+> ```
+> $ sudo containerlab destroy --topo clab/ceos-lab.clab.yml
+> $ sudo containerlab deploy --topo clab/ceos-lab.clab.yml
+> ```
+
 After ~90 seconds, you should see a four-row table:
 
 ```

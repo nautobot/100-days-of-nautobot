@@ -87,7 +87,21 @@ PYEOF
 
 The patch inserts two **silent skip** rules (a rule with a pattern but no `-> Action` consumes the line and continues) right before the Error catch-all. After this, `parse_output(platform='arista_eos', command='show version', data=<cEOS output>)` returns a populated dict instead of raising.
 
-> ⚠️ Like the network-bridge step in Day 2, this patch lives in the container's filesystem and is **lost** on `invoke stop` + `invoke debug`. Re-run after any container recreation. (A helper script that re-applies this and the Day 2 network bridge in one shot is available at [`scripts/patch_lab_ceos.sh`](../scripts/patch_lab_ceos.sh).)
+> ⚠️ Like the network-bridge step in Day 2, this TextFSM patch lives in the container's filesystem and is **lost** any time the containers are recreated — `invoke stop` + `invoke debug`, `invoke build` + `invoke debug`, codespace machine-type change. After any such recreation, re-apply **both** the Day 2 bridge attachments **and** this patch, or the next onboarding job will fail to connect or to parse `show version`.
+>
+> Easiest — the one-shot helper does both:
+>
+> ```
+> $ bash ~/100-days-of-nautobot/Nautobot_App_1_Device_Onboarding/scripts/patch_lab_ceos.sh
+> ```
+>
+> If you need the bridge commands explicitly:
+>
+> ```
+> $ docker network connect bridge nautobot-docker-compose-celery_worker-1
+> $ docker network connect bridge nautobot-docker-compose-nautobot-1
+> $ docker network connect bridge nautobot-docker-compose-celery_beat-1
+> ```
 
 ## Run the Job Against One Device
 

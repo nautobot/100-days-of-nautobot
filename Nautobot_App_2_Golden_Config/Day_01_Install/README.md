@@ -50,13 +50,17 @@ RUN cd /source && \
     poetry export --without-hashes -o /tmp/dist/requirements.txt
 ```
 
-### Edit `tasks.py`
+### Edit `invoke.yml`
 
-Change the `python_ver` default near the top of the file:
+You created `invoke.yml` during Device Onboarding Day 1 with `python_ver: "3.10"`. Bump it to `"3.12"`:
 
-```python
-"python_ver": "3.12",   # was "3.10"
+```yaml
+nautobot_docker_compose:
+  python_ver: "3.12"     # was "3.10"
+  # ... other entries unchanged
 ```
+
+> ℹ️ The 3.1 Upgrade Lab Day 1 edits `tasks.py` for this same value — it doesn't have an `invoke.yml`. We do (from DO Day 1), and `invoke.yml`'s value **overrides** anything in `tasks.py`. So we only need to edit `invoke.yml`; `tasks.py`'s long-standing `"3.8"` default is moot for us.
 
 ### Rebuild and migrate
 

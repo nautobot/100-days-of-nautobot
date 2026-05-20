@@ -13,6 +13,14 @@ The [3.1 Upgrade Lab Day 1](../../Nautobot_3_1_Upgrade_Lab/Day_01_Upgrade/README
 
 For the full reasoning behind each step, read [Hop 1 in the Upgrade Lab](../../Nautobot_3_1_Upgrade_Lab/Day_01_Upgrade/README.md#hop-1-232--2433-also-python-38--312). The condensed commands you need to run are below.
 
+### Resuming on a fresh codespace? Re-do DO Day 1's baseline setup first
+
+This pack [requires Device Onboarding completed end-to-end](../README.md#prerequisites). Docker volumes don't persist across separate codespaces, though — so if you finished DO in a previous codespace and launched a fresh one for this pack, the Postgres volume here is empty and `~/nautobot-docker-compose` isn't even cloned. Going straight into Phase 1 edits + `invoke build` will trap you: the build's first `invoke debug` initializes the schema against an empty DB, the next `invoke db-import` fails on `relation "..." already exists`, and `invoke migrate` after the 2.4.33 rebuild has nothing coherent to work from.
+
+Re-run [DO Day 1's setup](../../Nautobot_App_1_Device_Onboarding/Day_01_Install/README.md) end-to-end in this codespace **before** touching Phase 1 below — clone `nautobot-docker-compose`, create `invoke.yml` at `python_ver: "3.10"`, `invoke build`, `invoke db-import` (per [DO Day 1's "About the database" callout](../../Nautobot_App_1_Device_Onboarding/Day_01_Install/README.md#step-4--rebuild-the-image)), then `invoke debug` to confirm 2.3.2 at `:8080`. For Days 3–4 (Backup, Compliance), you will also need DO Days 2–3 re-done so the Containerlab topology + onboarded cEOS devices are in place.
+
+Once 2.3.2 is healthy, `invoke stop`, then continue with the snapshot below.
+
 ### Snapshot the DB first
 
 ```
@@ -67,7 +75,9 @@ nautobot_docker_compose:
 ```
 $ poetry lock
 $ invoke stop
-$ invoke build         # several minutes — pulls the 2.4.33-py3.12 base image
+$ docker pull ghcr.io/nautobot/nautobot:2.4.33-py3.12
+$ docker pull ghcr.io/nautobot/nautobot-dev:2.4.33-py3.12
+$ invoke build         # several minutes — uses the pre-pulled base images above
 $ invoke start
 $ docker exec nautobot-docker-compose-nautobot-1 nautobot-server migrate dcim --fake
 $ invoke migrate
@@ -181,6 +191,8 @@ The left nav should also gain a new top-level **Apps → Golden Configuration** 
 - **Settings**
   - Golden Config Settings
   - Remediation Settings
+
+![Apps → Golden Configuration menu group in the Nautobot left nav after Day 1 install](../images/golden_config_1.png)
 
 We will configure **Golden Config Settings** on Day 2.
 

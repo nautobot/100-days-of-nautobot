@@ -83,9 +83,16 @@ I am glad you asked, sign up for the challenge [here](https://go.networktocode.c
 
 In addition to the main 100 Days, we maintain **expansion packs** — short, focused labs that cover topics adjacent to the core challenge.
 
+**Lab environment**
+
 - **[Nautobot 3.1 Upgrade Lab](Nautobot_3_1_Upgrade_Lab/README.md)** — a two-day lab that walks an in-place upgrade of the Scenario 1 environment from Nautobot 2.3.2 to 3.1.2 (the version on [demo.nautobot.com](https://demo.nautobot.com/)), followed by a reference for what looks different in 3.1 when replaying Days 1–100 against the upgraded environment.
 
-More expansion packs are planned, including coverage of popular Nautobot apps that the main 100 Days do not get to.
+**Popular Nautobot Apps** — numbered because each builds on the state the previous one left behind. Work through them in order.
+
+1. **[Nautobot Device Onboarding](Nautobot_App_1_Device_Onboarding/README.md)** — a four-day pack that installs `nautobot-app-device-onboarding`, sets up the Containerlab cEOS topology, and onboards the four lab devices into Nautobot end-to-end via the SSoT-based `Sync Devices From Network` and `Sync Network Data From Network` jobs.
+2. **[Nautobot Golden Config](Nautobot_App_2_Golden_Config/README.md)** — a four-day pack that picks up where Device Onboarding leaves off: back up running configs, render intended configs from Jinja templates, and run compliance diffs against the onboarded cEOS devices.
+
+More are planned (likely candidates: Data Validation Engine, ChatOps).
 
 ## Contributors
 

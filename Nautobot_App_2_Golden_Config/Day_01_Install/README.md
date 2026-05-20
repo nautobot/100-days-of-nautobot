@@ -67,7 +67,9 @@ nautobot_docker_compose:
 ```
 $ poetry lock
 $ invoke stop
-$ invoke build         # several minutes — pulls the 2.4.33-py3.12 base image
+$ docker pull ghcr.io/nautobot/nautobot:2.4.33-py3.12
+$ docker pull ghcr.io/nautobot/nautobot-dev:2.4.33-py3.12
+$ invoke build         # several minutes — uses the pre-pulled base images above
 $ invoke start
 $ docker exec nautobot-docker-compose-nautobot-1 nautobot-server migrate dcim --fake
 $ invoke migrate

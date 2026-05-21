@@ -2,7 +2,7 @@
 
 Today is the part of the Golden Config workflow that **would** SSH into each in-scope Device, run `show running-config`, and write the output into the backup directory inside the celery_worker container's local clone of the GitRepository. In a real-network lab — for example, after [DO Day 3](../../Nautobot_App_1_Device_Onboarding/Day_03_Run_Onboarding_Job/README.md) — that means a one-click Job that fetches running-configs for the four cEOS devices, parses what came back, and shows you per-device backup status in the UI.
 
-This pack does **not** run that Job. Reaching four cEOS containers from the Nautobot stack inside one Codespace consistently starves the host (see the pack-level [Lab approach section](../README.md#lab-approach--no-containerlab-in-this-pack) for the full reason). Instead, we ship four **pre-committed sample running-configs** in the `golden-config-data/backups/` scaffold — they stand in for what the Backup job would have produced. Today is three steps:
+This pack does **not** run that Job by default. We tried it across many Codespace setups during verification and the results were **uneven** — sometimes the full four-cEOS topology came up and the Backup job ran clean; sometimes one or two devices came up; sometimes Containerlab's postdeploy hung partway through. To keep the lab experience consistent for every learner, Day 3 is a walkthrough against four **pre-committed sample running-configs** in the `golden-config-data/backups/` scaffold — they stand in for what the Backup job would have produced. (Step 2 also gives an optional partial-lab path for readers who want to see the live Backup job actually run.) Today is three steps:
 
 1. Walk through what the Backup job does in production, where it gets its inputs, and what it writes.
 2. Inspect the pre-committed samples inside the celery_worker container's local clone of the GitRepository.
@@ -23,13 +23,20 @@ No Jobs are run today.
 
 The local clone is on the celery_worker container's filesystem at `/opt/nautobot/git/golden_config_lab/`. With no Secrets Group on the GitRepository, the job does **not** push the backups back upstream — in production you'd attach a Secrets Group with a deploy key or PAT, point at your own backup-only repo, and let the job push commits.
 
-## Step 2 — Why we are not running it in this pack
+## Step 2 — Why we walkthrough instead of running the job
 
-Reaching `172.17.0.0/16` from the Nautobot containers in a Codespace requires the four Containerlab cEOS containers up and SSH-reachable. Even on larger Codespace SKUs that consistently starved CPU/RAM hard enough to wedge Docker entirely. The full post-mortem is in the [pack-level Lab approach section](../README.md#lab-approach--no-containerlab-in-this-pack).
+Running the live Backup Job against four cEOS containers from inside one Codespace gave us **uneven results** across multiple attempts during pack verification — sometimes everything came up clean, sometimes one or two cEOS containers stalled in postdeploy, sometimes Docker itself stopped responding. Rather than ship a lab that works for some learners and not others, we committed the Backup Job's *output* — four files in the right places with realistic running-config content — directly to this pack. Everything downstream in Golden Config (Intended on Day 4, Compliance on Day 4) operates on those files exactly the way it would operate on the live job's output.
 
-So the Backup Configurations job's *output* — four files in the right places with realistic running-config content — was committed to this pack manually. Everything downstream in Golden Config (Intended generation on Day 4, Compliance on Day 4) operates on those files exactly the way it would operate on the job's output.
-
-> 💡 **Want to actually run the Backup Job?** Do the [Device Onboarding pack](../../Nautobot_App_1_Device_Onboarding/README.md) on a 16+ GB Codespace SKU first — that brings up the four cEOS containers and onboards them with a `cEOS Lab Credentials` SecretsGroup. Then attach that SecretsGroup to the four mock Devices this pack seeded (or skip the seed step entirely and use DO's onboarded inventory), and run `Perform Configuration Backup` from the UI as documented in Step 1 above. The Day 2 path templates write the output to the same paths the pre-committed samples occupy — you can keep the samples as a fallback, or delete them and let the live job populate the directories.
+> 💡 **Optional — try the live Backup Job against a partial topology.** If you would rather see the Backup Job actually run, deploy only the **Boston pair** of cEOS containers instead of all four. Two cEOS instances + the Nautobot stack fits comfortably in most Codespace SKUs:
+>
+> ```
+> $ cd ~/100-days-of-nautobot
+> $ sudo containerlab destroy --topo clab/ceos-lab.clab.yml --cleanup    # if you have 4 already
+> $ sudo containerlab deploy  --topo clab/ceos-lab.clab.yml --node-filter bos-acc-01,bos-rtr-01
+> $ bash Nautobot_App_1_Device_Onboarding/scripts/patch_lab_ceos.sh
+> ```
+>
+> Then attach a `cEOS Lab Credentials` SecretsGroup to `bos-acc-01` and `bos-rtr-01` ([DO Day 2](../../Nautobot_App_1_Device_Onboarding/Day_02_Pre_Onboarding_Data/README.md) walks the SecretsGroup wiring), and either narrow the `cEOS Lab Devices` DynamicGroup filter to also match on `Location = Boston` (cleanest), or accept that **Perform Configuration Backup** will succeed for the Boston pair and fail for the NYC pair (a side-demo of GC's per-device error handling). The Day 2 Backup Path Template writes captured configs to the same `golden-config-data/backups/Boston/` paths the pre-committed samples occupy — the live job either overwrites them or you can `rm` the samples first.
 
 ## Step 3 — Inspect the pre-committed sample backups
 

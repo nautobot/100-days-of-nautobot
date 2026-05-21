@@ -85,6 +85,8 @@ Leave **Secrets Group** empty — public repo, no credentials needed, no pushes.
 
 Click **Create & Sync** — this saves the repository and triggers the initial Git fetch in one step. Watch the job log; on success, the GitRepository's status flips to `OK`. (Plain **Create** saves without fetching; you would then have to trigger the fetch manually via the `Sync` action top-right.)
 
+![Golden Config Lab GitRepository sync job logs showing a successful initial Create & Sync](../images/day2_github_sync_logs.png)
+
 ## Step 2 — Create a DynamicGroup to scope Golden Config to the mock cEOS Devices
 
 Golden Config's Settings use a DynamicGroup as their scope — only Devices matching the group get rendered (Intended) and checked (Compliance).

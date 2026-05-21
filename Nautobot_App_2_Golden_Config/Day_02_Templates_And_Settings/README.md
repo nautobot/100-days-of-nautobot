@@ -27,7 +27,7 @@ Nautobot_App_2_Golden_Config/golden-config-data/
     └── .gitkeep
 ```
 
-Golden Config reads templates from this scaffold to render intended configurations, and reads the pre-committed sample backups to compare against in Day 4's compliance run. The `intended/` subdir is populated locally inside the Nautobot container on Day 4 — no Secrets Group on the GitRepository, so it never pushes back upstream.
+Golden Config reads templates from this scaffold to render intended configurations, and reads the pre-committed sample backups to compare against in Day 4's compliance run. The `intended/` subdir is populated locally inside the celery_worker container on Day 4 — no Secrets Group on the GitRepository, so it never pushes back upstream.
 
 ## Step 0 — Seed the four mock cEOS Devices
 
@@ -142,19 +142,19 @@ On the **Golden Config Settings** detail page (`cEOS Lab Settings`), each reposi
 
 ![cEOS Lab Settings Golden Config Settings detail page showing the wired repository, path templates, and DynamicGroup scope](../images/day2_cEOS_lab_settings.png)
 
-Quick sanity-check from the codespace shell — confirm the local clone of the GitRepository inside the Nautobot container has both the template and the four sample backups in the right places:
+Quick sanity-check from the codespace shell — confirm the local clone of the GitRepository inside the **celery_worker** container has both the template and the four sample backups in the right places. (The GitRepository sync is a Nautobot Job; Jobs run on the celery_worker container, so the clone at `/opt/nautobot/git/<slug>/` lives on the worker's filesystem, not on the `nautobot-1` web-service container.)
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     ls /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/templates/arista_eos/
 network.j2
 
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     ls /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/
 bos-acc-01.cfg
 bos-rtr-01.cfg
 
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     ls /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/New_York/
 nyc-acc-01.cfg
 nyc-rtr-01.cfg

@@ -38,7 +38,7 @@ Click **Jobs → Jobs → Generate Intended Configurations → Run Job Now**. Le
 After the job runs, check the intended files:
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     find /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/intended/ \
     -name "*.cfg"
 /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/intended/Boston/bos-acc-01.cfg
@@ -46,7 +46,7 @@ $ docker exec nautobot-docker-compose-nautobot-1 \
 /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/intended/New_York/nyc-acc-01.cfg
 /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/intended/New_York/nyc-rtr-01.cfg
 
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     cat /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/intended/Boston/bos-rtr-01.cfg
 !
 ! Intended configuration for bos-rtr-01 (network / arista_eos)
@@ -89,16 +89,16 @@ The interesting part is what happens when something drifts — Step 6.
 
 ## Step 6 — Deliberate drift demo
 
-In production, drift happens when someone makes a change on a real device that the intended template does not allow. The next Backup run would capture that change, and the next Compliance run would flag it. To simulate the same effect without an SSH-reachable device, we edit one of the pre-committed sample backups directly inside the Nautobot container's local clone of the GitRepository and re-run Compliance.
+In production, drift happens when someone makes a change on a real device that the intended template does not allow. The next Backup run would capture that change, and the next Compliance run would flag it. To simulate the same effect without an SSH-reachable device, we edit one of the pre-committed sample backups directly inside the celery_worker container's local clone of the GitRepository and re-run Compliance.
 
 Add an unauthorized NTP server to `bos-rtr-01.cfg`:
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     sh -c "sed -i 's|^ntp server 8.8.8.8|ntp server 8.8.8.8\nntp server 192.0.2.99|' \
         /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg"
 
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     grep '^ntp' /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg
 ntp server 1.1.1.1
 ntp server 8.8.8.8
@@ -123,7 +123,7 @@ Click into the Non-Compliant `ntp` cell — the per-line diff shows `ntp server 
 **To restore the all-green state**, either undo the edit directly:
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     sh -c "sed -i '/^ntp server 192.0.2.99/d' \
         /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg"
 ```

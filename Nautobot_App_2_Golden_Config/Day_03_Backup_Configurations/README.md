@@ -1,11 +1,11 @@
 # Day 3: Backup Running Configurations (explain-only walkthrough)
 
-Today is the part of the Golden Config workflow that **would** SSH into each in-scope Device, run `show running-config`, and write the output into the backup directory inside the Nautobot container's local clone of the GitRepository. In a real-network lab — for example, after [DO Day 3](../../Nautobot_App_1_Device_Onboarding/Day_03_Run_Onboarding_Job/README.md) — that means a one-click Job that fetches running-configs for the four cEOS devices, parses what came back, and shows you per-device backup status in the UI.
+Today is the part of the Golden Config workflow that **would** SSH into each in-scope Device, run `show running-config`, and write the output into the backup directory inside the celery_worker container's local clone of the GitRepository. In a real-network lab — for example, after [DO Day 3](../../Nautobot_App_1_Device_Onboarding/Day_03_Run_Onboarding_Job/README.md) — that means a one-click Job that fetches running-configs for the four cEOS devices, parses what came back, and shows you per-device backup status in the UI.
 
 This pack does **not** run that Job. Reaching four cEOS containers from the Nautobot stack inside one Codespace consistently starves the host (see the pack-level [Lab approach section](../README.md#lab-approach--no-containerlab-in-this-pack) for the full reason). Instead, we ship four **pre-committed sample running-configs** in the `golden-config-data/backups/` scaffold — they stand in for what the Backup job would have produced. Today is three steps:
 
 1. Walk through what the Backup job does in production, where it gets its inputs, and what it writes.
-2. Inspect the pre-committed samples inside the Nautobot container's local clone of the GitRepository.
+2. Inspect the pre-committed samples inside the celery_worker container's local clone of the GitRepository.
 3. Identify what is **in** a running-config backup and what is **not** — important context for Day 4's compliance comparison.
 
 No Jobs are run today.
@@ -21,7 +21,7 @@ No Jobs are run today.
 5. Writes the file. Optionally runs the per-Platform `regex_lines` filter to scrub volatile lines (timestamp comments, banner counters, etc.) before saving.
 6. Updates per-Device backup status visible at **Apps → Golden Configuration → Backup → All Backups**.
 
-The local clone is on the Nautobot container's filesystem at `/opt/nautobot/git/golden_config_lab/`. With no Secrets Group on the GitRepository, the job does **not** push the backups back upstream — in production you'd attach a Secrets Group with a deploy key or PAT, point at your own backup-only repo, and let the job push commits.
+The local clone is on the celery_worker container's filesystem at `/opt/nautobot/git/golden_config_lab/`. With no Secrets Group on the GitRepository, the job does **not** push the backups back upstream — in production you'd attach a Secrets Group with a deploy key or PAT, point at your own backup-only repo, and let the job push commits.
 
 ## Step 2 — Why we are not running it in this pack
 
@@ -45,10 +45,10 @@ Nautobot_App_2_Golden_Config/golden-config-data/backups/
     └── nyc-rtr-01.cfg
 ```
 
-Once Day 2's `Create & Sync` pulled the GitRepository, those four files are also inside the Nautobot container's local clone. Verify from the codespace shell:
+Once Day 2's `Create & Sync` pulled the GitRepository, those four files are also inside the celery_worker container's local clone. Verify from the codespace shell:
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     find /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/ \
     -name "*.cfg"
 /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-acc-01.cfg
@@ -60,7 +60,7 @@ $ docker exec nautobot-docker-compose-nautobot-1 \
 Pick one and read it through:
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 \
+$ docker exec nautobot-docker-compose-celery_worker-1 \
     cat /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg
 ```
 

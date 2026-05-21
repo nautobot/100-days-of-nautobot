@@ -205,6 +205,8 @@ Look for **`nautobot_golden_config`** in that `Apply all migrations:` list — t
 
 Open the Nautobot UI on port 8080. The footer should show **v2.4.33** now. Under **Apps → Installed Apps**, you should see **Golden Configuration** listed. (If you came in from the Device Onboarding pack, you will also see `Nautobot Plugin for Nornir`, `Single Source of Truth`, and `Device Onboarding` from there.)
 
+![Apps → Installed Apps page in the Nautobot UI showing Golden Configuration installed after Day 1](../images/day1_installed_apps.png)
+
 The left nav should also gain a new top-level **Apps → Golden Configuration** group with sub-items like:
 
 - **Compliance**

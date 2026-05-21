@@ -76,7 +76,7 @@ The job diffs `intended/.../<name>.cfg` against `backups/.../<name>.cfg` for eac
 
 ## Step 5 — Walk the Compliance dashboard
 
-**Apps → Golden Configuration → Compliance → Configuration Compliance** shows the per-(Device, Feature) result grid. Expected for the lab on a fresh run:
+**GOLDEN CONFIG → Config Compliance** shows the per-(Device, Feature) result grid. Expected for the lab on a fresh run:
 
 | Device | hostname | ntp |
 |--------|----------|-----|

@@ -79,6 +79,8 @@ In the Nautobot UI, navigate to **Extensibility → Git Repositories → Add**:
 | **Branch** | `main` |
 | **Provided Contents** | tick all three: `backup configs`, `intended configs`, `jinja templates` (the dropdown also shows `Golden Config properties` — leave that one unticked; we wire Settings through the UI in Step 3, not via Git) |
 
+> 💡 **Selecting multiple Provided Contents entries:** the field is a standard HTML multi-select, so hold **⌘ Command** (macOS) or **Ctrl** (Windows / Linux) while clicking the second and third entries to keep prior selections. Clicking without the modifier replaces your current selection with just the clicked entry.
+
 Leave **Secrets Group** empty — public repo, no credentials needed, no pushes.
 
 Click **Create & Sync** — this saves the repository and triggers the initial Git fetch in one step. Watch the job log; on success, the GitRepository's status flips to `OK`. (Plain **Create** saves without fetching; you would then have to trigger the fetch manually via the `Sync` action top-right.)

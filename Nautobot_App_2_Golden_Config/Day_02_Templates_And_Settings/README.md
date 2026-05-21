@@ -140,6 +140,8 @@ Click **Create**.
 
 On the **Golden Config Settings** detail page (`cEOS Lab Settings`), each repository link should be clickable and resolve. Click into the **Scope** DynamicGroup — the four mock cEOS Devices should be listed.
 
+![cEOS Lab Settings Golden Config Settings detail page showing the wired repository, path templates, and DynamicGroup scope](../images/day2_cEOS_lab_settings.png)
+
 Quick sanity-check from the codespace shell — confirm the local clone of the GitRepository inside the Nautobot container has both the template and the four sample backups in the right places:
 
 ```

@@ -153,12 +153,12 @@ PLUGINS_CONFIG = {
         "enable_backup": True,
         "enable_compliance": True,
         "enable_intended": True,
-        "enable_sotagg": True,
+        "enable_sotagg": False,
     },
 }
 ```
 
-We will use `backup`, `intended`, and `compliance` on Days 3 and 4. `sotagg` (SOT aggregation) is left on so the Jinja templates we write on Day 2 have the option of pulling richer GraphQL context if we extend them later.
+We will use `backup`, `intended`, and `compliance` on Days 3 and 4. `sotagg` (SoT aggregation) is **off** — when it is on, the Golden Config Settings form requires a SoT Aggregation GraphQL query to be defined, and we have no use for one in this pack. Flip it on (and define a query) later if you extend the Jinja templates to pull richer GraphQL context.
 
 > 💡 **Already completed the Device Onboarding pack in this codespace?** Your `PLUGINS` list already contains DO's three entries (`nautobot_plugin_nornir`, `nautobot_ssot`, `nautobot_device_onboarding`) and `PLUGINS_CONFIG` has matching entries. Keep all of them — just **append** `nautobot_golden_config` to the existing list and add the `PLUGINS_CONFIG["nautobot_golden_config"]` entry alongside the DO ones.
 

@@ -132,9 +132,9 @@ The path templates are themselves Jinja — `obj` is the Device. The `replace(' 
 - Intended → `Nautobot_App_2_Golden_Config/golden-config-data/intended/Boston/bos-acc-01.cfg`
 - Template → `Nautobot_App_2_Golden_Config/golden-config-data/templates/arista_eos/network.j2`
 
-Leave the **Backup Test** field empty (we will not run the Backup job in this lab anyway — see Day 3). Leave the GraphQL **SoT Aggregation Query** field empty for now.
+Leave the **Backup Test** field empty (we will not run the Backup job in this lab anyway — see Day 3). The **SoT Aggregation Query** field can stay empty too — Day 1 sets `enable_sotagg: False` in `PLUGINS_CONFIG`, so this field is informational only here.
 
-Save.
+Click **Create**.
 
 ## Step 4 — Validate the wiring
 

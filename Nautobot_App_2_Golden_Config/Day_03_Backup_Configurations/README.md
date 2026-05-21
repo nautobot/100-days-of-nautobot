@@ -1,110 +1,98 @@
-# Day 3: Backup Running Configurations
+# Day 3: Backup Running Configurations (explain-only walkthrough)
 
-Today is the first payoff. We run Golden Config's **Backup Configurations** job against the four cEOS devices that Device Onboarding placed in Nautobot. The job SSH's in via Nornir (reusing the `cEOS Lab Credentials` SecretsGroup from Device Onboarding Day 2), pulls `show running-config`, and writes one file per device into the backup directory inside the Nautobot container's local clone of the `Golden Config Lab` Git repository.
+Today is the part of the Golden Config workflow that **would** SSH into each in-scope Device, run `show running-config`, and write the output into the backup directory inside the Nautobot container's local clone of the GitRepository. In a real-network lab — for example, after [DO Day 3](../../Nautobot_App_1_Device_Onboarding/Day_03_Run_Onboarding_Job/README.md) — that means a one-click Job that fetches running-configs for the four cEOS devices, parses what came back, and shows you per-device backup status in the UI.
 
-## Step 1 — Confirm the Containerlab patches are in place
+This pack does **not** run that Job. Reaching four cEOS containers from the Nautobot stack inside one Codespace consistently starves the host (see the pack-level [Lab approach section](../README.md#lab-approach--no-containerlab-in-this-pack) for the full reason). Instead, we ship four **pre-committed sample running-configs** in the `golden-config-data/backups/` scaffold — they stand in for what the Backup job would have produced. Today is three steps:
 
-Golden Config's Backup job uses Nornir + Netmiko to reach the devices on `172.17.0.0/16`. If you stopped/restarted the stack since Device Onboarding, re-apply the runtime patches:
+1. Walk through what the Backup job does in production, where it gets its inputs, and what it writes.
+2. Inspect the pre-committed samples inside the Nautobot container's local clone of the GitRepository.
+3. Identify what is **in** a running-config backup and what is **not** — important context for Day 4's compliance comparison.
 
-```
-$ cd ~/100-days-of-nautobot
-$ bash Nautobot_App_1_Device_Onboarding/scripts/patch_lab_ceos.sh
-```
+No Jobs are run today.
 
-The script is idempotent — safe to re-run. It bridges the Nautobot containers to the default Docker network and reapplies the cEOS-compatibility patches.
+## Step 1 — How the Backup Configurations job works in production
 
-## Step 2 — Enable the Backup job
+`nautobot-app-golden-config` ships a Nautobot Job called **Perform Configuration Backup**. When you run it (UI: **Jobs → Jobs → Perform Configuration Backup → Run Job Now**), the job:
 
-Like every Nautobot Job, **Backup Configurations** ships disabled by default. Enable it once:
+1. Reads the **Scope** from your Golden Config Settings — for us, `cEOS Lab Settings` → `cEOS Lab Devices` DynamicGroup → the four mock cEOS Devices.
+2. For each Device in scope, opens a Nornir/Netmiko SSH session using credentials from the Device's `SecretsGroup` (in a DO-baselined lab this is the `cEOS Lab Credentials` group; mock Devices here have no SecretsGroup, which is one reason we cannot actually run the job).
+3. Issues `show running-config`, captures the output.
+4. Renders the **Backup Path Template** with the Device as `obj` to get a relative path inside the GitRepository's local clone. For `bos-rtr-01`: `Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg`.
+5. Writes the file. Optionally runs the per-Platform `regex_lines` filter to scrub volatile lines (timestamp comments, banner counters, etc.) before saving.
+6. Updates per-Device backup status visible at **Apps → Golden Configuration → Backup → All Backups**.
 
-- **Jobs → Jobs** → filter for "Golden Config" or "Backup".
-- Click into **Perform Configuration Backup**.
-- **Edit** (top-right) → tick **Enabled** → **Update**.
+The local clone is on the Nautobot container's filesystem at `/opt/nautobot/git/golden_config_lab/`. With no Secrets Group on the GitRepository, the job does **not** push the backups back upstream — in production you'd attach a Secrets Group with a deploy key or PAT, point at your own backup-only repo, and let the job push commits.
 
-You should now see **Run Job Now** on the job's detail page.
+## Step 2 — Why we are not running it in this pack
 
-## Step 3 — Run the job against one device first
+Reaching `172.17.0.0/16` from the Nautobot containers in a Codespace requires the four Containerlab cEOS containers up and SSH-reachable. Even on larger Codespace SKUs that consistently starved CPU/RAM hard enough to wedge Docker entirely. The full post-mortem is in the [pack-level Lab approach section](../README.md#lab-approach--no-containerlab-in-this-pack).
 
-Smart to validate against a single device before batching. Click **Perform Configuration Backup → Run Job Now**. The form is short:
+So the Backup Configurations job's *output* — four files in the right places with realistic running-config content — was committed to this pack manually. Everything downstream in Golden Config (Intended generation on Day 4, Compliance on Day 4) operates on those files exactly the way it would operate on the job's output.
 
-| Field | Set to |
-|-------|--------|
-| **Dryrun** | leave **unchecked** (we want files written to disk) |
-| **Debug** | leave unchecked |
-| **Device** | `bos-rtr-01` (or any one of the four cEOS devices) |
+> 💡 **Want to actually run the Backup Job?** Do the [Device Onboarding pack](../../Nautobot_App_1_Device_Onboarding/README.md) on a 16+ GB Codespace SKU first — that brings up the four cEOS containers and onboards them with a `cEOS Lab Credentials` SecretsGroup. Then attach that SecretsGroup to the four mock Devices this pack seeded (or skip the seed step entirely and use DO's onboarded inventory), and run `Perform Configuration Backup` from the UI as documented in Step 1 above. The Day 2 path templates write the output to the same paths the pre-committed samples occupy — you can keep the samples as a fallback, or delete them and let the live job populate the directories.
 
-Click **Run**. The job log streams; refresh until completion.
+## Step 3 — Inspect the pre-committed sample backups
 
-Expected log highlights:
+The samples ship at:
 
 ```
-Starting backup jobs.
-Pull Device data
-Backup configurations starting.
-bos-rtr-01: Backup running-config file is locked.
-bos-rtr-01: Backup running-config: <local path under /opt/nautobot/git/golden_config_lab/backups/>
-Performing backup compliance for nautobot-config.
-Backup configurations ended.
+Nautobot_App_2_Golden_Config/golden-config-data/backups/
+├── Boston/
+│   ├── bos-acc-01.cfg
+│   └── bos-rtr-01.cfg
+└── New_York/
+    ├── nyc-acc-01.cfg
+    └── nyc-rtr-01.cfg
 ```
 
-## Step 4 — Inspect the per-device backup
-
-The job wrote a config file inside the Nautobot container at the path your **Backup Path Template** from Day 2 resolved to. For `bos-rtr-01` (location `Boston`):
+Once Day 2's `Create & Sync` pulled the GitRepository, those four files are also inside the Nautobot container's local clone. Verify from the codespace shell:
 
 ```
-$ docker exec nautobot-docker-compose-nautobot-1 ls /opt/nautobot/git/golden_config_lab/backups/Boston/
-bos-rtr-01.cfg
-
-$ docker exec nautobot-docker-compose-nautobot-1 head -20 /opt/nautobot/git/golden_config_lab/backups/Boston/bos-rtr-01.cfg
+$ docker exec nautobot-docker-compose-nautobot-1 \
+    find /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/ \
+    -name "*.cfg"
+/opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-acc-01.cfg
+/opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg
+/opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/New_York/nyc-acc-01.cfg
+/opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/New_York/nyc-rtr-01.cfg
 ```
 
-You should see the device's running-config — the same content `show running-config` would produce over SSH. Compare against a fresh manual SSH to confirm:
+Pick one and read it through:
 
 ```
-$ ssh admin@<bos-rtr-01-ip> show running-config | head -20
+$ docker exec nautobot-docker-compose-nautobot-1 \
+    cat /opt/nautobot/git/golden_config_lab/Nautobot_App_2_Golden_Config/golden-config-data/backups/Boston/bos-rtr-01.cfg
 ```
 
-The two should match line-for-line (minus the timestamp comment at the top of `show running-config`, which Golden Config's `regex_lines` settings can scrub if you want — leave it for now).
+You should see:
 
-In the UI: **Apps → Golden Configuration → Backup → All Backups** — the row for `bos-rtr-01` should show the backup status and a link to view the file via Nautobot.
+- a `hostname` matching the device name,
+- two `ntp server` lines at `1.1.1.1` and `8.8.8.8` (these align with the Jinja template Day 4 will render — that is why Day 4's compliance comes out clean for hostname + NTP on every device),
+- realistic filler — `interface Management0` with the device's management IP, `interface Ethernet1` / `Ethernet2` with peer-description text, `ip routing`, and on the two router devices (`bos-rtr-01`, `nyc-rtr-01`) a small `router bgp` block.
 
-## Step 5 — Batch the remaining three
+All four samples are plain Arista IOS-style configurations — same shape that `show running-config` produces on a cEOS Lab device. They differ from each other in hostname, management IP, peer descriptions, and BGP ASN/router-id, so Day 4's compliance treats them as four distinct devices.
 
-Re-run **Perform Configuration Backup**. This time, leave the **Device** field empty — when nothing is specified, the job runs against the full **Scope** of the `cEOS Lab Settings` (the `cEOS Lab Devices` DynamicGroup, all four cEOS devices).
+## Step 4 — What got captured, what didn't
 
-After the run, the backup directory should contain all four files:
+In a real backup, **`show running-config`** captures:
 
-```
-$ docker exec nautobot-docker-compose-nautobot-1 find /opt/nautobot/git/golden_config_lab/backups/ -name "*.cfg"
-/opt/nautobot/git/golden_config_lab/backups/Boston/bos-acc-01.cfg
-/opt/nautobot/git/golden_config_lab/backups/Boston/bos-rtr-01.cfg
-/opt/nautobot/git/golden_config_lab/backups/New York/nyc-acc-01.cfg
-/opt/nautobot/git/golden_config_lab/backups/New York/nyc-rtr-01.cfg
-```
+- All configured state — hostname, users, interfaces, routing protocols, ACLs, etc.
+- Plus any volatile metadata at the top (the timestamp comment Arista emits) unless filtered out via the per-Platform `regex_lines` setting.
 
-## Step 6 — What got captured, what didn't
+It does **not** capture:
 
-Notice what is **in** the backup file:
+- Operational state — `show interface counters`, `show route`, neighbor adjacencies. Anything that changes minute-to-minute is out of scope.
+- Anything in `startup-config` that did not also make it to `running-config`.
 
-- Everything from `show running-config` — hostname, users, interfaces, OSPF, etc.
-- Including the timestamp comment Arista emits at the top.
-
-And what is **not**:
-
-- Operational state (`show interface counters`, `show route`, neighbors). Backup is configuration only — anything that changes minute-to-minute is out of scope.
-- Anything from the device's startup config that is not also in running config.
-
-This matters for compliance on Day 4: we will only be able to compare against config lines that show up in `running-config`, never against operational state.
-
-> 💡 **Why is the backup only on the Nautobot container, not pushed to GitHub?** The `Golden Config Lab` GitRepository has no Secrets Group attached, so the Backup job clones the repo locally inside the container and writes there. It does not push back. For production you would attach a Secrets Group with a PAT or deploy key, point at your own backup repository, and let the job push commits up.
+This matters for Day 4: the Compliance comparison checks only config lines present in a running-config backup. State-vs-config comparisons would need a different job — `Perform Configuration Compliance` is specifically diffing two static config snapshots (backup vs. intended).
 
 ## Day 3 To Do
 
 Remember to stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/).
 
-Go ahead and post a screenshot of your backup directory listing (the four `.cfg` files under `backups/Boston/` and `backups/New York/`) or the **All Backups** page in the Nautobot UI on social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
+Go ahead and post a screenshot of one of your pre-committed sample backups (a `cat` output, or the rendered Markdown view of [`golden-config-data/backups/`](../golden-config-data/backups/) on GitHub) on social media of your choice, make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress!
 
-In tomorrow's challenge, we will [render intended configurations from the Jinja template and run Compliance](../Day_04_Intended_And_Compliance/README.md) — diff intended vs backup, watch a deliberately-drifted device get flagged, and close out the pack. See you tomorrow!
+In tomorrow's challenge, we will [render intended configurations from the Jinja template and run real Compliance](../Day_04_Intended_And_Compliance/README.md) against today's pre-committed backups — diff intended vs backup, deliberately drift one sample, watch a row flip red, and close out the pack. See you tomorrow!
 
 [X/Twitter](<https://twitter.com/intent/tweet?url=https://github.com/nautobot/100-days-of-nautobot&text=I+just+completed+Day+3+of+the+Golden+Config+expansion+pack+of+the+100+days+of+nautobot+challenge+!&hashtags=100DaysOfNautobot,JobsToBeDone>)
 

@@ -133,8 +133,8 @@ Python 3.12.x
 Now that we are on Nautobot 2.4.33, the current 2.6.x line of Golden Config is what we want. Pin to the 2.6 line specifically:
 
 ```
-(nautobot-docker-compose-py3.12) $ poetry shell
-(nautobot-docker-compose-py3.12) $ poetry add 'nautobot-golden-config@~2.6'
+(nautobot-docker-compose-py3.10) $ poetry shell
+(nautobot-docker-compose-py3.10) $ poetry add 'nautobot-golden-config@~2.6'
 ```
 
 `~2.6` resolves to `>=2.6.0, <3.0.0` in Poetry — currently picks 2.6.4 (the latest 2.x). Transitive deps pulled in: `hier-config`, `matplotlib`, `deepdiff`, `django-pivot`, `xmldiff`, `nautobot-capacity-metrics`, `netutils`, `toml`, and importantly **`nautobot-plugin-nornir`** (Golden Config uses Nornir internally for its Backup job — we will not run that job in this pack, but the dependency comes along anyway).
@@ -165,14 +165,14 @@ We will use `backup`, `intended`, and `compliance` on Days 3 and 4. `sotagg` (SO
 ### Step 3 — Rebuild the image (again, with GC this time)
 
 ```
-(nautobot-docker-compose-py3.12) $ invoke stop
-(nautobot-docker-compose-py3.12) $ invoke build
+(nautobot-docker-compose-py3.10) $ invoke stop
+(nautobot-docker-compose-py3.10) $ invoke build
 ```
 
 ### Step 4 — Start the stack
 
 ```
-(nautobot-docker-compose-py3.12) $ invoke debug
+(nautobot-docker-compose-py3.10) $ invoke debug
 ```
 
 `invoke debug` runs the stack in the foreground so you can watch the logs as Nautobot loads the Golden Config app on startup.
@@ -184,10 +184,22 @@ In a **second terminal**:
 ```
 $ cd ~/nautobot-docker-compose
 $ poetry shell
-(nautobot-docker-compose-py3.12) $ invoke post-upgrade
+(nautobot-docker-compose-py3.10) $ invoke post-upgrade
 ```
 
-Look for `nautobot_golden_config` in the migrations list — those are the Golden Config tables (Compliance Rules, Compliance Features, Settings, ConfigPlans, etc.) being created.
+The job output starts with a one-time security warning (Golden Config installs a custom API root view — expected, harmless), then walks through the migration list. The opening looks like this:
+
+```
+Running docker compose command "ps --services --filter status=running"
+Running docker compose command "exec nautobot nautobot-server post_upgrade"
+01:00:35.739 WARNING nautobot.core.api.routers routers.py                   get_api_root_view() :
+  Something has changed an OrderedDefaultRouter's APIRootView attribute to a custom class. Please verify that class GoldenConfigRootView implements appropriate authentication controls.
+Performing database migrations...
+Operations to perform:
+  Apply all migrations: admin, auth, circuits, cloud, constance, contenttypes, dcim, django_celery_beat, django_celery_results, extras, ipam, nautobot_golden_config, sessions, silk, social_django, taggit, tenancy, users, virtualization, wireless
+```
+
+Look for **`nautobot_golden_config`** in that `Apply all migrations:` list — those are the Golden Config tables (Compliance Rules, Compliance Features, Settings, ConfigPlans, etc.) being created in this run.
 
 ### Step 6 — Verify in the UI
 

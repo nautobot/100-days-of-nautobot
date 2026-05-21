@@ -104,6 +104,8 @@ Click **Create**. You will land on the new group's detail page with an empty Mem
 
 Now apply the filter — click **Edit** on the detail page and use the filter builder to set `Platform = arista_eos`, then save. The DynamicGroup's **Members** tab should now list the four mock cEOS Devices (`bos-acc-01`, `bos-rtr-01`, `nyc-acc-01`, `nyc-rtr-01`).
 
+![cEOS Lab Devices DynamicGroup with Platform = arista_eos filter, Members tab showing the four mock cEOS Devices](../images/day2_dynamic_group.png)
+
 ## Step 3 — Configure Golden Config Settings
 
 Navigate to **Apps → Golden Configuration → Golden Config Settings → Add**:

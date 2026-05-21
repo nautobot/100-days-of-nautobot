@@ -31,14 +31,31 @@ Golden Config reads templates from this scaffold to render intended configuratio
 
 ## Step 0 — Seed the four mock cEOS Devices
 
-Open a second terminal in the Codespace (leave the first terminal running `invoke debug` from Day 1). Install `pynautobot` and run the seed script:
+Open a second terminal in the Codespace (leave the first terminal running `invoke debug` from Day 1). Install `pynautobot`:
 
 ```
 $ pip install pynautobot
-$ python ~/100-days-of-nautobot/Nautobot_App_2_Golden_Config/scripts/seed_mock_devices.py
 ```
 
-The script is **idempotent** — re-running it is safe; it prints `already present, leaving as-is` for any object that exists. On a fresh Scenario 1 baseline it will create:
+The seed script hits Nautobot's REST API, so it needs an admin API token. The Lab Scenario 1 baseline does **not** wire one up for you out of the box — `creds.env` sets `NAUTOBOT_CREATE_SUPERUSER=false`, which means the admin user comes from the imported Scenario 1 SQL dump rather than from the env-var defaults, and the `NAUTOBOT_SUPERUSER_API_TOKEN` value in `creds.env` is never written into the database. Trying to run the script without overriding the token gets you `403 Forbidden: Invalid token`.
+
+Grab your admin user's actual API token from the UI:
+
+1. Log in to the Nautobot UI as `admin / admin`.
+2. Top-right user dropdown → **Profile**.
+3. **API Tokens** tab → click **+ Add** to create a new token (leave the expiry blank for the lab) → **Create**.
+4. Copy the token key shown on the next page — that is the only time the full key is displayed.
+
+![Nautobot admin user Profile → API Tokens tab with a token created for the Golden Config lab](../images/day2_api_token.png)
+
+Now run the seed script with that token exported in front of the command:
+
+```
+$ NAUTOBOT_TOKEN=<paste-your-token-here> \
+    python ~/100-days-of-nautobot/Nautobot_App_2_Golden_Config/scripts/seed_mock_devices.py
+```
+
+The script is **idempotent** — re-running it is safe; it prints `already present, leaving as-is` for any object that exists. It creates:
 
 - LocationType `Site`
 - Locations `Boston` and `New York`
@@ -48,7 +65,7 @@ The script is **idempotent** — re-running it is safe; it prints `already prese
 
 Verify in the Nautobot UI at **Devices → Devices** — all four should be listed with Platform `arista_eos`, Role `network`, Status `Active`.
 
-> 💡 The script picks `NAUTOBOT_URL` and `NAUTOBOT_TOKEN` from environment if you set them; otherwise it falls back to `http://localhost:8080` and `nautobot-docker-compose`'s default `SUPERUSER_API_TOKEN` (`0123456789abcdef0123456789abcdef01234567`). Both defaults match a fresh Codespace launched from this repo's Lab Scenario 1 config.
+> 💡 The script also reads `NAUTOBOT_URL` from the environment if set, defaulting to `http://localhost:8080` (correct for a fresh Codespace from this repo's Lab Scenario 1 config). Override only if your Nautobot is reachable at a different URL.
 
 ## Step 1 — Create the GitRepository in Nautobot
 

@@ -21,16 +21,22 @@ data.
 Usage from the codespace shell:
 
     $ pip install pynautobot
-    $ NAUTOBOT_URL=http://localhost:8080 \
-      NAUTOBOT_TOKEN=0123456789abcdef0123456789abcdef01234567 \
+    $ NAUTOBOT_TOKEN=<your-admin-api-token> \
       python Nautobot_App_2_Golden_Config/scripts/seed_mock_devices.py
 
-The default URL and token match a fresh Codespace launched from this
-repository's Lab Scenario 1 config (the token is the default
-SUPERUSER_API_TOKEN baked into nautobot-docker-compose's creds.example.env).
-Override via environment variables if your setup differs.
+NAUTOBOT_TOKEN must be set to your admin user's actual API token (grab it
+from the Nautobot UI: top-right user dropdown -> Profile -> API Tokens ->
+Add). The Lab Scenario 1 baseline has NAUTOBOT_CREATE_SUPERUSER=false in
+creds.env, so the example NAUTOBOT_SUPERUSER_API_TOKEN value the env file
+ships with is NOT written into the database; the script defaults to that
+value only as a sentinel that fails fast with 403 if you forget to
+override.
 
-Idempotent — safe to re-run.
+NAUTOBOT_URL defaults to http://localhost:8080 (correct for a fresh
+Codespace from this repo's Lab Scenario 1 config). Override only if your
+Nautobot is reachable at a different URL.
+
+Idempotent - safe to re-run.
 """
 
 import os

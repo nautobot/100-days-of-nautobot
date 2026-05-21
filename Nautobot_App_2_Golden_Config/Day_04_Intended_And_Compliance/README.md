@@ -15,14 +15,16 @@ Two jobs to enable, both via **Jobs → Jobs → \<name\> → Edit → tick Enab
 
 Compliance works by partitioning a config into **features** (each defined by a CLI prefix) and diffing intended-vs-backup per feature. Two features for our small template:
 
-**Apps → Golden Configuration → Compliance → Compliance Features → Add** — twice:
+**GOLDEN CONFIG → Compliance Features → Add** — twice:
 
 | Name | Slug | Description |
 |------|------|-------------|
 | `hostname` | `hostname` | Matches the `hostname` line |
 | `ntp` | `ntp` | Matches `ntp ...` lines |
 
-**Apps → Golden Configuration → Compliance → Compliance Rules → Add** — one per (Platform, Feature):
+![Compliance Features list page showing the `hostname` and `ntp` features added for the cEOS Lab](../images/day4_compliance_features.png)
+
+**GOLDEN CONFIG → Compliance Rules → Add** — one per (Platform, Feature):
 
 | Feature | Platform | Config to Match | Config Type |
 |---------|----------|-----------------|-------------|

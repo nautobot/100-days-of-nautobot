@@ -74,7 +74,7 @@ In the Nautobot UI, navigate to **Extensibility → Git Repositories → Add**:
 | Field | Value |
 |-------|-------|
 | **Name** | `Golden Config Lab` |
-| **Slug** | `golden_config_lab` — Nautobot's slug must be a valid Python identifier (alphanumerics + underscore). Auto-fill from the Name field produces `golden-config-lab` with hyphens, which fails validation (`'golden-config-lab' is not a valid identifier`) — manually replace the dashes with underscores before saving. |
+| **Slug** | `golden_config_lab` (auto-fills from the Name field) |
 | **Remote URL** | `https://github.com/nautobot/100-days-of-nautobot.git` |
 | **Branch** | `main` |
 | **Provided Contents** | tick all three: `backup configs`, `intended configs`, `jinja templates` (the dropdown also shows `Golden Config properties` — leave that one unticked; we wire Settings through the UI in Step 3, not via Git) |

@@ -222,7 +222,7 @@ The left nav should also gain a new top-level **Apps → Golden Configuration** 
   - Golden Config Settings
   - Remediation Settings
 
-![Apps → Golden Configuration menu group in the Nautobot left nav after Day 1 install](../images/golden_config_1.png)
+![Apps → Golden Configuration menu group in the Nautobot left nav after Day 1 install](../images/day1_golden_config_menu.png)
 
 We will seed four mock cEOS Devices and configure **Golden Config Settings** on Day 2.
 

@@ -15,7 +15,7 @@ If you have already completed the [Device Onboarding pack](../Nautobot_App_1_Dev
 
 ## Lab approach — no Containerlab in this pack
 
-Early drafts of this pack relied on the four Containerlab cEOS containers Device Onboarding deploys. Live verification on a default Codespace SKU surfaced a hard limit: running four cEOS instances (~2 GB each) alongside the Golden-Config-fattened Nautobot stack (Django + Celery worker + Celery beat + Postgres + Redis, ~3–4 GB after the install) consistently starves the host. Containerlab's `postdeploy` hangs waiting on EOS management interfaces that never come up, Docker stops responding to commands, and the lab gets stuck — often requiring a fresh Codespace to recover.
+Early drafts of this pack relied on the four Containerlab cEOS containers Device Onboarding deploys. Across multiple verification attempts on different Codespace SKUs we got **uneven results** — sometimes all four cEOS containers came up and Golden Config's Backup Job ran clean; sometimes only part of the topology came up; sometimes Containerlab's `postdeploy` stalled and the lab needed a fresh Codespace to recover. The combined footprint of four cEOS instances plus the Golden-Config-fattened Nautobot stack just sits too close to the resource ceiling of typical Codespace SKUs to ship as a required step.
 
 Rather than gate the whole pack on a beefier machine SKU, this pack teaches Golden Config **entirely through Nautobot's data model and Git-stored configs**, with no SSH ever leaving the Nautobot container:
 

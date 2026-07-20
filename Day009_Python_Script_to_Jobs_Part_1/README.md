@@ -49,7 +49,7 @@ As part of our setup, the Containerlab executables have already been installed. 
        date: 2024-09-21T12:26:37Z
      source: https://github.com/srl-labs/containerlab
  rel. notes: https://containerlab.dev/rn/0.57/#0573
- ```
+```
 
 In the next step, we will download the Arista cEOS image to be used in our lab. 
 

@@ -26,7 +26,7 @@ On the next screen, click on the dropdown menu for 'Dev container configuration'
 
 ![Codespace_Screenshot_2.png](../../Day001_Development_Setup/images/Codespace_Screenshot_2.png)
 
-Codespac will begin to launch, feel free to click on 'Building Codespace' to view the creation log and monitor the progress: 
+Codespace will begin to launch, feel free to click on 'Building Codespace' to view the creation log and monitor the progress: 
 
 ![Codespace_Screenshot_3.png](../../Day001_Development_Setup/images/Codespace_Screenshot_3.png)
 
@@ -46,7 +46,7 @@ Go ahead and launch the Codespace, once it is launched, this repository will be 
 
 ## Start Nautobot and the necessary components
 
-Included in the Codespace is the code from [nautobot-docker-compose](https://github.com/nautobot/nautobot-docker-compose/) repository. Our Codespace is launched with the docker-in-docker feature to allow us run Nautobot as well as the necessary components in containers. 
+Included in the Codespace is the code from [nautobot-docker-compose](https://github.com/nautobot/nautobot-docker-compose/) repository. Our Codespace is launched with the docker-in-docker feature to allow us to run Nautobot as well as the necessary components in containers. 
 
 The following instructions will be typed in at the terminal window. 
 
@@ -125,7 +125,7 @@ ALTER TABLE
 ALTER TABLE
 ```
 
-- Now we can start the nautobot containers with ```invoke debug```. This will start Nautobot in debug mode and display all message on the screen: 
+- Now we can start the nautobot containers with ```invoke debug```. This will start Nautobot in debug mode and display all messages on the screen: 
 
 > [!TIP] 
 > Wait until you see the message of ```Starting development server at http://0.0.0.0:8080/``` before moving on to the next step: 
@@ -153,7 +153,7 @@ nautobot-1       | Quit the server with CONTROL-C.
 nautobot-1       | 
 ```
 
-Once Nautobot is started, we can go to the forwarded ports, hoover over 'Forwarded Address' and click on the globe icon to open a separate browser window: 
+Once Nautobot is started, we can go to the forwarded ports, hover over 'Forwarded Address' and click on the globe icon to open a separate browser window: 
 
 ![Codespace_Screenshot_6.png](../../Day001_Development_Setup/images/Codespace_Screenshot_6.png)
 
@@ -161,7 +161,7 @@ The new window should direct you to the forwarded port where Nautobot UI can be 
 
 ![Codespace_Screenshot_7.png](../../Day001_Development_Setup/images/Codespace_Screenshot_7.png)
 
-We now have a working Nautobot instance in Codepsace. Let's go back to the terminal window and use ```Ctl+C``` to terminate the Nautobot instance: 
+We now have a working Nautobot instance in Codespace. Let's go back to the terminal window and use ```Ctl+C``` to terminate the Nautobot instance: 
 
 ```
 ...
@@ -210,7 +210,7 @@ Containerlab is already installed in our environment, we can check the version i
  rel. notes: https://containerlab.dev/rn/0.57/#0573
 ```
 
-We provided a lab topology under ```100-days-of-nautobot-challenge/clab``` which we can take a look: 
+We provided a lab topology under ```100-days-of-nautobot-challenge/clab``` which we can inspect using the following commands: 
 
 ```
 $ cd 100-days-of-nautobot-challenge/

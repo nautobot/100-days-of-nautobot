@@ -53,7 +53,7 @@ You might be wondering, what is so special about executing this simple job? Let'
 
 1. **Asynchronous execution**
 
-The job was executed in an asynchronous, non-blocking way. If you noticed, as soon as we click on `Run`, we were redirected to the results page. We did not have to wait for the job result to come back before we can interact with Nautobot again. 
+The job was executed in an asynchronous, non-blocking way. If you noticed, as soon as we clicked on `Run`, we were redirected to the results page. We did not have to wait for the job result to come back before we could interact with Nautobot again. 
 
 This is due to the fact that Nautobot is integrated with the [Celery](https://docs.celeryq.dev/en/stable/getting-started/introduction.html) framework with distributed tasks queues. There is a message bus and a broker that allows for scalability, such as adding more workers to execute more jobs. 
 
@@ -69,7 +69,7 @@ We can see the basic performance benchmark in the job execution, such as the dur
 
 4. **Interaction with existing Nautobot data**
 
-This job interacted directly with the data existed in Nautobot. We did not have to write an external API call to Nautobot. The job has access to both the data and the relationship between the objects. 
+This job interacted directly with the data that existed in Nautobot. We did not have to write an external API call to Nautobot. The job has access to both the data and the relationship between the objects. 
 
 5. **Other benefits**
 

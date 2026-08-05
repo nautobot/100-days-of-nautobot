@@ -2,7 +2,7 @@
 
 Welcome to Day 3 of the `#100DaysOfNautobot` challenge! It is time to create some jobs for Retail-r-Us. 
 
-For our first job, we will create a customary 'Hello World' type of job. It will be a small and limited Python script, but a fully functional Nautobot job. This will help us to see how the pieces work together before we move on to more complex jobs.
+For our first job, we will create a classic 'Hello World' type of job. It will be a small and limited Python script, but a fully functional Nautobot job. This will help us to see how the pieces work together before we move on to more complex jobs.
 
 Ready? Let's begin! 
 
@@ -12,11 +12,11 @@ Ready? Let's begin!
 > If you are restarting an existing Codespace from Day 1, feel free to skip this section. However, be aware sometimes we need to [Rebuild Codespace](https://github.com/nautobot/100-days-of-nautobot/blob/main/Lab_Setup/lab_related_notes/README.md#rebuild-codespace) if the Docker daemon stopped working after restarting. 
 
 > [!NOTE]
-> This section has a lot of repeat information from Day 1, feel free to quickly glance through them. 
+> This section has a lot of repeat information from Day 1, feel free to quickly glance through it. 
 
 Let's recall our steps from Day 1 for development setup.
 
-We will need to start a codespace instance by using "Code -> "..." -> New with Options" to pick a lab scenario:
+We will need to start a Codespace by using "Code -> "..." -> New with Options" to pick a lab scenario:
 
 ![codespaces_screenshot_1](images/codespaces_screenshot_1.png)
 
@@ -118,13 +118,13 @@ If you already created the file via option 1, you can read through option 2 for 
 
 With option 2, we will create the job file directly in the ```nautobot``` container. We want to demonstrate this option because it follows the method used in the [Jobs Developer Guide](https://docs.nautobot.com/projects/core/en/stable/development/jobs/#installing-jobs) for installing jobs.   
 
-Let's come back to the terminal section. While leaving the first ```invoke debug``` window open, click on the ```+``` sign to add a separate terminal window: 
+Let's come back to the terminal section. While leaving the first ```invoke debug``` window open, click on the ```+``` icon to open a new terminal: 
 
 ![start_new_terminal_1](images/start_new_terminal_1.png)
 
 
 > [!TIP] 
-> By leaving the first terminal window open and in debug mode, we will be able to see the system level messages that is helpful during our learning process. 
+> By leaving the first terminal window open and in debug mode, we will be able to see the system-level messages — which is helpful during our learning process. 
 
 Let's see which docker containers are running: 
 
@@ -152,7 +152,7 @@ root@196e7f7abedd:/opt/nautobot/jobs# touch hello_jobs.py
 ```
 
 > [!IMPORTANT] 
-> The location of the file is very important, this is where Nautobot looks for the job files. Also the file permission with `chown` is critical as well. 
+> File location is critical because this is where Nautobot searches for Job files. Correct file ownership is equally important and can be set using `chown`.
 
 We will need to change the owner and group for the file to `nautobot`: 
 
@@ -183,7 +183,7 @@ Once we have the file open, we can start adding components to the job.
 
 Whether you used Option 1 or Option 2, you are now ready to modify the Python file to specify the details of the job.
 
-First, we'll have to import the necessary object and methods from the ```nautobot.apps.jobs``` module: 
+First, we'll have to import the necessary objects and methods from the ```nautobot.apps.jobs``` module: 
 
 ```
 from nautobot.apps.jobs import Job, register_jobs
@@ -191,7 +191,7 @@ from nautobot.apps.jobs import Job, register_jobs
 
 The ```Job``` is an object that we will inherit in our own Job class. Inheritance in programming allows us to define a class that inherits all the methods and properties from another pre-created object. 
 
-We can now define our own Jobs object using the ```run()``` method to house our code: 
+We can now define our own Job object using the ```run()``` method to house our code: 
 
 ```
 class HelloJobs(Job):
@@ -209,7 +209,7 @@ register_jobs(
 ```
 
 > [!IMPORTANT]
-> Register jobs is an important step that many people, myself included, might miss when first introduced to Nautobot jobs. 
+> Registering jobs is an important step that many people, myself included, might miss when first introduced to Nautobot jobs. 
 
 Here is what the complete file looks like: 
 
@@ -230,10 +230,10 @@ Make sure we save the file before we move on to the next step.
 
 ## Register and Run the Job
 
-In order for the job to be available, we will need to tell Nautobot by registering it. Remember the ```invoke debug``` command that conveniently builds and start all the components for us? Turns out there is a ```invoke``` command for ```post_upgrade``` as well.
+In order for the job to be available, we will need to tell Nautobot by registering it. Remember the ```invoke debug``` command that conveniently builds and starts all the components for us? Turns out there is an ```invoke``` command for ```post-upgrade``` as well.
 
 > [!IMPORTANT]
-> Registering the job with `invoke post-upgrade` is another critical step many engineers new to Nautobot Jobs may have missed. Please remember to do this step. 
+> Registering the job with `invoke post-upgrade` is another critical step many engineers new to Nautobot Jobs might miss. Please remember to do this step. 
 
 Open up (yet) another terminal window and initiate the poetry shell: 
 
@@ -306,7 +306,7 @@ If we move back to the `JOBS` section on the Nautobot UI, we should see the newl
 
 ![hello_jobs_1](images/hello_jobs_1.png)
 
-Remember that all new jobs by default is disabled? We will need edit the job by clicking on the edit button: 
+Remember that all new jobs are disabled by default? We will need to edit the job by clicking on the edit button: 
 
 ![hello_jobs_2](images/hello_jobs_2.png)
 
@@ -338,9 +338,9 @@ Just like that, we have our first job running!
 
 ## Day 3 To Do
 
-Since we will continue to work on the same file tomorrow, let's go ahead and stop the codespace instance on [https://github.com/codespaces/](https://github.com/codespaces/) but do not delete it. 
+Since we will continue to work on the same file tomorrow, let's go ahead and stop the Codespace on [https://github.com/codespaces/](https://github.com/codespaces/) but do not delete it. 
 
-Go ahead and post a screenshot of the result of the newly created job on a social media of your choice. Make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
+Go ahead and post a screenshot of the result of the newly created job on a social media platform of your choice. Make sure you use the tag `#100DaysOfNautobot` `#JobsToBeDone` and tag `@networktocode`, so we can share your progress! 
 
 In tomorrow's challenge, we will explore how we can customize the job even more. See you tomorrow! 
 

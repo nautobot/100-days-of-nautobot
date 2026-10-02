@@ -270,13 +270,13 @@ class VerifyHostnameJob(Job):
 5. Template Files
 The templates render the HTML pages that display your plugin’s output.
 
-- **`templates/nautobot_example_plugin/customized_jobresult.html`**:
+- **`plugins/templates/nautobot_example_plugin/customized_jobresult.html`**:
 This template extends Nautobot’s generic object detail template and provides a custom layout for the job result page. It defines various blocks (breadcrumbs, buttons, content sections, tabs, and JavaScript) to structure the page. The template utilizes the context provided by `CustomJobResultView`, including the custom message and job results, to present a detailed view of the job execution.
 
-- **`templates/nautobot_example_plugin/inc/hostname_check_results.html`**:
+- **`plugins/templates/nautobot_example_plugin/inc/hostname_check_results.html`**:
 This partial template is included within the main job result template. It displays a table of hostname check results by iterating over the job’s result data. Additionally, it includes a button and accompanying JavaScript to export the results as a CSV file, allowing users to easily download and analyze the job output.
 
-```templates/nautobot_example_plugin/customized_jobresult.html```:
+```plugins/templates/nautobot_example_plugin/customized_jobresult.html```:
 ```html
 {% extends 'generic/object_detail.html' %}
 {% load helpers %}
@@ -445,7 +445,7 @@ This partial template is included within the main job result template. It displa
 {% endblock %}
 ```
 
-```templates/nautobot_example_plugin/inc/hostname_check_results.html```:
+```plugins/templates/nautobot_example_plugin/inc/hostname_check_results.html```:
 ```html
 {% load custom_links %}
 

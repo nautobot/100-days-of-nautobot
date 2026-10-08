@@ -75,10 +75,10 @@ $ mkdir nautobot-ansible-example
 $ cd nautobot-ansible-example
 $ sudo apt update
 $ sudo apt install python3-venv -y
-$ python3 -m venv .ansbile
-$ source .ansbile/bin/activate
+$ python3 -m venv .ansible
+$ source .ansible/bin/activate
 $ pip3 install ansible pynautobot paramiko netutils
-$ ansible-galaxy collection install networktocode.nautobot
+$ ansible-galaxy collection install networktocode.nautobot --upgrade
 $ ansible-galaxy collection install arista.eos --force
 ```
 
